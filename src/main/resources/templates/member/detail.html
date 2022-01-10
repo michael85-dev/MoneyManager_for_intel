@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+    session: <a th:text="${session['loginEmail']}"></a>
+</header>
+<section>
+    <form action="/member/update" method="post" enctype="multipart/form-data" th:object="${mdDTO}">
+        <input type="text" th:field="*{memberEmail}" th:value="*{memberEmail}" readonly>
+        <input type="password" th:field="*{memberPassword}" th:value="*{memberPassword}">
+        <input type="password" id="pwCheck" placeholder="비밀번호를 다시 입력해주세요">
+        <input type="text" th:filed="*{memberName}" th:value="*{memberName}" readonly>
+        <input type="text" th:field="*{memberPhone}" th:value="*{memberPhone}">
+        <textarea rows="5" th:field="*{memberMemo}" th:value="*{memberMemo}"></textarea>
+        <input type="file" th:field="*{memberPhoto}" value="저장"> <!-- 파일 관련 설정 -->
+        <input type="submit" value="수정">
+        <button th:onclick="backtomain([[*{memberId}]])">돌아가기</button>
+    </form>
+</section>
+</body>
+<script>
+    function backtomain(memberId) { // 해당 솔루션 좀더 고민 필요함.
+        location.href = "/main";
+    }
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+    <div>
+        <!-- 관리자 계정으로 접근시 보일 수 있는 전체 목록 메뉴 만듥 -->
+        <a href="/member">전체 회원 목록</a>
+        <!-- 어떻게 해야 할 수 있을까? -->
+        로그인 : <a th:text="${session['loginEmail']}"></a>
+        <a href="/member/detail">조회</a>
+        <a href="/select">+</a> <!-- 어떤걸 생성하게 해야하는가? -->
+    </div>
+    <div>
+        <a >계좌?</a>
+        <a >카드?</a>
+        <a >현금?</a>
+    </div>
+</header>
+<section>
+
+</section>
+</body>
+</html>

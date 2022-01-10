@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+
+</header>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>아이디</th>
+                <th>비밀번호</th>
+                <th>전화번호</th>
+                <th>메모</th>
+                <th>이미지</th>
+                <th>상세조회</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="m: ${memberList}">
+                <td th:text="${m.memberId}">번호</td>
+                <td th:text="${m.memberName}">이름</td>
+                <td th:text="${m.memberEmail}">아이디</td>
+                <td th:text="${m.memberPassword}">비밀번호</td>
+                <td th:text="${m.memberPhone}">전화번호</td>
+                <td th:text="${m.memberMemo}">메모</td>
+                <td th:text="${m.memberPhotoName}"></td>
+                <td>
+                    <button th:onclick="detail([[${m.memberId}]])">조회</button>
+                </td>
+                <td>
+                    <button th:onclick=deleteById([[${m.memberId}]])">삭제</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="detail_view">
+
+    </div>
+</section>
+</body>
+<script>
+    function detail(memberId) {
+        console.log(memberId);
+        const reqUrl = "/member/" + memberId;
+        $.ajax({
+           type: 'post',
+           url: reqUrl,
+           dataType: 'json',
+           success: function(result) {
+               console.log(result);
+               const detail_view = document.getElementById('detail_view');
+
+               let output = "";
+               output += "<table>\n" +
+                   "    <thead>\n" +
+                   "        <tr>\n" +
+                   "            <th>번호</th>\n" +
+                   "            <th>이름</th>\n" +
+                   "            <th>아이디</th>\n" +
+                   "            <th>비밀번호</th>\n" +
+                   "            <th>전화번호</th>\n" +
+                   "            <th>메모</th>\n" +
+                   "            <th>사진</th>\n" +
+                   "        </tr>\n" +
+                   "    </thead>\n" +
+                   "    <tbody>\n" +
+                   "        <tr>\n" +
+                   "            <td>"+ result.memberId + "</td>\n" +
+                   "            <td>" + result.memberName + "</td>\n" +
+                   "            <td>"+ result.memberEmail + "</td>\n" +
+                   "            <td>" + result.memberPassword + "</td>\n" +
+                   "            <td>" + result.memberPhone + "</td>\n" +
+                   "            <td>" + result.memberMemo + "</td>\n" +
+                   "            <td>" + result.memberPhotoName + "</td>\n" +
+                   "        </tr>\n" +
+                   "    </tbody>\n" +
+                   "</table>";
+
+               detail_view.innerHTML = output;
+           },
+            error: function() {
+                alert('상세 조회 실패');
+           }
+        });
+    }
+
+    function deleteById(memberId) {
+        console.log(memberId);
+        const reqUrl = "/member/" + memberId;
+        $.ajax({
+           type: 'delete',
+           url: reqUrl,
+
+           success: function() {
+                location.href = '/member/';
+           },
+            error: function() {
+               alert('삭제 실패');
+            }
+        });
+    }
+</script>
+</html>

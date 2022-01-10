@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+
+</header>
+<section>
+    <form action="/member/login" method="post" enctype="multipart/form-data" th:object="${mlogin}">
+        <input type="text" th:field="*{memberEmail}" placeholder="아이디">
+        <input type="password" th:field="*{memberPassword}" placeholder="비밀번호">
+        <input type="submit" value="로그인">
+    </form>
+</section>
+</body>
+</html>

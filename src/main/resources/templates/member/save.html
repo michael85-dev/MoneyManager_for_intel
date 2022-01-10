@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+
+</header>
+<section>
+    <form action="/member/save" method="post" enctype="multipart/form-data" th:object="${msave}">
+        <input type="text" th:field="*{memberEmail}" placeholder="가입하실 이메일을 입력하세요">
+        <input type="password" th:field="*{memberPassword}" placeholder="사용할 비밀번호를 입력하세요">
+        <input type="password" id="pwCheck" placeholder="비밀번호를 다시 입력해주세요">
+        <input type="text" th:filed="*{memberName}" placeholder="이름을 입력하세요">성
+        <input type="text" th:field="*{memberPhone}" placeholder="000-0000-0000">
+        <textarea rows="5" th:field="*{memberMemo}"></textarea>
+        <input type="file" th:field="*{memberPhoto}" value="저장"> <!-- 파일 관련 설정 -->
+        <input type="submit" value="회원가입">
+    </form>
+</section>
+</body>
+</html>
