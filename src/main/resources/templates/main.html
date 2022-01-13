@@ -9,16 +9,25 @@
 <header>
     <div>
         <!-- 관리자 계정으로 접근시 보일 수 있는 전체 목록 메뉴 만듥 -->
-        <a href="/member">전체 회원 목록</a>
+        <div th:if="${session['loginEmail'] eq 'admin'}">
+            <!-- th:if="${#string.equals('loginEmail', admin}" -->
+            <a href="/member">전체 회원 목록</a>
+        </div>
         <!-- 어떻게 해야 할 수 있을까? -->
-        로그인 : <a th:text="${session['loginEmail']}"></a>
+        로그인 : <a th:text="${session['loginNickName']}"></a>
+        <a href="/member/logout">로그아웃</a>
         <a href="/member/detail">조회</a>
         <a href="/select">+</a> <!-- 어떤걸 생성하게 해야하는가? -->
     </div>
     <div>
-        <a >계좌?</a>
-        <a >카드?</a>
-        <a >현금?</a>
+<!--        <select>-->
+<!--            <option th:value="bank" href="/bank/save" th:object="*{bsave}">-->
+<!--                <input type="text" th:field="*{bankName}"-->
+<!--            </option>-->
+<!--        </select>-->
+<!--        <a >계좌?</a>-->
+<!--        <a >카드?</a>-->
+<!--        <a >현금?</a>-->
     </div>
 </header>
 <section>

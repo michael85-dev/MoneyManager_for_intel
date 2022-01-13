@@ -16,6 +16,7 @@
                 <th>번호</th>
                 <th>이름</th>
                 <th>아이디</th>
+                <th>닉네임</th>
                 <th>비밀번호</th>
                 <th>전화번호</th>
                 <th>메모</th>
@@ -28,6 +29,7 @@
             <tr th:each="m: ${memberList}">
                 <td th:text="${m.memberId}">번호</td>
                 <td th:text="${m.memberName}">이름</td>
+                <td th:text="${m.memberNickName}">닉네임</td>
                 <td th:text="${m.memberEmail}">아이디</td>
                 <td th:text="${m.memberPassword}">비밀번호</td>
                 <td th:text="${m.memberPhone}">전화번호</td>

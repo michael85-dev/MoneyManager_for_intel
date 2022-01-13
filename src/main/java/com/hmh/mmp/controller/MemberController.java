@@ -13,7 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
+
+import static com.hmh.mmp.common.SessionConst.*;
 
 @Controller
 @RequestMapping("/member/*")
@@ -29,7 +32,8 @@ public class MemberController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult br) {
+    public String save(@PathVariable @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult br) throws IOException {
+        // @ModelAttribute의 member는 대체 어디서 넘어온 것인가.
         if (br.hasErrors()) {
             return "member/save";
         }
@@ -58,11 +62,23 @@ public class MemberController {
         if (checkResult) {
             session.setAttribute("loginEmail", memberLoginDTO.getMemberEmail());
             // 해당 loginEmail의 값을 SessionConst라는 폴더를 만들어서 적용도 가능함.
+            session.setAttribute(LOGIN_EMAIL, memberLoginDTO.getMemberEmail());
+            session.setAttribute("loginId", memberLoginDTO.getId());
+            session.setAttribute(LOGIN_ID, memberLoginDTO.getId());
+            session.setAttribute("loginNickName", memberLoginDTO.getMemberNickName());
+            session.setAttribute(NICK_NAME, memberLoginDTO.getMemberNickName());
 
             return "main";
         } else {
             return "member/login";
         }
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+
+        return "index";
     }
 
     @GetMapping
@@ -103,5 +119,15 @@ public class MemberController {
         Long memberId = ms.update(memberDetailDTO);
 
         return "redirect:/member/" + memberDetailDTO.getMemberId();
+    }
+
+    @GetMapping("select")
+    public String select(Model model, HttpSession session, MemberLoginDTO memberLoginDTO) {
+        Long memberId = memberLoginDTO.getId();
+        ms.findAll();
+
+//        bs.findAll(memberId); // 일시 정지
+
+        return "/select";
     }
 }

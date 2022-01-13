@@ -19,6 +19,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update # ?? 이게 뭔데? ddl : data definition language?
+  servlet:
+    multipart:
+      max-file-size: 20MB # 최대 파일 사이즈 20MB
+      max-request-size: 40MB # 최대 요청 사이즈 40MB
 
 # ddl dml dcl임
 # ERD : entity relation diagram -> entity의 경우 mysql에서는 table의 의미로 사용함.

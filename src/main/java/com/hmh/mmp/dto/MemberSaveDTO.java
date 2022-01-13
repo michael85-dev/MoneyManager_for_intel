@@ -19,6 +19,7 @@ public class MemberSaveDTO {
     private String memberPassword;
     @NotBlank(message="이름은 필수 입니다.")
     private String memberName;
+    private String memberNickName;
     private String memberPhone;
     private String memberMemo;
     private MultipartFile memberPhoto;

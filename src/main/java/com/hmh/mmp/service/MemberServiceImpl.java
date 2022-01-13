@@ -7,7 +7,10 @@ import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository mr;
 
     @Override
-    public Long save(MemberSaveDTO memberSaveDTO) {
+    public Long save(MemberSaveDTO memberSaveDTO) throws IOException {
         /*
             1. MemberSaveDTO -> MemberEntity에 옮기기 : msDTO는 더 이상 다음단계에서는 쓰지 않음. 해당 데이터는 Entity에서 다룸
                 - 여기서는 MemberEntity의 saveMember 메서드
@@ -29,7 +32,22 @@ public class MemberServiceImpl implements MemberService {
         MemberEntity mEntity = MemberEntity.saveMember(memberSaveDTO); // 이것을 통해 가입 진행됨
 
         // 이메일 체크
-        MemberEntity emailCheck = mr.findByIdMemberEmail(memberSaveDTO.getMemberEmail()); // 지금 설정하는게 아님...
+        MemberEntity emailCheck = mr.findByMemberEmail(memberSaveDTO.getMemberEmail()); // 지금 설정하는게 아님...
+
+        // 사진 관련 정보를 넣기 위한 것.
+        MultipartFile memberPhoto = memberSaveDTO.getMemberPhoto();
+        String memberPhotoName = memberPhoto.getOriginalFilename();
+
+        memberPhotoName = System.currentTimeMillis() + "-" + memberPhotoName;
+
+        String savePath = ""; // 미정 후에 전부 교체 해야함.
+
+        if (!memberPhoto.isEmpty()) {
+            memberPhoto.transferTo(new File(savePath));
+        }
+
+        memberSaveDTO.setMemberPhotoName(memberPhotoName);
+
 
         if (emailCheck != null) {
             throw new IllegalStateException("중복된 이메일입니다.");
@@ -42,7 +60,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean login(MemberLoginDTO memberLoginDTO) {
         // MemberEntity -> MemberLogin
-        MemberEntity memberEntity = mr.findByIdMemberEmail(memberLoginDTO.getMemberEmail()); // 왜냐면 로그인에서 쓴 데이터는 memberLogin에서 받았기 때문에.
+        MemberEntity memberEntity = mr.findByMemberEmail(memberLoginDTO.getMemberEmail()); // 왜냐면 로그인에서 쓴 데이터는 memberLogin에서 받았기 때문에.
 
         if (memberEntity != null) {
             if (memberLoginDTO.getMemberPassword().equals(memberEntity.getMemberPassword())) {
@@ -85,7 +103,7 @@ public class MemberServiceImpl implements MemberService {
     // session의 데이터를 가지고 모든 데이터 또는 부분 데이터를 가지고 오기 위한 메서드.
     @Override
     public MemberDetailDTO findByEmail(String memberEmail) {
-        MemberEntity memberEntity = mr.findByIdMemberEmail(memberEmail);
+        MemberEntity memberEntity = mr.findByMemberEmail(memberEmail);
         MemberDetailDTO memberDetailDTO = MemberDetailDTO.toMemberDetailDTO(memberEntity);
 
         return memberDetailDTO;

@@ -18,16 +18,25 @@ public class MemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increments)
     @Column(name="member_id")
     private Long id;
+
     @Column(length = 50, unique = true)
     private String memberEmail;
+
     @Column(length = 30)
     private String memberPassword;
+
     @Column(length = 30)
     private String memberName;
+
+    @Column(length = 30)
+    private String memberNickName;
+
     @Column(length = 20)
     private String memberPhone;
+
     @Column(length = 1000)
     private String memberMemo;
+
     @Column
     private String memberPhotoName;
 
@@ -37,6 +46,7 @@ public class MemberEntity {
         mEntity.setMemberEmail(msDTO.getMemberEmail());
         mEntity.setMemberPassword(msDTO.getMemberPassword());
         mEntity.setMemberName(msDTO.getMemberName());
+        mEntity.setMemberNickName(msDTO.getMemberNickName());
         mEntity.setMemberPhone(msDTO.getMemberPhone());
         mEntity.setMemberMemo(msDTO.getMemberMemo());
         mEntity.setMemberPhotoName(msDTO.getMemberPhotoName());
@@ -50,6 +60,7 @@ public class MemberEntity {
         memberEntity.setMemberEmail(memberDetailDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDetailDTO.getMemberPassword());
         memberEntity.setMemberName(memberDetailDTO.getMemberName());
+        memberEntity.setMemberNickName(memberDetailDTO.getMemberNickName());
         memberEntity.setMemberPhone(memberDetailDTO.getMemberPhone());
         memberEntity.setMemberMemo(memberDetailDTO.getMemberMemo());
         memberEntity.setMemberPhotoName(memberDetailDTO.getMemberPhotoName());

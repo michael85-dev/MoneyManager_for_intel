@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberLoginDTO {
-    private String memberEmail;
-    private String memberPassword;
-    private String memberNickName;
-    private Long id;
+public class AccountSaveDTO {
+    public String accountBank;
+    public String accountName;
+
 }
