@@ -1,10 +1,12 @@
 package com.hmh.mmp.controller;
 
-import com.hmh.mmp.dto.MemberDetailDTO;
-import com.hmh.mmp.dto.MemberLoginDTO;
-import com.hmh.mmp.dto.MemberSaveDTO;
-import com.hmh.mmp.service.MemberService;
+import com.hmh.mmp.common.PagingConst;
+import com.hmh.mmp.dto.*;
+import com.hmh.mmp.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,10 @@ import static com.hmh.mmp.common.SessionConst.*;
 @RequiredArgsConstructor // final이 붙어있는ㄱ ㅓㅅ에 대한 생성자를 만들어줌?
 public class MemberController {
     private final MemberService ms;
+    private final BankService bs;
+    private final BoardService bos;
+    private final CardService crs;
+    private final CashService css;
 
     @GetMapping("save")
     public String saveForm(Model model) {
@@ -56,7 +62,7 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public String login(@PathVariable @ModelAttribute("member") MemberLoginDTO memberLoginDTO, BindingResult br, HttpSession session) {
+    public String login(@PathVariable @ModelAttribute("member") MemberLoginDTO memberLoginDTO, BindingResult br, HttpSession session, Model model, Pageable pageable) {
         boolean checkResult = ms.login(memberLoginDTO); // MemberLoginDTO에 다가 Entity데이터를 담아서 비교?
 
         if (checkResult) {
@@ -67,6 +73,31 @@ public class MemberController {
             session.setAttribute(LOGIN_ID, memberLoginDTO.getId());
             session.setAttribute("loginNickName", memberLoginDTO.getMemberNickName());
             session.setAttribute(NICK_NAME, memberLoginDTO.getMemberNickName());
+
+            // 여기서 페이징 부터 해서 모든 데이터를 메인에 뿌려 줘야함.
+            // 은행 관련
+            List<BankDetailDTO> bankList = bs.findAll(memberLoginDTO.getId());
+            model.addAttribute("bList", bankList);
+
+            Page<BankPagingDTO> bPageList = bs.paging(pageable);
+            model.addAttribute("bpList", bPageList);
+                // 해당 내용 메서드로 만들지 고민....
+            int bank_startPage = (((int) (Math.ceil((double)pageable.getPageNumber() / PagingConst.B_BLOCK_LIMIT))) - 1) * PagingConst.B_BLOCK_LIMIT + 1;
+            int bank_endPage = ((bank_startPage + PagingConst.B_BLOCK_LIMIT - 1) < bPageList.getTotalPages()) ? bank_startPage + PagingConst.B_BLOCK_LIMIT - 1 : bPageList.getTotalPages();
+            model.addAttribute("bank_startPage", bank_startPage);
+            model.addAttribute("bank_endPage", bank_endPage);
+
+            // 카드 관련
+            List<CardDetailDTO> cardList = crs.findAll(memberLoginDTO.getId());
+            model.addAttribute("crList", cardList);
+
+            // 현금 관련
+            List<CashDetailDTO> cashList = css.findAll(memberLoginDTO.getId());
+            model.addAttribute("csList", cashList);
+
+            // 게시판 관련
+
+            // 공지사항 관련
 
             return "main";
         } else {
@@ -82,14 +113,24 @@ public class MemberController {
     }
 
     @GetMapping
-    public String findAll(Model model) {
+    public String findAll(Model model, @PageableDefault(page = 1) Pageable pageable) {
         List<MemberDetailDTO> memberDetailDTO = ms.findAll();
         model.addAttribute("memberList", memberDetailDTO);
+
+        // 페이지 작업 하기.
+        Page<MemberPagingDTO> mPageList = ms.paging(pageable);
+        model.addAttribute("pList", mPageList);
+
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < mPageList.getTotalPages()) ? startPage * PagingConst.BLOCK_LIMIT - 1 : mPageList.getTotalPages();
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "member/findAll";
     }
 
-    @PostMapping("{memberId}")
+    @PostMapping("{memberId}") // ajax로 받음.
     public @ResponseBody MemberDetailDTO findById(@PathVariable("memberId") Long memberId) {
         MemberDetailDTO memberDetailDTO = ms.findById(memberId);
 
@@ -124,7 +165,13 @@ public class MemberController {
     @GetMapping("select")
     public String select(Model model, HttpSession session, MemberLoginDTO memberLoginDTO) {
         Long memberId = memberLoginDTO.getId();
-        ms.findAll();
+        List<MemberDetailDTO> memberList = ms.findAll();
+        model.addAttribute("mList", memberList);
+
+        List<BankDetailDTO> bankList = bs.findAll(memberLoginDTO.getId());// 해당 관련 memberId 관련 넣어줘야함.
+        model.addAttribute("bList", bankList);
+
+
 
 //        bs.findAll(memberId); // 일시 정지
 

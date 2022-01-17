@@ -27,7 +27,8 @@ public class BankDetailDTO {
         bankDetailDTO.setBankName(bankEntity.getBankName());
         bankDetailDTO.setBankMemo(bankEntity.getBankMemo());
         bankDetailDTO.setTotalAsset(bankEntity.getTotalAsset());
-        bankDetailDTO.setMemberId(bankEntity.getMemberId());
+        // ?? 이걸 어떻게 해야하나.
+        bankDetailDTO.setMemberId(bankEntity.getMemberEntity().getId());
 
         return bankDetailDTO;
     }

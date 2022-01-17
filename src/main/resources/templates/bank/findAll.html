@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+    bank findAll page
+    <a href="/bank/save">계좌 생성</a>
+</header>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>계좌 등록 순서</th> <!-- 필요한지 -->
+                <th>계좌 명</th>
+                <th>메모</th> <!-- 필요하다면 -->
+                <th>총 잔액</th> <!-- 세부 사항은 조회를 따로 할 수 있게 -->
+                <th>조회</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody> <!-- 해당 부분에 대한 추가 수정 필요 함 - 완료되면 이부분은 지울 예정 -->
+            <tr th:each="bd: ${bdList}">
+                <td th:text="${bd.bankName}">계좌 명</td>
+                <td th:text="${bd.bankMemo}">계좌 메모</td>
+                <td th:text="${bd.totalAsset}">총 잔액</td>
+                <th th:href="@{|/bank/${bd.bankId}|}">조회</th>
+                <th th:href="@{|/bank/delete/${bd.bankId}|}">삭제</th>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="container">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/bank/(page=1)}">
+                    <span>First</span>
+                </a>
+            </li>
+
+            <li th:class="${bpList.first} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${bpList.first} ? '#' : @{/bank/(page=${bpList.number})}">
+                    <span>&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                th:class="${page == bpList.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/bank/(page=${page})}"></a>
+            </li>
+
+            <li th:class="${bpList.last} ? 'disabled'">
+                <a class="page-link" th:href="${bpList.last} ? '#' : @{/bank/(page=${bpList.number + 2})}">
+                    <span>&gt;</span>
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" th:href="@{/bank/(page=${bpList.totalPages})}">
+                    <span>Last</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</section>
+</body>
+<script>
+    // function findById(bankId) {
+    //     console.log('bankId');
+    //     const reqUrl = "/bank/" + bankId;
+    //     $.ajax ({
+    //        type:'get',
+    //        url: reqUrl,
+    //        dataType: 'json',
+    //        success: function(result) {
+    //            console.log(result);
+    //
+    //        }
+    //     });
+    // }
+</script>
+</html>
