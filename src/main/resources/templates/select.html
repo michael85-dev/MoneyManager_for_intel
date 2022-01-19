@@ -10,21 +10,22 @@
 <body>
 <header>
     select page
+    로그인 : <a th:text="${session['loginNickName']}"></a>
 </header>
 <section>
     <select>
         <option disabled>선택하세요</option>
         <option>
             <!-- 현금 -->
-            <a href="/cash/select"><span>현금 생성</span></a>
+            <a href="/cash/save"><span>현금 생성</span></a>
         </option>
         <option>
             <!-- 은행 -->
-            <a href="/bank/select"><span>계좌 생성</span></a>
+            <a href="/bank/save"><span>계좌 생성</span></a>
         </option>
         <option>
             <!-- 카드 -->
-            <a href="/card/select"><span>카드 생성</span></a>
+            <a href="/card/save"><span>카드 생성</span></a>
         </option>
     </select>
 </section>

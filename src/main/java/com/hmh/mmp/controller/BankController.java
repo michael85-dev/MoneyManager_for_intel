@@ -95,7 +95,16 @@ public class BankController {
 
         model.addAttribute("bdDTO", bankDetailDTO);
 
+//        return "bank/findById";
         return "bank/findById";
+    }
+
+    @PostMapping("{bankId}")
+    public String update(@ModelAttribute BankDetailDTO bankDetailDTO) {
+        Long bankId = bs.update(bankDetailDTO);
+
+//        return "redirect:/bank/" + bankDetailDTO.getBankId();
+        return "bank/findAll";
     }
 
 }

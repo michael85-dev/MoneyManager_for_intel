@@ -1,5 +1,6 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.CashSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,10 +19,6 @@ public class CashEntity extends BaseEntity {
     @Column(name = "cash_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private MemberEntity memberId;
-
     private String cashName;
     private String cashMemo;
 
@@ -34,4 +31,16 @@ public class CashEntity extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cashEntity")
     private List<BalanceEntity> balanceEntityList = new ArrayList<>();
+
+    public static CashEntity toSaveCash(CashSaveDTO cashSaveDTO, MemberEntity memberEntity) {
+        CashEntity cashEntity = new CashEntity();
+
+        cashEntity.setCashMemo(cashSaveDTO.getCashMemo());
+        cashEntity.setCashName(cashSaveDTO.getCashName());
+        cashEntity.setMemberEntity(memberEntity);
+        cashEntity.setCashPhotoName(cashSaveDTO.getCashPhotoName());
+        cashEntity.setTotalAsset(cashSaveDTO.getTotalAsset());
+
+        return cashEntity;
+    }
 }

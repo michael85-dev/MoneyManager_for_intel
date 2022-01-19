@@ -16,4 +16,6 @@ public interface BankService {
     BankDetailDTO findById(Long bankId);
 
     Page<BankPagingDTO> paging(Pageable pageable);
+
+    Long update(BankDetailDTO bankDetailDTO);
 }

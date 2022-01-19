@@ -101,4 +101,14 @@ public class BankServiceImp implements BankService{
 
         return pList;
     }
+
+    @Override
+    public Long update(BankDetailDTO bankDetailDTO) {
+        MemberEntity memberEntity = mr.findById(bankDetailDTO.getMemberId()).get();
+
+        BankEntity bankEntity = BankEntity.updateBank(bankDetailDTO, memberEntity);
+        Long bankId = br.save(bankEntity).getId();
+
+        return bankId;
+    }
 }

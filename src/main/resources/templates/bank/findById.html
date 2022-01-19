@@ -13,6 +13,7 @@
 </header>
 <section>
     <form action="/bank/update" method="post" th:object="${bdDTO}">
+        <input type="text" th:field="*{memberId}" th:value="*{memberId}" readonly> <!-- 일단 테스트용 후에 지우기 -->
         <input type="text" th:field="*{bankId}" th:value="*{bankId}" readonly>
         <input type="text" th:field="*{bankName}" th:value="*{bankName}">
         <input type="text" th:field="*{bankAccount}" ??>
