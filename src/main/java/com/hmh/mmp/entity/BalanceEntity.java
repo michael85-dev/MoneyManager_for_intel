@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 // 현금 관련 내역을 보기 위한 것.
 @Entity
@@ -24,6 +25,7 @@ public class BalanceEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
+    private LocalDate date;
     private String balanceMemo;
     private String balanceName;
     private long plusAsset;

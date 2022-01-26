@@ -45,7 +45,7 @@ public class MemberController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult br) throws IOException {
+    public String save(@PathVariable @ModelAttribute("msave") MemberSaveDTO memberSaveDTO, BindingResult br) throws IOException {
         // @ModelAttribute의 member는 대체 어디서 넘어온 것인가.
         if (br.hasErrors()) {
             return "member/save";
@@ -69,7 +69,7 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public String login(@PathVariable @ModelAttribute("member") MemberLoginDTO memberLoginDTO, BindingResult br, HttpSession session, Model model, Pageable pageable) {
+    public String login(@PathVariable @ModelAttribute("mlogin") MemberLoginDTO memberLoginDTO, BindingResult br, HttpSession session, Model model, Pageable pageable) {
         boolean checkResult = ms.login(memberLoginDTO); // MemberLoginDTO에 다가 Entity데이터를 담아서 비교?
 
         if (checkResult) {

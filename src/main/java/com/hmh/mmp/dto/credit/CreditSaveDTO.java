@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +14,7 @@ public class CreditSaveDTO {
     private Long bankId;
     private Long memberId;
 
+    private LocalDate date;
     private String creditName; // 내역
     private String creditPhotoName; // 사진명
     private String creditMemo;

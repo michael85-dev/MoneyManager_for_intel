@@ -29,7 +29,7 @@ public class CashController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute("save") CashSaveDTO cashSaveDTO, HttpSession session, BindingResult br) {
+    public String save(@PathVariable @ModelAttribute("csave") CashSaveDTO cashSaveDTO, HttpSession session, BindingResult br) {
         String memberEmail = (String)session.getAttribute(LOGIN_EMAIL);
         MemberDetailDTO memberDetailDTO = ms.findByEmail(memberEmail);
         Long memberId = memberDetailDTO.getMemberId();

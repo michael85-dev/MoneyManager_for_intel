@@ -18,6 +18,7 @@ public class BankDetailDTO extends BankSaveDTO {
         bankDetailDTO.setTotalAsset(bankEntity.getTotalAsset());
         // ?? 이걸 어떻게 해야하나.
         bankDetailDTO.setMemberId(bankEntity.getMemberEntity().getId());
+        bankDetailDTO.setBankPhotoName(bankEntity.getBankPhotoName());
 
         return bankDetailDTO;
     }

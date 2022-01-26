@@ -20,13 +20,6 @@ public class BankEntity extends BaseEntity {
     @Column(name = "bank_id")
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Long memberId;
-//    // Fk 관계를 주어야 하는데 .?
-//    @ManyToOne
-//    private
-
     @Column(length = 30, unique = true)
     private String bankName;
 
@@ -59,6 +52,7 @@ public class BankEntity extends BaseEntity {
         bankEntity.setBankName(bankSaveDTO.getBankName());
         bankEntity.setBankMemo(bankSaveDTO.getBankMemo());
         bankEntity.setTotalAsset(bankSaveDTO.getTotalAsset());
+        bankEntity.setBankPhotoName(bankSaveDTO.getBankPhotoName());
 
         return bankEntity;
     }
@@ -72,6 +66,7 @@ public class BankEntity extends BaseEntity {
         bankEntity.setBankName(bankDetailDTO.getBankName());
         bankEntity.setBankMemo(bankDetailDTO.getBankMemo());
         bankEntity.setTotalAsset(bankDetailDTO.getTotalAsset());
+        bankEntity.setBankPhotoName(bankDetailDTO.getBankPhotoName());
 
         return bankEntity;
     }

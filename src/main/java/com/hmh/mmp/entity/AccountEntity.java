@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 // 은행 관련 내역을 보기 위한 것.
 @Entity
@@ -24,6 +25,7 @@ public class AccountEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
+    private LocalDate date;
     private Long plusAsset;
     private Long minusAsset;
     private String accountName;

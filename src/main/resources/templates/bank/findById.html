@@ -12,40 +12,38 @@
     findById bank page
 </header>
 <section>
-    <form action="/bank/update" method="post" th:object="${bdDTO}">
-        <input type="text" th:field="*{memberId}" th:value="*{memberId}" readonly> <!-- 일단 테스트용 후에 지우기 -->
-        <input type="text" th:field="*{bankId}" th:value="*{bankId}" readonly>
-        <input type="text" th:field="*{bankName}" th:value="*{bankName}">
-        <input type="text" th:field="*{bankAccount}" ??>
-        <input type="text" th:field="*{totalAsset}" th:value="*{totalAsset}"> <!-- 이거에 대한 차액을 기록할지 여부를 알려야 함. -->
-        <textarea th:field="*{bankMemo}" th:value="*{bankMemo}"></textarea>
-        <input type="button" th:field="*{bankId}" onclick="update()" value="수정">성 <!-- 단순 submit으로 할지 고민 필요 -->
-        <input type="button" onclick="bToMain()" value="돌아가기">
-    </form>
+    <div>
+        <a th:value="${bdDTO.bankId}" href="/board/update">수정</a> <!-- 변수를 어떻게 불러와야 할까 --> <button onclick="bToMain()">돌아가기</button>
+    </div>
+    <div th:object="${bdDTO}">
+        <span th:text="*{bankName}">계좌명</span> <span th:text="*{bankRate}">이율</span>
+        <span th:text="*{totalAsset}">잔액</span>
+        <span th:text="*{bankMemo}">메모</span>
+    </div>
+    <div>
+        <div class="text-end"> <!-- 내역 생성을 위한 것. -->
+            <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a>
+        </div>
+        <div> <!-- 세부 내역 표시를 위한 공간 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>
 </body>
 <script>
     function bToMain() {
         location.href="/bank/findAll";
-    }
-
-    function update(bankId) {
-        // 물어보는 창을 띄움. 수정한다. 안한다.
-        const reqUrl = "/bank/" + bankId;
-        if () {
-            $.ajax ({
-                type: 'put',
-                url: reqUrl,
-                success: function () {
-                    location.href="/bank/findAll";
-                },
-                error: function() {
-                    location.href="/bank/findById";
-                }
-            });
-        } else {
-            location.href="/bank/findById";
-        }
     }
 </script>
 </html>

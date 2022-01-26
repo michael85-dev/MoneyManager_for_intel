@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
 
         memberPhotoName = System.currentTimeMillis() + "-" + memberPhotoName;
 
-        String savePath = ""; // 미정 후에 전부 교체 해야함.
+        String savePath = "D:\\GitHub\\MoneyManager_for_intel\\src\\main\\resources\\photo\\member" + memberPhotoName; // 미정 후에 전부 교체 해야함.
 
         if (!memberPhoto.isEmpty()) {
             memberPhoto.transferTo(new File(savePath));

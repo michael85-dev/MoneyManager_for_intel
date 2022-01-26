@@ -1,6 +1,6 @@
 ## MoneyManager Project
 
-STS 에서 작업했던 것을 SpringBoot로 변경해서 진행
+STS 에서 작업했던 것을 SpringBoot로 변경해서 진행 및 추가내용 업데이트
 
 1. 기존에 했던 방식을 그대로 사용
 2. 모든 데이터는 가입된 사람을 기준으로 나눔

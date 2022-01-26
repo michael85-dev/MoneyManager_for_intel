@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 
 // 현금 관련 내역을 보기 위한 것.
 @Data
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 public class BalanceSaveDTO {
     private Long cashId;
     private Long memberId;
+
+    private LocalDate date;
     private String balanceMemo;
     private String balanceName;
     private long plusAsset;

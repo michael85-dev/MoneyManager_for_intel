@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 
 // 체크카드 관련 정보
 @Data
@@ -21,6 +22,7 @@ public class DebitSaveDTO {
     private Long memberId;
     private Long bankId;
 
+    private LocalDate date;
     private String debitName; //내역명
     private MultipartFile debitPhoto;
     private String debitPhotoName; // 영수증

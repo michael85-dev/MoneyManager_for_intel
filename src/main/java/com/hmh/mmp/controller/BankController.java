@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.hmh.mmp.common.SessionConst.LOGIN_EMAIL;
@@ -48,7 +49,7 @@ public class BankController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute("bank") BankSaveDTO bankSaveDTO, HttpSession session, BindingResult br) {
+    public String save(@PathVariable @ModelAttribute("bsave") BankSaveDTO bankSaveDTO, HttpSession session, BindingResult br) throws IOException {
         if (br.hasErrors()) {
 
             return "bank/save";
@@ -66,7 +67,7 @@ public class BankController {
 
         Long bankId = bs.save(bankSaveDTO);
 
-        return "main";
+        return "redirect:/main";
     }
 
     @GetMapping
@@ -98,6 +99,15 @@ public class BankController {
 
 //        return "bank/findById";
         return "bank/findById";
+    }
+
+    @GetMapping("update")
+    public String updateForm(@PathVariable("bankId") Long bankId, Model model) {
+        BankDetailDTO bankDetailDTO = bs.findById(bankId);
+
+        model.addAttribute("bankDTO", bankDetailDTO);
+
+        return "bank/update";
     }
 
     @PostMapping("{bankId}")

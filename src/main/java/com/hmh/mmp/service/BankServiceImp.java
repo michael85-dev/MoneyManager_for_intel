@@ -14,7 +14,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +29,20 @@ public class BankServiceImp implements BankService{
     private final MemberRepository mr;
 
     @Override
-    public Long save(BankSaveDTO bankSaveDTO) {
+    public Long save(BankSaveDTO bankSaveDTO) throws IOException {
         Optional<MemberEntity> memberEntityOptional = mr.findById(bankSaveDTO.getMemberId());
         MemberEntity memberEntity = memberEntityOptional.get();
+
+        MultipartFile bankPhoto = bankSaveDTO.getBankPhoto();
+        String bankPhotoName = bankPhoto.getOriginalFilename();
+        bankPhotoName = System.currentTimeMillis() + "-" + bankPhotoName;
+
+        String savePath = "D:\\GitHub\\MoneyManager_for_intel\\src\\main\\resources\\photo\\bank" + bankPhotoName;
+
+        if (!bankPhoto.isEmpty()) {
+            bankPhoto.transferTo(new File(savePath));
+            bankSaveDTO.setBankPhotoName(bankPhotoName);
+        }
 
         BankEntity bankEntity = BankEntity.saveBank(bankSaveDTO, memberEntity);
 

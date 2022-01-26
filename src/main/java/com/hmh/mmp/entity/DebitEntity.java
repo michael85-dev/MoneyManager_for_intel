@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -24,7 +25,8 @@ public class DebitEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
     private BankEntity bankEntity;
-    
+
+    private LocalDate date;
     private String debitName; //내역명
     private String debitPhotoName; // 영수증
     private Long minusAsset; // 지출

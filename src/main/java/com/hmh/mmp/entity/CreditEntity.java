@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 // 카드의 신용카드 관련 정보를 저장하기 위한 것
 @Entity
@@ -27,6 +28,7 @@ public class CreditEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
+    private LocalDate date;
     private String creditName; // 내역
     private String creditPhotoName; // 사진명
     private String creditMemo;

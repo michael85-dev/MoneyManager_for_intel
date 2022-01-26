@@ -13,8 +13,13 @@
     <form action="/member/login" method="post" enctype="multipart/form-data" th:object="${mlogin}">
         <input type="text" th:field="*{memberEmail}" placeholder="아이디">
         <input type="password" th:field="*{memberPassword}" placeholder="비밀번호">
-        <input type="submit" value="로그인">
+        <input type="submit" value="로그인"> <button onclick="bToMain()">돌아가기</button><!-- 체크하는 것에 대해서 제대로 구상이 되어 있는가? -->
     </form>
 </section>
 </body>
+<script>
+    function bToMain() {
+        location.href="/index";
+    }
+</script>
 </html>

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +17,7 @@ public class AccountSaveDTO{
     private Long bankId;
     private Long memberId;
 
+    private LocalDate date;
     private Long plusAsset;
     private Long minusAsset;
     private String accountName;
