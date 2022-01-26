@@ -1,4 +1,4 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -24,5 +25,6 @@ public class MemberSaveDTO {
     private String memberMemo;
     private MultipartFile memberPhoto;
     private String memberPhotoName;
-
+    private String memberAddress; // 숍시 주소등록을 위함?
+    private String memberLevel;
 }

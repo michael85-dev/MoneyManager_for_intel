@@ -20,11 +20,16 @@ public class BalanceEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cash_id")
     private CashEntity cashEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
 
     private String balanceMemo;
-
+    private String balanceName;
     private long plusAsset;
     private long minusAsset;
 
     private String balancePhotoName;
+
+
 }

@@ -22,6 +22,8 @@ public class BoardEntity extends BaseEntity {
     private String boardContents;
     private String boardTitle;
     private String boardPassword;
+    private Integer boardHits;
+    private String boardPhotoName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

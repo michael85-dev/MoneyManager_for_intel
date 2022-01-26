@@ -1,4 +1,4 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.card;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountSaveDTO {
-    public String accountBank;
-    public String accountName;
-
+public class CardDetailDTO extends CardSaveDTO{
+    private Long cardId;
 }

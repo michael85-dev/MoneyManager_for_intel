@@ -1,4 +1,4 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.board;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardSaveDTO {
-    private String boardEmail;
-    private String boardPassword;
-    private String boardName;
-    private String boardNickName;
-    private String boardMemo;
+    private Long memberId;
     private String boardPhotoName;
     private MultipartFile boardPhoto;
-
+    private String boardWriter;
+    private String boardContents;
+    private String boardTitle;
+    private String boardPassword;
+    private Integer boardHits;
 }

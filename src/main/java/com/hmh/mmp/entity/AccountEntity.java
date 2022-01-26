@@ -20,9 +20,13 @@ public class AccountEntity extends BaseEntity {
     @JoinColumn(name = "bank_id")
     private BankEntity bankEntity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     private Long plusAsset;
     private Long minusAsset;
-
+    private String accountName;
     private String accountPhotoName;
     private String accountMemo;
 }

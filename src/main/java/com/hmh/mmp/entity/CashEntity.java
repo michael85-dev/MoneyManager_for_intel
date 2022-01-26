@@ -1,9 +1,8 @@
 package com.hmh.mmp.entity;
 
-import com.hmh.mmp.dto.CashSaveDTO;
+import com.hmh.mmp.dto.cash.CashSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;

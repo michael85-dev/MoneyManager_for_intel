@@ -1,6 +1,6 @@
 package com.hmh.mmp.controller;
 
-import com.hmh.mmp.dto.BoardDetailDTO;
+import com.hmh.mmp.dto.board.BoardDetailDTO;
 import com.hmh.mmp.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

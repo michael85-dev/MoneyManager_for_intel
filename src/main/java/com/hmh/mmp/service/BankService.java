@@ -1,9 +1,8 @@
 package com.hmh.mmp.service;
 
-import com.hmh.mmp.dto.BankDetailDTO;
-import com.hmh.mmp.dto.BankPagingDTO;
-import com.hmh.mmp.dto.BankSaveDTO;
-import com.hmh.mmp.dto.MemberDetailDTO;
+import com.hmh.mmp.dto.bank.BankDetailDTO;
+import com.hmh.mmp.dto.bank.BankPagingDTO;
+import com.hmh.mmp.dto.bank.BankSaveDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

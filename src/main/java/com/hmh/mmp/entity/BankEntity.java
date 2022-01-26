@@ -1,10 +1,9 @@
 package com.hmh.mmp.entity;
 
-import com.hmh.mmp.dto.BankDetailDTO;
-import com.hmh.mmp.dto.BankSaveDTO;
+import com.hmh.mmp.dto.bank.BankDetailDTO;
+import com.hmh.mmp.dto.bank.BankSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,6 +34,8 @@ public class BankEntity extends BaseEntity {
     private String bankMemo;
 
     private Long totalAsset;
+    private Double bankRate;
+    private String bankPhotoName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -42,6 +43,10 @@ public class BankEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
     private List<AccountEntity> accountEntityList= new ArrayList<>();
+    @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
+    private List<CreditEntity> creditEntityList= new ArrayList<>();
+    @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
+    private List<DebitEntity> debitEntityList= new ArrayList<>();
 
     // BankEntity에다가 Save와 Update등의 내용을 담아야함....
     public static BankEntity saveBank(BankSaveDTO bankSaveDTO, MemberEntity memberEntity) {

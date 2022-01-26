@@ -1,7 +1,7 @@
 package com.hmh.mmp.controller;
 
-import com.hmh.mmp.dto.CashSaveDTO;
-import com.hmh.mmp.dto.MemberDetailDTO;
+import com.hmh.mmp.dto.cash.CashSaveDTO;
+import com.hmh.mmp.dto.member.MemberDetailDTO;
 import com.hmh.mmp.service.CashService;
 import com.hmh.mmp.service.MemberService;
 import lombok.RequiredArgsConstructor;

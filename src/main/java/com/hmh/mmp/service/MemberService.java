@@ -1,9 +1,9 @@
 package com.hmh.mmp.service;
 
-import com.hmh.mmp.dto.MemberDetailDTO;
-import com.hmh.mmp.dto.MemberLoginDTO;
-import com.hmh.mmp.dto.MemberPagingDTO;
-import com.hmh.mmp.dto.MemberSaveDTO;
+import com.hmh.mmp.dto.member.MemberDetailDTO;
+import com.hmh.mmp.dto.member.MemberLoginDTO;
+import com.hmh.mmp.dto.member.MemberPagingDTO;
+import com.hmh.mmp.dto.member.MemberSaveDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

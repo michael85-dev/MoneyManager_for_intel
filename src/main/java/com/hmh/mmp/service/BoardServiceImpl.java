@@ -1,6 +1,6 @@
 package com.hmh.mmp.service;
 
-import com.hmh.mmp.dto.BoardDetailDTO;
+import com.hmh.mmp.dto.board.BoardDetailDTO;
 import com.hmh.mmp.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

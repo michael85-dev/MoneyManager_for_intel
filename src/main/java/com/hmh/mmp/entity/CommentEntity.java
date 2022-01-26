@@ -1,6 +1,6 @@
 package com.hmh.mmp.entity;
 
-import com.hmh.mmp.dto.CommentSaveDTO;
+import com.hmh.mmp.dto.comment.CommentSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,11 +18,16 @@ public class CommentEntity extends BaseEntity {
 
     private String commentWriter;
     private String commentContents;
-    private String commentPhotoName;
+    private Integer hate;
+    private Integer like;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
 
     public static CommentEntity toSaveEntity(CommentSaveDTO commentSaveDTO) {
 

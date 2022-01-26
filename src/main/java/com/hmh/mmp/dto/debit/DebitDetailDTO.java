@@ -1,4 +1,4 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.debit;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDetailDTO {
+public class DebitDetailDTO extends DebitSaveDTO{
+    private Long debitId;
 }

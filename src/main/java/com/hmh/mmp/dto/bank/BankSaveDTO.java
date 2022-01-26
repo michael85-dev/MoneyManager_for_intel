@@ -1,8 +1,9 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.bank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
@@ -20,4 +21,8 @@ public class BankSaveDTO {
     private String bankMemo; // 메모
 
     private long totalAsset; // 총 잔액
+    private Double bankRate; // 통장 이자율
+    private MultipartFile bankPhoto; // 사진 항목
+    private String bankPhotoName;
+
 }

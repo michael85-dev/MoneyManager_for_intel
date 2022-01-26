@@ -1,10 +1,10 @@
 package com.hmh.mmp.service;
 
 import com.hmh.mmp.common.PagingConst;
-import com.hmh.mmp.dto.MemberDetailDTO;
-import com.hmh.mmp.dto.MemberLoginDTO;
-import com.hmh.mmp.dto.MemberPagingDTO;
-import com.hmh.mmp.dto.MemberSaveDTO;
+import com.hmh.mmp.dto.member.MemberDetailDTO;
+import com.hmh.mmp.dto.member.MemberLoginDTO;
+import com.hmh.mmp.dto.member.MemberPagingDTO;
+import com.hmh.mmp.dto.member.MemberSaveDTO;
 import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

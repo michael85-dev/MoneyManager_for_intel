@@ -1,4 +1,4 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.member;
 
 
 import lombok.AllArgsConstructor;
@@ -12,13 +12,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberPagingDTO {
+public class MemberPagingDTO extends MemberSaveDTO {
     private Long memberId;
-    private String memberEmail;
-    private String memberPassword;
-    private String memberName;
-    private String memberNickName;
-    private String memberPhone;
-    private String memberMemo;
-    private String memberPhotoName;
+
+    public MemberPagingDTO(Long id, String memberEmail, String memberPassword, String memberName, String memberNickName, String memberPhone, String memberMemo, String memberPhotoName) {
+    }
 }

@@ -1,10 +1,9 @@
 package com.hmh.mmp.service;
 
 import com.hmh.mmp.common.PagingConst;
-import com.hmh.mmp.dto.BankDetailDTO;
-import com.hmh.mmp.dto.BankPagingDTO;
-import com.hmh.mmp.dto.BankSaveDTO;
-import com.hmh.mmp.dto.MemberDetailDTO;
+import com.hmh.mmp.dto.bank.BankDetailDTO;
+import com.hmh.mmp.dto.bank.BankPagingDTO;
+import com.hmh.mmp.dto.bank.BankSaveDTO;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.BankRepository;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -92,7 +92,7 @@ Bank : 계좌 정보를 기록 하기 이전에 분류
 - id(pk) : 분류를 위한 관리 번호
 - MemberEntity (fk) : 회원 연동
 - bankName(not null) : 계좌명
-- bankTotalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
+- totalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
 - bankMemo : 계좌의 정보를 기록하기 위한 메모
 - bankRate : 계좌 이율을 계산하기 위함
 - bankPhoto : 계좌 사진 필요하면 입력할 수 있게 설정
@@ -127,8 +127,8 @@ account : 계좌에 연동되어 상세보기를 들어가면 볼 수 있는 내
 - accountName : 내역명
 - accountPhoto : 첨부 영수증
 - accountMemo : 메모
-- accountPlusAsset : 수입
-- accountMinusAsset : 지출
+- PlusAsset : 수입
+- MinusAsset : 지출
 - 
 
 ---
@@ -156,7 +156,7 @@ Cash : 현금 관리를 위한 계좌
 - id(pk) : 분류를 위한 관리 번호
 - MemberEntity (fk) : 회원 연동
 - cashName(not null) : 계좌명
-- cashTotalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
+- totalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
 - cashMemo : 계좌의 정보를 기록하기 위한 메모
 - cashPhoto : 계좌 사진 필요하면 입력할 수 있게 설정
 -
@@ -184,15 +184,15 @@ balance : 계좌에 연동되어 상세보기를 들어가면 볼 수 있는 내
   - 삭제(delete)
     - 세부 보기와 전체보기에서 지울 수 있도록 설정
 
-필드명(AccountEntity) extends BaseEntity
+필드명(balanceEntity) extends BaseEntity
 - id(pk) : 분류 번호
 - cashEntity (fk) : 연동을 위한 은행 계좌
 - memberEntity (fk) : 필요여부 불확실 -> 고민
-- cashName : 내역명
-- cashPhoto : 첨부 영수증
-- cashMemo : 메모
-- cashPlusAsset : 수입
-- cashMinusAsset : 지출
+- balanceName : 내역명
+- balancePhoto : 첨부 영수증
+- balanceMemo : 메모
+- plusAsset : 수입
+- minusAsset : 지출
 
 ---
 
@@ -219,7 +219,7 @@ Card : 현금 관리를 위한 계좌
 - id(pk) : 분류를 위한 관리 번호
 - MemberEntity (fk) : 회원 연동
 - cardName(not null) : 계좌명
-- cardTotalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
+- totalAsset : 계좌의 액수가 얼마인지 확인 (마이너스 통장 기능도 할 수 있도록 설정하기)
 - cardMemo : 계좌의 정보를 기록하기 위한 메모
 - cardPhoto : 계좌 사진 필요하면 입력할 수 있게 설정
 - 
@@ -251,7 +251,6 @@ Debit : 계좌에 연동되어 상세보기를 들어가면 볼 수 있는 내�
 - id(pk) : 분류 번호
 - cardEntity (fk) : 연동을 위한 은행 계좌
 - bankEntity (fk) : 계좌에서 돈이 바로 출금될 수 있도록 설정
-- cashEntity (fk) : 계좌에서 돈이 바로 출금될 수 있도록 설정
 - memberEntity (fk) : 필요여부 불확실 -> 고민
 - debitName : 내역명
 - debitPhoto : 첨부 영수증
@@ -288,7 +287,6 @@ Credit : 계좌에 연동되어 상세보기를 들어가면 볼 수 있는 내�
 - id(pk) : 분류 번호
 - cardEntity (fk) : 연동을 위한 은행 계좌
 - bankEntity (fk) : 계좌에서 돈이 바로 출금될 수 있도록 설정
-- cashEntity (fk) : 계좌에서 돈이 바로 출금될 수 있도록 설정
 - memberEntity (fk) : 필요여부 불확실 -> 고민
 - creditName : 내역명
 - creditPhoto : 첨부 영수증
@@ -386,4 +384,36 @@ Notice : 공지게시판
 - noticeContents : 게시글 내용
 - noticeHits : 조회수
 - noticePhoto : 이미지 첨부
-- 
+
+---
+<이 기능은 고민>
+
+Shop : 쇼핑몰? 중고장터?
+목적
+- 제품을 보여줘서 해당 제품들이 제대로 나올 수 있게?
+
+- 기능
+  - 저장(save)
+    - 제품 목록화
+  - 전체보기(findAll)
+    - 저장된 모든 항목을 격자로 표현해서 표현
+  - 세부보기(findById)
+    - 세부 정보를 표현할 수 있게 함.
+  - 제품 삭제 (delete)
+    - 삭제
+  - 제품 수정(update)
+    - 수정
+
+필드
+- id (pk) : 고유번호
+- memberEntity (fk) : 제품을 올리기 위한 것?
+- shopTitle : 제목
+- shopPhoto : 제품 사진
+- shopContents : 내용을 넣기 위함
+- shopInfo : 판매 정보를 올리기 위함
+- shopPrice : 제품 가격
+
+
+---
+ShopList : 해당 세부 정보
+- 리뷰용?

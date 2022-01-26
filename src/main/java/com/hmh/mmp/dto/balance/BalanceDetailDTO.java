@@ -1,12 +1,12 @@
-package com.hmh.mmp.dto;
+package com.hmh.mmp.dto.balance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 체크카드 관련 정보
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DebitSaveDTO {
+public class BalanceDetailDTO extends BalanceSaveDTO{
+    private Long balanceId;
 }

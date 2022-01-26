@@ -1,6 +1,6 @@
 package com.hmh.mmp.service;
 
-import com.hmh.mmp.dto.CashSaveDTO;
+import com.hmh.mmp.dto.cash.CashSaveDTO;
 import com.hmh.mmp.entity.CashEntity;
 import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.CashRepository;
