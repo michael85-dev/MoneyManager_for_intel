@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -34,13 +35,14 @@ public class AccountController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute AccountSaveDTO accountSaveDTO) {
+    public String save(@ModelAttribute AccountSaveDTO accountSaveDTO, Model model) throws IOException {
         System.out.println("AccountController.save");
         Long accountId = as.save(accountSaveDTO);
 
         // Paging 관련 업데이트 필요함
         List<AccountDetailDTO> accountDetailDTOList = as.findAll(accountSaveDTO.getBankId());
 
-        return "account/findAll";
+
+        return "bank/findById" + accountSaveDTO.getBankId();
     }
 }

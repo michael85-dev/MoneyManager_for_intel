@@ -6,4 +6,7 @@ public class PagingConst {
 
     public static final int B_PAGE_LIMIT = 20;
     public static final int B_BLOCK_LIMIT = 4;
+
+    public static final int CS_PAGE_LIMIT = 20; // 이렇게 설정하면 분명 리스트는 계속 생기는데 ㅍ 페이지에서 오류가 생김.
+    public static final int CS_BLOCK_LIMIT = 4;
 }

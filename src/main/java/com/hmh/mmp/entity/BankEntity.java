@@ -51,8 +51,9 @@ public class BankEntity extends BaseEntity {
         bankEntity.setMemberEntity(memberEntity);
         bankEntity.setBankName(bankSaveDTO.getBankName());
         bankEntity.setBankMemo(bankSaveDTO.getBankMemo());
-        bankEntity.setTotalAsset(bankSaveDTO.getTotalAsset());
+        bankEntity.setTotalAsset(0L);
         bankEntity.setBankPhotoName(bankSaveDTO.getBankPhotoName());
+        bankEntity.setBankRate(bankSaveDTO.getBankRate());
 
         return bankEntity;
     }
@@ -65,8 +66,9 @@ public class BankEntity extends BaseEntity {
 //        bankEntity.setMemberId(bankDetailDTO.getMemberId()); // 동일한 문제.
         bankEntity.setBankName(bankDetailDTO.getBankName());
         bankEntity.setBankMemo(bankDetailDTO.getBankMemo());
-        bankEntity.setTotalAsset(bankDetailDTO.getTotalAsset());
+        bankEntity.setTotalAsset(bankDetailDTO.getTotalAsset()); // 업데이트 관련 항목을 찾아봐야함.
         bankEntity.setBankPhotoName(bankDetailDTO.getBankPhotoName());
+        bankEntity.setBankRate(bankDetailDTO.getBankRate());
 
         return bankEntity;
     }

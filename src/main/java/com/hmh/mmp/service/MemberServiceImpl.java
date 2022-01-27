@@ -28,17 +28,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Long save(MemberSaveDTO memberSaveDTO) throws IOException {
-        /*
-            1. MemberSaveDTO -> MemberEntity에 옮기기 : msDTO는 더 이상 다음단계에서는 쓰지 않음. 해당 데이터는 Entity에서 다룸
-                - 여기서는 MemberEntity의 saveMember 메서드
-            2. MemberRepository의 save 메서드 호출하면서 MemberEntity 객체 전달
-
-         */
-        MemberEntity mEntity = MemberEntity.saveMember(memberSaveDTO); // 이것을 통해 가입 진행됨
-
-        // 이메일 체크
-        MemberEntity emailCheck = mr.findByMemberEmail(memberSaveDTO.getMemberEmail()); // 지금 설정하는게 아님...
-
         // 사진 관련 정보를 넣기 위한 것.
         MultipartFile memberPhoto = memberSaveDTO.getMemberPhoto();
         String memberPhotoName = memberPhoto.getOriginalFilename();
@@ -53,6 +42,16 @@ public class MemberServiceImpl implements MemberService {
 
         memberSaveDTO.setMemberPhotoName(memberPhotoName);
 
+        /*
+            1. MemberSaveDTO -> MemberEntity에 옮기기 : msDTO는 더 이상 다음단계에서는 쓰지 않음. 해당 데이터는 Entity에서 다룸
+                - 여기서는 MemberEntity의 saveMember 메서드
+            2. MemberRepository의 save 메서드 호출하면서 MemberEntity 객체 전달
+
+         */
+        MemberEntity mEntity = MemberEntity.saveMember(memberSaveDTO); // 이것을 통해 가입 진행됨
+
+        // 이메일 체크
+        MemberEntity emailCheck = mr.findByMemberEmail(memberSaveDTO.getMemberEmail()); // 지금 설정하는게 아님...
 
         if (emailCheck != null) {
             throw new IllegalStateException("중복된 이메일입니다.");

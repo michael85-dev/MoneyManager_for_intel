@@ -1,5 +1,6 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.account.AccountSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,4 +32,22 @@ public class AccountEntity extends BaseEntity {
     private String accountName;
     private String accountPhotoName;
     private String accountMemo;
+
+    public static AccountEntity toSaveData(AccountSaveDTO accountSaveDTO, BankEntity bankEntity) {
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setAccountName(accountSaveDTO.getAccountName());
+        accountEntity.setAccountMemo(accountSaveDTO.getAccountMemo());
+        accountEntity.setAccountPhotoName(accountSaveDTO.getAccountPhotoName());
+        accountEntity.setBankEntity(bankEntity);
+        accountEntity.setMinusAsset(accountSaveDTO.getMinusAsset());
+        accountEntity.setPlusAsset(accountSaveDTO.getPlusAsset());
+
+        return accountEntity;
+
+    }
+
+    public static AccountEntity toSaveDataWithMember(AccountEntity accountEntity, BankEntity bankEntity, MemberEntity memberEntity) {
+        AccountEntity accountEntityWithMember = new AccountEntity();
+        return accountEntity;
+    }
 }

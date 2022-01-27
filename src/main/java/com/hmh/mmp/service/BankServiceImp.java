@@ -117,6 +117,7 @@ public class BankServiceImp implements BankService{
     @Override
     public Long update(BankDetailDTO bankDetailDTO) {
         MemberEntity memberEntity = mr.findById(bankDetailDTO.getMemberId()).get();
+        // banktotalAsset 관련 수식을 만들어서 넣어야함.
 
         BankEntity bankEntity = BankEntity.updateBank(bankDetailDTO, memberEntity);
         Long bankId = br.save(bankEntity).getId();
