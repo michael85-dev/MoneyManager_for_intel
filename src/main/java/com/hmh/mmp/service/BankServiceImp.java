@@ -44,6 +44,11 @@ public class BankServiceImp implements BankService{
             bankSaveDTO.setBankPhotoName(bankPhotoName);
         }
 
+        Long asset = bankSaveDTO.getTotalAsset();
+        if (asset == null) {
+            bankSaveDTO.setTotalAsset(0);
+        }
+
         BankEntity bankEntity = BankEntity.saveBank(bankSaveDTO, memberEntity);
 
         System.out.println("BankEntity.MemberId : " + bankEntity.getId());
@@ -118,6 +123,14 @@ public class BankServiceImp implements BankService{
     public Long update(BankDetailDTO bankDetailDTO) {
         MemberEntity memberEntity = mr.findById(bankDetailDTO.getMemberId()).get();
         // banktotalAsset 관련 수식을 만들어서 넣어야함.
+        Long beforeAsset = br.findById(bankDetailDTO.getBankId()).get().getTotalAsset();
+        if (bankDetailDTO.getTotalAsset() > 0) {
+            beforeAsset = beforeAsset + bankDetailDTO.getTotalAsset();
+            bankDetailDTO.setTotalAsset(beforeAsset);
+        } else {
+            beforeAsset = beforeAsset - bankDetailDTO.getTotalAsset();
+            bankDetailDTO.setTotalAsset(beforeAsset);
+        }
 
         BankEntity bankEntity = BankEntity.updateBank(bankDetailDTO, memberEntity);
         Long bankId = br.save(bankEntity).getId();

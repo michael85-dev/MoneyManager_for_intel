@@ -1,6 +1,7 @@
 package com.hmh.mmp.entity;
 
 import com.hmh.mmp.dto.cash.CashSaveDTO;
+import com.hmh.mmp.dto.cash.CashUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +40,16 @@ public class CashEntity extends BaseEntity {
         cashEntity.setMemberEntity(memberEntity);
         cashEntity.setCashPhotoName(cashSaveDTO.getCashPhotoName());
         cashEntity.setTotalAsset(cashSaveDTO.getTotalAsset());
+
+        return cashEntity;
+    }
+
+    public static CashEntity toUpdateData(CashUpdateDTO cashUpdateDTO) {
+        CashEntity cashEntity = new CashEntity();
+        cashEntity.setCashMemo(cashUpdateDTO.getCashMemo());
+        cashEntity.setCashName(cashUpdateDTO.getCashName());
+        cashEntity.setCashPhotoName(cashUpdateDTO.getCashPhotoName());
+        cashEntity.setTotalAsset(cashUpdateDTO.getTotalAsset());
 
         return cashEntity;
     }

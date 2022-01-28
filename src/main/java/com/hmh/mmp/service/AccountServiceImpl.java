@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -38,7 +39,13 @@ public class AccountServiceImpl implements AccountService{
             accountSaveDTO.setPlusAsset(0L);
         }
 
+        Long bankTotalAsset = br.findById(accountSaveDTO.getBankId()).get().getTotalAsset();
+        bankTotalAsset = bankTotalAsset + accountSaveDTO.getPlusAsset() - accountSaveDTO.getMinusAsset();
+
         BankEntity bankEntity = br.findById(accountSaveDTO.getBankId()).get();
+
+        // account저장으로 인해 생긴 금액의 차액을 정산하여 최종 금액으로 반영
+        bankEntity.setTotalAsset(bankTotalAsset);
 
         AccountEntity accountEntity = AccountEntity.toSaveData(accountSaveDTO, bankEntity);
 
@@ -49,7 +56,12 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public List<AccountDetailDTO> findAll(Long bankId) {
-        List<AccountEntity> accountEntityList = ar.findAll(bankId);
+        Optional<BankEntity> bankEntityOptional = br.findById(bankId);
+        BankEntity bankEntity = bankEntityOptional.get();
+
+        List<AccountEntity> accountEntityList = bankEntity.getAccountEntityList();
+
+//        List<AccountEntity> accountEntityList = ar.findAll(bankId);
         List<AccountDetailDTO> accountDetailDTOList = new ArrayList<>();
 
         for (AccountEntity ae:accountEntityList) {

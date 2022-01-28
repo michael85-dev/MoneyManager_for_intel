@@ -18,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 public class CardSaveDTO {
     private String cardName;
     private String cardMemo;
+    private int level;
+    private String cardTag;
     private MultipartFile cardPhoto;
     private String cardPhotoName;
     private Long totalAsset;

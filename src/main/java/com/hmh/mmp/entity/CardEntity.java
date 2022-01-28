@@ -1,10 +1,12 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.card.CardSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class CardEntity extends BaseEntity {
     private String cardName;
     private String cardMemo;
     private String cardPhotoName;
+    private Integer level;
+    private String cardTag;
 
     private Long totalAsset;
 
@@ -35,4 +39,16 @@ public class CardEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "cardEntity", fetch = FetchType.LAZY)
     private List<CreditEntity> creditEntityList = new ArrayList<>();
+
+    public static CardEntity toSaveData(CardSaveDTO cardSaveDTO, MemberEntity memberEntity) {
+        CardEntity cardEntity = new CardEntity();
+        cardEntity.setCardName(cardSaveDTO.getCardName());
+        cardEntity.setCardMemo(cardSaveDTO.getCardMemo());
+        cardEntity.setTotalAsset(cardSaveDTO.getTotalAsset());
+        cardEntity.setCardPhotoName(cardSaveDTO.getCardPhotoName());
+        cardEntity.setMemberEntity(memberEntity);
+        cardEntity.setCardTag(cardSaveDTO.getCardTag());
+
+        return cardEntity;
+    }
 }

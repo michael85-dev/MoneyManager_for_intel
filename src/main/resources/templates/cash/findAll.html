@@ -15,15 +15,58 @@
   <table>
     <thead>
       <tr>
-        <th></th>
+        <th>번호</th>
+        <th>현금명</th>
+        <th>총 자산</th>
+        <th>메모</th>
+        <th>삭제</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
+      <tr th:each="cl: ${cashList}">
+        <td th:text="${cl.cashId}">번호</td>
+        <td th:text="${cl.cashName}">
+          <a th:href="@{/cash/${cl.cashId}">현금명</a>
+        </td>
+        <td th:text="${cl.totalAsset}">총 자산</td>
+        <td th:text="${cl.cashMemo}">메모</td>
+        <td th:href="@{|/cash/delete/${cl.cashId}|}">삭제</td>
       </tr>
     </tbody>
   </table>
+
+  <div class="container">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" th:href="@{cash/(page==1)}">
+          <span>First</span>
+        </a>
+      </li>
+
+      <li th:class="${cashPage.first} ? 'disabled'" class="page-item">
+        <a class="page-link" th:href="${cashPage.first} ? '#' : @{/cash/(page=${cashPage.number})}">
+          <span>&lt;</span>
+        </a>
+      </li>
+
+      <li th:each="page: ${#numbers.sequence(cashStartPage, cashEndPage)}"
+          th:class="${page == cashPage.number + 1} ? 'active'" calss="page-item">
+        <a class="page-link" th:text="${page}" th:href="@{/cash/(page=${page})}"></a>
+      </li>
+
+      <li th:class="${cashPage.last} ? 'disabled'">
+        <a class="page-link" th:href="${cashPage.last} ? '#' : @{/cash/(page=${cashPage.number + 2})}">
+          <span>&gt;</span>
+        </a>
+      </li>
+
+      <li class="page-item">
+        <a class="page-link" th:href="@{/cash/(page=${cashPage.totalPages})}">
+          <span>Last</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </section>
 
 </body>
