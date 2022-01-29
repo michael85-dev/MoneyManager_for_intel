@@ -21,5 +21,6 @@ public class CommentSaveDTO {
     private Long boardId;
     private Long memberId;
 
-
+    private String firstList; // 대분류
+    private String secondList; // 중뷴류
 }

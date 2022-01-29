@@ -22,6 +22,7 @@ public class AccountDetailDTO extends AccountSaveDTO {
         accountDetailDTO.setAccountPhotoName(accountEntity.getAccountPhotoName());
         accountDetailDTO.setBankId(accountEntity.getBankEntity().getId());
         accountDetailDTO.setMemberId(accountEntity.getMemberEntity().getId());
+        accountDetailDTO.setFirstList(accountEntity.getFirstListEntityList()); // 이렇게 설정하면 그 안에 있는 항목을 list로 불러오지 못할텐데.
 
         return accountDetailDTO;
     }

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,10 @@ public class AccountSaveDTO{
     private MultipartFile accountPhoto;
     private String accountPhotoName;
     private String accountMemo;
+
+    private List<String> firstList;
+//    private String firstList; // 대분류
+    private String secondList; // 중뷴류
+    private String thirdList; // 소분류
 
 }

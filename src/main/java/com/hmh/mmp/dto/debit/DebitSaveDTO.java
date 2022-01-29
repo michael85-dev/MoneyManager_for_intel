@@ -29,4 +29,8 @@ public class DebitSaveDTO {
     private Long minusAsset; // 지출
     private String debitMemo; // 내역
     private Double debitGet; // 할인
+
+    private String firstList; // 대분류
+    private String secondList; // 중뷴류
+    private String thirdList; // 소분류
 }

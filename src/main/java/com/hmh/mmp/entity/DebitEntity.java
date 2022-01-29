@@ -1,10 +1,13 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +28,9 @@ public class DebitEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
     private BankEntity bankEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "debitEntity")
+    private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
 
     private LocalDate date;
     private String debitName; //내역명

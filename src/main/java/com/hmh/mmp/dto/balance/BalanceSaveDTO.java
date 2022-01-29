@@ -27,4 +27,8 @@ public class BalanceSaveDTO {
     private long minusAsset;
     private MultipartFile balancePhoto;
     private String balancePhotoName;
+
+    private String firstList; // 대분류
+    private String secondList; // 중뷴류
+    private String thirdList; // 소분류
 }

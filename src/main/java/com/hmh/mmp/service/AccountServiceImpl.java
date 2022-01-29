@@ -56,7 +56,8 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public List<AccountDetailDTO> findAll(Long bankId) {
-        Optional<BankEntity> bankEntityOptional = br.findById(bankId);
+        Optional<BankEntity> bankEntityOptional = br.findById(bankId); // 이렇게 하는 이유는 만약 account에서 그대로 list를 불러올 경우에 id 중복이 일어나게 되기 때문임.
+        // 해당 List 관련해서도 불러야 하기는 하는데.
         BankEntity bankEntity = bankEntityOptional.get();
 
         List<AccountEntity> accountEntityList = bankEntity.getAccountEntityList();

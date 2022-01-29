@@ -1,11 +1,14 @@
 package com.hmh.mmp.entity;
 
 import com.hmh.mmp.dto.account.AccountSaveDTO;
+import com.hmh.mmp.entity.list.FirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // 은행 관련 내역을 보기 위한 것.
 @Entity
@@ -17,6 +20,9 @@ public class AccountEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
     private Long id;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accountEntity")
+    private List<FirstListEntity> firstListEntityList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")

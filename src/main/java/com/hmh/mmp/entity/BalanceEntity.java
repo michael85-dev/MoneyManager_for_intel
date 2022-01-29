@@ -1,11 +1,14 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.entity.list.FirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // 현금 관련 내역을 보기 위한 것.
 @Entity
@@ -24,6 +27,9 @@ public class BalanceEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "balanceEntity")
+    private List<FirstListEntity> firstListEntityList = new ArrayList<>();
 
     private LocalDate date;
     private String balanceMemo;

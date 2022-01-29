@@ -22,4 +22,8 @@ public class CreditSaveDTO {
     private Double rate; // 할부이자.
     private Integer month; // 할부
     private Double creditGet; // 캐쉬백
+
+    private String firstList; // 대분류
+    private String secondList; // 중뷴류
+    private String thirdList; // 소분류
 }

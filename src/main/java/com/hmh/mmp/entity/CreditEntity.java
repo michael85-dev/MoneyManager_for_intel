@@ -1,11 +1,14 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // 카드의 신용카드 관련 정보를 저장하기 위한 것
 @Entity
@@ -27,6 +30,9 @@ public class CreditEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "creditEntity")
+    private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
 
     private LocalDate date;
     private String creditName; // 내역
