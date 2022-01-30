@@ -107,4 +107,11 @@ public class CardController {
 
         return "card/findById";
     }
+
+    @GetMapping("card/{cardId}")
+    public String updateForm(@PathVariable("cardId") Long cardId, Model model) {
+        
+
+        return "card/update";
+    }
 }
