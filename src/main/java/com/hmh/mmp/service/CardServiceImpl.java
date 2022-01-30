@@ -4,6 +4,7 @@ import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.card.CardDetailDTO;
 import com.hmh.mmp.dto.card.CardPagingDTO;
 import com.hmh.mmp.dto.card.CardSaveDTO;
+import com.hmh.mmp.dto.card.CardUpdateDTO;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.CardRepository;
@@ -81,5 +82,12 @@ public class CardServiceImpl implements CardService{
         CardDetailDTO cardDetailDTO = CardDetailDTO.toMoveData(cardEntity);
 
         return cardDetailDTO;
+    }
+
+    @Override
+    public Long update(CardUpdateDTO cardUpdateDTO) {
+        CardEntity cardEntity = CardEntity.toUpdateData(cardUpdateDTO);
+
+        return null;
     }
 }

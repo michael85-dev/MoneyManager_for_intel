@@ -1,6 +1,7 @@
 package com.hmh.mmp.entity;
 
 import com.hmh.mmp.dto.card.CardSaveDTO;
+import com.hmh.mmp.dto.card.CardUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,5 +51,10 @@ public class CardEntity extends BaseEntity {
         cardEntity.setCardTag(cardSaveDTO.getCardTag());
 
         return cardEntity;
+    }
+
+    public static CardEntity toUpdateData(CardUpdateDTO cardUpdateDTO) {
+        CardEntity cardEntity = new CardEntity();
+        cardEntity.setCardTag(cardUpdateDTO.getCardTag()); // 이거 어떻게 설정해야하는지 셋업 필요
     }
 }

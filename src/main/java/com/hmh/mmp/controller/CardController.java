@@ -4,6 +4,7 @@ import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.card.CardDetailDTO;
 import com.hmh.mmp.dto.card.CardPagingDTO;
 import com.hmh.mmp.dto.card.CardSaveDTO;
+import com.hmh.mmp.dto.card.CardUpdateDTO;
 import com.hmh.mmp.dto.credit.CreditDetailDTO;
 import com.hmh.mmp.dto.credit.CreditPagingDTO;
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
@@ -110,8 +111,20 @@ public class CardController {
 
     @GetMapping("card/{cardId}")
     public String updateForm(@PathVariable("cardId") Long cardId, Model model) {
-        
+        System.out.println("CardController.updateForm");
+        CardDetailDTO cardDetailDTO = crs.findById(cardId);
+
+        model.addAttribute("cupdate", cardDetailDTO);
 
         return "card/update";
+    }
+
+    @PostMapping("update")
+    public String update(@ModelAttribute CardUpdateDTO cardUpdateDTO) {
+        Long cardId = crs.update(cardUpdateDTO);
+
+        //페이징?
+
+        return "card/findAll";
     }
 }
