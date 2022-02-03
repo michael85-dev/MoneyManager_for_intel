@@ -3,15 +3,22 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.board.BoardDetailDTO;
 import com.hmh.mmp.dto.board.BoardPagingDTO;
+import com.hmh.mmp.dto.board.BoardSaveDTO;
+import com.hmh.mmp.dto.board.BoardUpdateDTO;
 import com.hmh.mmp.entity.BoardEntity;
+import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.BoardRepository;
+import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
     private final BoardRepository bor;
+    private final MemberRepository mr;
 
     @Override
     public List<BoardDetailDTO> findAll() {
@@ -60,7 +68,50 @@ public class BoardServiceImpl implements BoardService{
         BoardEntity boardEntity = bor.findById(boardId).get();
 //        데이터를 보내고
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.toMoveData(boardEntity);
+        // 조회수 저장 관련 코드 필요함.
+        bor.hits?
 
         return boardDetailDTO;
+    }
+
+    @Override
+    public Long update(BoardUpdateDTO boardUpdateDTO) throws IOException {
+        MultipartFile boardPhoto = boardUpdateDTO.getBoardPhoto();
+        String boardPhotoName = boardPhoto.getOriginalFilename();
+        boardPhotoName = System.currentTimeMillis() + "-" + boardPhotoName;
+
+        String savePath = "D:\\GitHub\\MoneyManager_for_intel\\src\\main\\resources\\photo\\board" + boardPhotoName;
+
+        if (!boardPhoto.isEmpty()) {
+            boardPhoto.transferTo(new File(savePath));
+            boardUpdateDTO.setBoardPhotoName(boardPhotoName);
+        }
+        
+        // 데이터 저장
+        BoardEntity boardEntity = BoardEntity.toUpdateData(boardUpdateDTO);
+        Long boardId = bor.save(boardEntity).getId();
+        return boardId;
+    }
+
+    @Override
+    public Long save(BoardSaveDTO boardSaveDTO) throws IOException {
+        MultipartFile boardPhoto = boardSaveDTO.getBoardPhoto();
+        String boardPhotoName = boardPhoto.getOriginalFilename();
+        boardPhotoName = System.currentTimeMillis() + "-" + boardPhotoName;
+
+        String savePath = "D:\\GitHub\\MoneyManager_for_intel\\src\\main\\resources\\photo\\board" + boardPhotoName;
+
+        if (!boardPhoto.isEmpty()) {
+            boardPhoto.transferTo(new File(savePath));
+            boardSaveDTO.setBoardPhotoName(boardPhotoName);
+        }
+
+        MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
+
+        // 데이터 저장
+        BoardEntity boardEntity = BoardEntity.toSaveData(boardSaveDTO, memberEntity);
+        Long boardId = bor.save(boardEntity).getId();
+
+        return boardId;
     }
 }

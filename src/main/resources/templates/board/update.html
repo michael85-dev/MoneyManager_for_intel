@@ -14,7 +14,12 @@
 </header>
 <main>
     <form action="/board/update" method="post" th:object="${bDTO}" th:name="*{boardId}" enctype="multipart/form-data">
-
+        게시번호 : <input type="text" name="boardId" th:value="*{boardId}" readonly>
+        제목 : <input type="text" name="boardTitle" th:value="*{boardTitle}"> 조회수 : <input type="text" name="boardHits" th:value="*{boardHits}" readonly>
+        작성자 : <input type="text" name="boardWriter" th:value="*{boardWriter}" readonly>
+        내용 : <textarea th:value="*{boardContents}" name="boardContents" rows="10"></textarea> <!-- 디자인 바꾸는 방법이 필요함. -->
+        이미지 :
+        ??
         <input type="submit" value="수정"><button onclick="bToMain()"></button>
     </form>
 </main>

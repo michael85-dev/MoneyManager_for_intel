@@ -1,5 +1,6 @@
 package com.hmh.mmp.dto.board;
 
+import com.hmh.mmp.dto.member.MemberDetailDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,12 @@ public class BoardSaveDTO {
     private String boardTitle;
     private String boardPassword;
     private Integer boardHits;
+
+    public static BoardSaveDTO toMoveDate(MemberDetailDTO memberDetailDTO) {
+        BoardSaveDTO boardSaveDTO = new BoardSaveDTO();
+        boardSaveDTO.setMemberId(memberDetailDTO.getMemberId());
+        boardSaveDTO.setBoardWriter(memberDetailDTO.getMemberNickName());
+
+        return boardSaveDTO;
+    }
 }

@@ -1,5 +1,7 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.board.BoardSaveDTO;
+import com.hmh.mmp.dto.board.BoardUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,4 +35,28 @@ public class BoardEntity extends BaseEntity {
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
 
+    public static BoardEntity toUpdateData(BoardUpdateDTO boardUpdateDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        // memberId와 boardWriter(memberNickName)에 대해서는 save에서 가지고 올것이니까...
+        boardEntity.setBoardWriter(boardUpdateDTO.getBoardWriter());
+        boardEntity.setBoardContents(boardUpdateDTO.getBoardContents());
+        boardEntity.setBoardPassword(boardUpdateDTO.getBoardPassword());
+        boardEntity.setBoardTitle(boardUpdateDTO.getBoardTitle());
+        boardEntity.setBoardPhotoName(boardUpdateDTO.getBoardPhotoName());
+        boardEntity.setId(boardUpdateDTO.getBoardId());
+
+        return boardEntity;
+    }
+
+    public static BoardEntity toSaveData(BoardSaveDTO boardSaveDTO, MemberEntity memberEntity) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
+        boardEntity.setMemberEntity(memberEntity);
+        boardEntity.setBoardTitle(boardSaveDTO.getBoardTitle());
+        boardEntity.setBoardPassword(boardSaveDTO.getBoardPassword());
+        boardEntity.setBoardContents(boardSaveDTO.getBoardContents());
+        boardEntity.setBoardPhotoName(boardSaveDTO.getBoardPhotoName());
+
+        return boardEntity;
+    }
 }
