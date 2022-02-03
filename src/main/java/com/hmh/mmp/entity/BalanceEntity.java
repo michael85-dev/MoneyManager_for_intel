@@ -39,6 +39,7 @@ public class BalanceEntity extends BaseEntity {
     private Long plusAsset;
     private Long minusAsset;
 
+    private Double rate; // 이자?
     private String balancePhotoName;
 
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +33,12 @@ public class DebitEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "debitEntity")
     private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
 
-    private LocalDate date;
+    private LocalDate calDate;
+    private LocalDateTime calTime;
     private String debitName; //내역명
     private String debitPhotoName; // 영수증
     private Long minusAsset; // 지출
     private String debitMemo; // 내역
     private Double debitGet; // 할인
+    private Double debitPercent; // 할인율
 }

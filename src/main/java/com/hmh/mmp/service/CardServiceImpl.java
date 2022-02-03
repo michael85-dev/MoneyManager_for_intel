@@ -87,7 +87,9 @@ public class CardServiceImpl implements CardService{
     @Override
     public Long update(CardUpdateDTO cardUpdateDTO) {
         CardEntity cardEntity = CardEntity.toUpdateData(cardUpdateDTO);
+        Long cardId = crr.save(cardEntity).getId();
+        // 이거로 끝인가? 아니면 해당 가계부 금액 차액만큼을 기록하는 것을 만들어야 하는가.
 
-        return null;
+        return cardId;
     }
 }

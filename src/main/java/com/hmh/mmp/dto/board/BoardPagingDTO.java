@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class BoardPagingDTO extends BoardSaveDTO{
     private Long boardId;
 
+    public BoardPagingDTO(Long id, Integer boardHits, String boardContents, String boardPassword, String boardTitle, String boardWriter, String boardPhotoName, Long id1, String memberNickName) {
+    }
 }

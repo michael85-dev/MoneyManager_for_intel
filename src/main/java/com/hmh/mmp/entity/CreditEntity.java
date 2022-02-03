@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class CreditEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "creditEntity")
     private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
 
-    private LocalDate date;
+    private LocalDate calDate;
+    private LocalDateTime calTime;
     private String creditName; // 내역
     private String creditPhotoName; // 사진명
     private String creditMemo;
@@ -42,5 +44,5 @@ public class CreditEntity {
     private Double rate; // 할부이자.
     private Integer month; // 할부
     private Double creditGet; // 캐쉬백
-
+    private Double creditPercent; // 캐쉬백
 }
