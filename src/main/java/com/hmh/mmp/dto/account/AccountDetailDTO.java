@@ -23,6 +23,7 @@ public class AccountDetailDTO extends AccountSaveDTO {
         accountDetailDTO.setBankId(accountEntity.getBankEntity().getId());
         accountDetailDTO.setMemberId(accountEntity.getMemberEntity().getId());
         accountDetailDTO.setFirstList(accountEntity.getFirstListEntityList()); // 이렇게 설정하면 그 안에 있는 항목을 list로 불러오지 못할텐데.
+        // 이걸 어떻게 가지고 와야할까?
 
         return accountDetailDTO;
     }

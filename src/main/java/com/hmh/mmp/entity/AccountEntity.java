@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +33,11 @@ public class AccountEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    private LocalDate date;
+    private LocalDateTime calTime;
+    private LocalDate   calDate;
     private Long plusAsset;
     private Long minusAsset;
-    private String accountName;
+    private String accountName; // 후에 고민해보기
     private String accountPhotoName;
     private String accountMemo;
 

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,12 @@ public class BalanceEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "balanceEntity")
     private List<FirstListEntity> firstListEntityList = new ArrayList<>();
 
-    private LocalDate date;
+    private LocalDate calDate;
+    private LocalDateTime calTIme;
     private String balanceMemo;
     private String balanceName;
-    private long plusAsset;
-    private long minusAsset;
+    private Long plusAsset;
+    private Long minusAsset;
 
     private String balancePhotoName;
 

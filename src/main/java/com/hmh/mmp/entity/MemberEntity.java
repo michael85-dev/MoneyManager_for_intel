@@ -33,7 +33,8 @@ public class MemberEntity extends BaseEntity {
     @Column
     private String memberPhotoName; // 사진 보관을 위한 것
     private String memberAddress; // 숍시 주소등록을 위함?
-    private String memberLevel; // 등급 분류를 위함.
+    private Integer memberLevel; // 등급 분류를 위함.
+    private String memberStep;
 
 
     @OneToMany(mappedBy = "memberEntity", fetch = FetchType.LAZY)

@@ -26,5 +26,6 @@ public class MemberSaveDTO {
     private MultipartFile memberPhoto;
     private String memberPhotoName;
     private String memberAddress; // 숍시 주소등록을 위함?
-    private String memberLevel;
+    private int memberLevel;
+    private String memberStep;
 }
