@@ -11,4 +11,6 @@ public interface NoticeService {
     List<NoticeDetailDTO> findAll();
 
     Page<NoticePagingDTO> paging(Pageable pageable);
+
+    NoticeDetailDTO findById(Long noticeId);
 }

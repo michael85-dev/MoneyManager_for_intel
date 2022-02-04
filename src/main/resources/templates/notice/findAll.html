@@ -12,7 +12,7 @@
 
 </header>
 <main>
-    <div class="text-end">
+    <div class="text-end" th:if="${session.level eq ('5' or '4')}">
         <a href="/notice/save">작성</a>
     </div>
     <table>
@@ -26,47 +26,47 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="no : ${nList}">
-            <td th:text="${bd.boardId}">번호</td>
-            <td th:href="@{|/board/${bd.boardId}|}">
-                    <span th:text="${bd.boardTitle}">
-                        제목
-                    </span>
-            </td>
-            <td th:text="${bd.boardWriter}">작성자</td>
-            <td th:text="${bd.boardHits}">조회수</td>
-            <td>이미지</td> <!-- 이미지가 있으면 아이콘 표시로 설정 -->
-        </tr>
+            <tr th:each="no : ${nList}">
+                <td th:text="${no.noticeId}">번호</td>
+                    <td th:href="@{|/notice/${no.noticeId}|}">
+                        <span th:text="${no.noticeTitle}">
+                            제목
+                        </span>
+                    </td>
+                <td th:text="${no.noticeWriter}">작성자</td>
+                <td th:text="${no.noticeHits}">조회수</td>
+                <td>이미지</td> <!-- 이미지가 있으면 아이콘 표시로 설정 -->
+            </tr>
         </tbody>
     </table>
 
     <div class="container">
         <ul class="pagination">
             <li class="page-item">
-                <a class="item-link" th:href="@{/board/(page=1)}">
+                <a class="item-link" th:href="@{/notice/(page=1)}">
                     <span>First</span>
                 </a>
             </li>
 
-            <li th:class="${boardPage.first} ? 'disabled'" class="page-item">
-                <a class="page-link" th:href="${boardPage.first} ? '#' : @{/board/(page=${boardPage.number})}">
+            <li th:class="${noticePage.first} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${noticePage.first} ? '#' : @{/notice/(page=${noticePage.number})}">
                     <span>&lt;</span>
                 </a>
             </li>
 
-            <li th:each="page: ${#numbers.sequence(bStartPage, bEndPage)}"
-                th:class="${${page == boardPage.number + 1}} ? 'active'" class="page-item">
-                <a class="page-link" th:text="${page}" th:href="@{/board/(page=${page})}"></a>
+            <li th:each="page: ${#numbers.sequence(nStartPage, nEndPage)}"
+                th:class="${${page == noticePage.number + 1}} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/notice/(page=${page})}"></a>
             </li>
 
-            <li th:class="${boardPage.last} ? 'disabled'">
-                <a class="page-link" th:href="${boardPage.last} ? '#' : @{/board/(page=${boardPage.number + 2})}">
+            <li th:class="${noticePage.last} ? 'disabled'">
+                <a class="page-link" th:href="${noticePage.last} ? '#' : @{/notice/(page=${noticePage.number + 2})}">
                     <span>&gt;</span>
                 </a>
             </li>
 
             <li class="page-item">
-                <a class="page-link" th:href="@{/board/(page=${boardPage.totalPages})}">
+                <a class="page-link" th:href="@{/notice/(page=${noticePage.totalPages})}">
                     <span>Last</span>
                 </a>
             </li>

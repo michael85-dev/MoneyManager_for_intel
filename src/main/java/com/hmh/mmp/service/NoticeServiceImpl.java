@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +51,17 @@ public class NoticeServiceImpl implements NoticeService {
         );
 
         return noticePagingDTOPage;
+    }
+
+    @Override
+    public NoticeDetailDTO findById(Long noticeId) {
+        System.out.println("NoticeServiceImpl.findById");
+
+        Optional<NoticeEntity> noticeEntityOptional = nr.findById(noticeId);
+        NoticeEntity noticeEntity = noticeEntityOptional.get();
+
+        NoticeDetailDTO noticeDetailDTO = NoticeDetailDTO.toDataMove(noticeEntity);
+
+        return noticeDetailDTO;
     }
 }
