@@ -28,6 +28,34 @@ board findById page
             <button onclick="bToMain()"></button>
         </div>
     </div>
+
+    <div id="comment-write"> <!-- 여기에 내용 불러와야함 (미완) -->
+        <input type="text" id="commentWriter" th:value="${session.nickName}" placeholder="작성자"> <br>
+        <input type="text" id="commentContents" placeholder="내용"> <br>
+        <button id="comment-write-btn">댓글 등록</button>
+    </div>
+    <!-- 코멘트 관련 작성 -->
+    <div id="comment-view">
+        <table>
+            <thead>
+                <tr>
+                    <th>댓글번호</th>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>작성시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td>
+                    <td>댓글번호</td>
+                    <td>작성자</td>
+                    <td>내용</td>
+                    <td>작성시간</td>
+                </td>
+            </tbody>
+        </table>
+    </div>
+
 </main>
 <footer>
 
@@ -40,5 +68,29 @@ board findById page
     function deleteInfo() {
 
     }
+
+    $("comment-write-btn").click(function(){
+        console.log('댓글등록버튼 호출됨');
+        const commentWriter = document.getElementById('commentWriter').value;
+        const commentContents = $('#commentContents').val();
+        const boardId = '[[${bDTO.boardId}]]'; //이게 데이터를 불러오는게 맞는가...? 확인 해야함.
+
+        $.ajax({
+            type: 'post',
+            url: '/comment/save',
+            data: {
+                'commentWriter' : commentWriter,
+                'commentContents' : commentContents,
+                'boardId' : boardId
+            },
+            dataType: 'json',
+            success: function(result) {
+                console.log(result);
+            },
+            error: function() {
+                alert('실패');
+            }
+        })
+    });
 </script>
 </html>

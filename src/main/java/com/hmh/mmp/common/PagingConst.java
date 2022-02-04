@@ -24,4 +24,7 @@ public class PagingConst {
 
     public static final int BO_PAGE_LIMIT = 20;
     public static final int BO_BLOCK_LIMIT = 4;
+
+    public static final int N_PAGE_LIMIT = 20;
+    public static final int N_BLOCK_LIMIT = 4;
 }

@@ -29,8 +29,17 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    public static CommentEntity toSaveEntity(CommentSaveDTO commentSaveDTO) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notice_id")
+    private NoticeEntity noticeEntity;
 
-        return null;
+    public static CommentEntity toSaveData(CommentSaveDTO commentSaveDTO, BoardEntity boardEntity, MemberEntity memberEntity) {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setCommentContents(commentSaveDTO.getCommentContents());
+        commentEntity.setCommentWriter(commentSaveDTO.getCommentWriter());
+        commentEntity.setBoardEntity(boardEntity);
+        commentEntity.setMemberEntity(memberEntity);
+
+        return commentEntity;
     }
 }

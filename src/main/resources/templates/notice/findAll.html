@@ -9,34 +9,34 @@
 </head>
 <body>
 <header>
-    board findAll page
+
 </header>
 <main>
     <div class="text-end">
-        <a href="/board/save">작성</a>
+        <a href="/notice/save">작성</a>
     </div>
     <table>
         <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>조회수</th>
-                <th>이미지</th>
-            </tr>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>이미지</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="bd : ${bdList}">
-                <td th:text="${bd.boardId}">번호</td>
-                <td th:href="@{|/board/${bd.boardId}|}">
+        <tr th:each="no : ${nList}">
+            <td th:text="${bd.boardId}">번호</td>
+            <td th:href="@{|/board/${bd.boardId}|}">
                     <span th:text="${bd.boardTitle}">
                         제목
                     </span>
-                </td>
-                <td th:text="${bd.boardWriter}">작성자</td>
-                <td th:text="${bd.boardHits}">조회수</td>
-                <td>이미지</td> <!-- 이미지가 있으면 아이콘 표시로 설정 -->
-            </tr>
+            </td>
+            <td th:text="${bd.boardWriter}">작성자</td>
+            <td th:text="${bd.boardHits}">조회수</td>
+            <td>이미지</td> <!-- 이미지가 있으면 아이콘 표시로 설정 -->
+        </tr>
         </tbody>
     </table>
 
@@ -73,7 +73,6 @@
 
         </ul>
     </div>
-
 
 </main>
 <footer>
