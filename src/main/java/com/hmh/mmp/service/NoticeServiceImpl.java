@@ -3,7 +3,11 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.notice.NoticeDetailDTO;
 import com.hmh.mmp.dto.notice.NoticePagingDTO;
+import com.hmh.mmp.dto.notice.NoticeSaveDTO;
+import com.hmh.mmp.dto.notice.NoticeUpdateDTO;
+import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.entity.NoticeEntity;
+import com.hmh.mmp.repository.MemberRepository;
 import com.hmh.mmp.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,7 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository nr;
+    private final MemberRepository mr;
 
     @Override
     public List<NoticeDetailDTO> findAll() {
@@ -63,5 +71,61 @@ public class NoticeServiceImpl implements NoticeService {
         NoticeDetailDTO noticeDetailDTO = NoticeDetailDTO.toDataMove(noticeEntity);
 
         return noticeDetailDTO;
+    }
+
+    @Override
+    public Long save(NoticeSaveDTO noticeSaveDTO) throws IOException {
+        System.out.println("NoticeServiceImpl.save");
+
+        // 사진명 저장
+        MultipartFile noticePhoto = noticeSaveDTO.getNoticePhoto();
+        String noticePhotoName = noticePhoto.getOriginalFilename();
+        noticePhotoName = System.currentTimeMillis() + "-" + noticePhotoName;
+
+        String savePath = "/Users/myungha/Desktop/Github/MoneyManager_for_intel/src/main/resources/photo/notice" + noticePhotoName;
+
+        if (!noticePhoto.isEmpty()) {
+            noticePhoto.transferTo(new File(savePath));
+            noticeSaveDTO.setNoticePhotoName(noticePhotoName);
+        }
+
+
+        // 데이터 호출
+        MemberEntity memberEntity = mr.findById(noticeSaveDTO.getMemberId()).get();
+
+        NoticeEntity noticeEntity = NoticeEntity.toSaveData(noticeSaveDTO, memberEntity);
+        Long noticeId = nr.save(noticeEntity).getId();
+
+        return noticeId;
+    }
+
+    @Override
+    public Long update(NoticeUpdateDTO noticeUpdateDTO) throws IOException {
+        System.out.println("NoticeServiceImpl.update");
+
+        // 사진명 저장
+        MultipartFile noticePhoto = noticeUpdateDTO.getNoticePhoto();
+        String noticePhotoName = noticePhoto.getOriginalFilename();
+        noticePhotoName = System.currentTimeMillis() + "-" + noticePhotoName;
+
+        String savePath = "/Users/myungha/Desktop/Github/MoneyManager_for_intel/src/main/resources/photo/notice" + noticePhotoName;
+
+        if (!noticePhoto.isEmpty()) {
+            noticePhoto.transferTo(new File(savePath));
+            noticeUpdateDTO.setNoticePhotoName(noticePhotoName);
+        }
+
+        NoticeEntity noticeEntity = NoticeEntity.toUpdateData(noticeUpdateDTO);
+        Long noticeId = nr.save(noticeEntity).getId();
+
+        return noticeId;
+    }
+
+    @Override
+    public void delete(Long noticeId) {
+        System.out.println("NoticeServiceImpl.delete");
+
+        NoticeEntity noticeEntity = nr.findById(noticeId).get();
+        nr.delete(noticeEntity);
     }
 }

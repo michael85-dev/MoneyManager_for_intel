@@ -120,7 +120,7 @@ public class BankServiceImp implements BankService{
     }
 
     @Override
-    public Long update(BankDetailDTO bankDetailDTO) {
+    public Long update(BankDetailDTO bankDetailDTO) throws IOException {
         MemberEntity memberEntity = mr.findById(bankDetailDTO.getMemberId()).get();
         // banktotalAsset 관련 수식을 만들어서 넣어야함.
         Long beforeAsset = br.findById(bankDetailDTO.getBankId()).get().getTotalAsset();
@@ -132,9 +132,29 @@ public class BankServiceImp implements BankService{
             bankDetailDTO.setTotalAsset(beforeAsset);
         }
 
+        // 이미지 넣었나? 확인
+        MultipartFile bankPhoto = bankDetailDTO.getBankPhoto();
+        String bankPhotoName = bankPhoto.getOriginalFilename();
+        bankPhotoName = System.currentTimeMillis() + "-" + bankPhotoName;
+
+        String savePath = "D:\\GitHub\\MoneyManager_for_intel\\src\\main\\resources\\photo\\bank" + bankPhotoName;
+
+        if (!bankPhoto.isEmpty()) {
+            bankPhoto.transferTo(new File(savePath));
+            bankDetailDTO.setBankPhotoName(bankPhotoName);
+        }
+
         BankEntity bankEntity = BankEntity.updateBank(bankDetailDTO, memberEntity);
         Long bankId = br.save(bankEntity).getId();
 
         return bankId;
+    }
+
+    @Override
+    public void delete(Long bankId) {
+        System.out.println("BankServiceImp.delete");
+        BankEntity bankEntity = br.findById(bankId).get();
+
+        br.delete(bankEntity);
     }
 }

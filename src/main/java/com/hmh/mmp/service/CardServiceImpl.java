@@ -92,4 +92,10 @@ public class CardServiceImpl implements CardService{
 
         return cardId;
     }
+
+    @Override
+    public void delete(Long cardId) {
+        CardEntity cardEntity = crr.findById(cardId).get();
+        crr.delete(cardEntity);
+    }
 }

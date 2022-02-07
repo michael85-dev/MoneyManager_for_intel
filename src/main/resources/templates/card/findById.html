@@ -10,7 +10,7 @@
 <body>
 <header>
     card findById page
-    <a th:href="@{|/card/update/${cardId}|}">수정</a>
+    <a th:href="@{|/card/update/${cardId}|}">수정</a><a th:href="@{|/card/delete/${cardId}|}">삭제</a> <!-- 이거 지울때 credit, debit의 내용도 지워지게 설정해야함. / 미완 / Entity에서 진행 -->
 </header>
 <main>
     <div th:object="${cardDTO}">

@@ -125,6 +125,14 @@ public class CardController {
 
         //페이징?
 
-        return "card/findAll";
+        return "redirect:/card/findAll";
+    }
+
+    @GetMapping("delete/cardId")
+    public String delete(@PathVariable("cardId") Long cardId) {
+        System.out.println("CardController.delete");
+        crs.delete(cardId);
+
+        return "redirect:/card/findAll"; // 이렇게 해야하는가 redirect:/card/라고 해야하는가.
     }
 }

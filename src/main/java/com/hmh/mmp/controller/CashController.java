@@ -118,6 +118,7 @@ public class CashController {
 
     @GetMapping("delete/{cashId}")
     public String delete(@PathVariable("cashId") Long cashId) {
+        System.out.println("CashController.delete");
         css.delete(cashId);
 
         return "redirect:/cash/findAll";

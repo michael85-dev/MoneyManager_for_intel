@@ -93,5 +93,14 @@ public class BoardController {
         return "redirect:/board/findAll";
     }
 
+    @GetMapping("delete")
+    @DeleteMapping("delete")
+    public String delete(@PathVariable("boardId") Long boardId) {
+        System.out.println("BoardController.delete");
+        bos.delete(boardId);
+
+        return "redirect:/board/";
+    }
+
 
 }

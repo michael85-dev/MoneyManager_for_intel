@@ -17,15 +17,17 @@ board findById page
         <!-- 각종 정보 관련 넣기 -->
         <button th:href="@{|/board/update/${bDTO.boardId}|}"></button><button onclick="deleteInfo()"></button>
     </div>
-    <div>
-        <span>번호</span>
-        <span>제목</span>
-        <span>작성자</span>
-        <span>내용</span>
-        <span>이미지</span>
+    <div th:object="${bDTO}">
+        <span th:text="*{boardId}">번호</span>
+        <span th:text="*{boardTitle}">제목</span>
+        <span th:text="*{boardWriter}">작성자</span>
+        <span th:text="*{boardContents}">내용</span>
+        <span>
+            <a img src: 이미지
+        </span>
         <div>
             <!-- 버튼 관련 -->
-            <button onclick="bToMain()"></button>
+            <button onclick="bToMain()"></button><button th:onclick="deleteInfo(${bDTO.boardId})">삭제</button>
         </div>
     </div>
 
@@ -45,8 +47,8 @@ board findById page
                     <th>작성시간</th>
                 </tr>
             </thead>
-            <tbody>
-                <td>
+            <tbody> <!-- 나중에 처리 하기 / 아직 미완인 상태임 -->
+                <td th:each="c : ${cList}">
                     <td>댓글번호</td>
                     <td>작성자</td>
                     <td>내용</td>
@@ -65,8 +67,20 @@ board findById page
     function bToMain() {
         location.href="/board/";
     }
-    function deleteInfo() {
+    function deleteInfo(boardId) { // 제대로 맞게 해결해야함.
+        $.ajax({
+           type: 'delete?'
+            url: '/board/delete/',
+            data : {
+               'boardId' : boardId,
+            },
+            success: function(result) {
+                console.log('삭제 완료');
+            },
+            error: function() {
 
+            }
+        });
     }
 
     $("comment-write-btn").click(function(){

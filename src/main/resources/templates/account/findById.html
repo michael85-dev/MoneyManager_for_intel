@@ -9,21 +9,24 @@
 </head>
 <body>
 <header>
-
+    account findById page
 </header>
 <main>
-    <div th:if="${session.level eq ('5' or '4')}"> <!-- 수정 필요 / 관리자 또는 부 관리자만 해당 항목을 볼 수 있음 -->
-        <a th:href="@{|/notice/update/${nDTO.noticeId}|}">수정</a>
-        <a th:href="@{|/notice/delete/${nDTO.noticeId}|}">삭제</a>
+    <div>
+        <a th:href="@{|/account/update/${aDTO.accountId}|}">수정</a><a th:href="@{|/account/delete/${aDTO.accountId}|}">삭제</a>
     </div>
-    <div th:object="${nDTO}">
-        <span th:text="*{noticeId}">번호</span>
-        <span th:text="*{noticeTitle}">제목</span>
-        <span th:text="*{noticeWriter}">작성자</span>
-        <span th:text="*{noticeContents}">내용</span>
-        <div class="text-end">
-            <button onclick="bToMain()">돌아가기</button>
+    <div th:object="${aDTO}">
+        <span th:text="*{accountId}">번호</span>
+        <span th:text="*{accountName}">사용 내역</span>
+        <div th:if="*{minusAsset eq '0'}">
+            <span th:text="*{plusAsset}">수입</span>
         </div>
+        <div th:if="*{plusAsset eq '0'}">
+            <span th:text="*{minusAsset}">지출</span>
+        </div>
+        <span th:text="*{accountMemo}">메모</span>
+        <img th:src="" alt="">
+        <button onclick="bToMain()">돌아가기</button>
     </div>
 </main>
 <footer>
@@ -32,7 +35,8 @@
 </body>
 <script>
     function bToMain() {
-        location.href="/notice/"; // 이렇게 주소를 줘야 하나...
+        const bankId = '[[${aDTO.bankId}]]'
+        location.href="/bank/" + bankId;
     }
 </script>
 </html>

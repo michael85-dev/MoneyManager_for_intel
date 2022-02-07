@@ -157,7 +157,7 @@ public class MemberController {
 
     @DeleteMapping("{memberId}")
     public ResponseEntity delete(@PathVariable("memberId") Long memberId) {
-        ms.deleteById(memberId);
+        ms.delete(memberId);
 
         return new ResponseEntity(HttpStatus.OK);
     }

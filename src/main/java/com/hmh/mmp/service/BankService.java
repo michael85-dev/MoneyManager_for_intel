@@ -17,5 +17,7 @@ public interface BankService {
 
     Page<BankPagingDTO> paging(Pageable pageable);
 
-    Long update(BankDetailDTO bankDetailDTO);
+    Long update(BankDetailDTO bankDetailDTO) throws IOException;
+
+    void delete(Long bankId);
 }

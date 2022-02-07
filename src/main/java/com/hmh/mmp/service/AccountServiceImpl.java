@@ -1,12 +1,18 @@
 package com.hmh.mmp.service;
 
+import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.account.AccountDetailDTO;
+import com.hmh.mmp.dto.account.AccountPagingDTO;
 import com.hmh.mmp.dto.account.AccountSaveDTO;
 import com.hmh.mmp.entity.AccountEntity;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.repository.AccountRepository;
 import com.hmh.mmp.repository.BankRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,5 +76,35 @@ public class AccountServiceImpl implements AccountService{
         }
 
         return accountDetailDTOList;
+    }
+
+    @Override
+    public Page<AccountPagingDTO> paging(Pageable pageable) {
+        int page = pageable.getPageNumber();
+        page = (page == 1) ? 0 : (page - 1);
+
+        Page<AccountEntity> accountEntities = ar.findAll(PageRequest.of(page, PagingConst.A_PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
+        Page<AccountPagingDTO> aList = accountEntities.map(
+                account -> new AccountPagingDTO(account.getId(),
+                        account.getAccountMemo(),
+                        account.getAccountName(),
+                        account.getAccountPhotoName(),
+                        account.getMinusAsset(),
+                        account.getPlusAsset(),
+                        account.getBankEntity(),
+                        account.getCalDate(),
+                        account.getCalTime())
+        );
+
+        return aList;
+    }
+
+    @Override
+    public AccountDetailDTO findById(Long accountId) {
+        System.out.println("AccountServiceImpl.findById");
+        AccountEntity accountEntity = ar.findById(accountId).get();
+        AccountDetailDTO accountDetailDTO = AccountDetailDTO.toMoveData(accountEntity);
+
+        return accountDetailDTO;
     }
 }

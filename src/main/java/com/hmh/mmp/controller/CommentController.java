@@ -34,7 +34,7 @@ public class CommentController {
         Long commentId = cs.save(commentSaveDTO);
 
         List<CommentDetailDTO> commentDetailDTOList = cs.findAll(commentSaveDTO.getBoardId());
-
+        model.addAttribute("cList", commentDetailDTOList);
 
         return commentDetailDTOList;
     }

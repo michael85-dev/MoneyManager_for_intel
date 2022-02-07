@@ -1,5 +1,7 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.notice.NoticeSaveDTO;
+import com.hmh.mmp.dto.notice.NoticeUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,4 +32,27 @@ public class NoticeEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "noticeEntity")
     private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    public static NoticeEntity toSaveData(NoticeSaveDTO noticeSaveDTO, MemberEntity memberEntity) {
+        NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNoticeTitle(noticeSaveDTO.getNoticeTitle());
+        noticeEntity.setNoticePassword(noticeSaveDTO.getNoticePassword());
+        noticeEntity.setNoticeWriter(noticeSaveDTO.getNoticeWriter());
+        noticeEntity.setNoticeContents(noticeSaveDTO.getNoticeContents());
+        noticeEntity.setNoticePhotoName(noticeSaveDTO.getNoticePhotoName());
+        noticeEntity.setMemberEntity(memberEntity);
+
+        return noticeEntity;
+    }
+
+    public static NoticeEntity toUpdateData(NoticeUpdateDTO noticeUpdateDTO) {
+        NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNoticeTitle(noticeUpdateDTO.getNoticeTitle());
+        noticeEntity.setNoticeContents(noticeUpdateDTO.getNoticeContents());
+        noticeEntity.setNoticePassword(noticeUpdateDTO.getNoticePassword());
+        noticeEntity.setNoticeWriter(noticeUpdateDTO.getNoticeWriter());
+        noticeEntity.setNoticePhotoName(noticeUpdateDTO.getNoticePhotoName());
+
+        return noticeEntity;
+    }
 }

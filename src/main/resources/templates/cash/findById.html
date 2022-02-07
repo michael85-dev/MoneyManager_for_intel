@@ -13,7 +13,7 @@
 </header>
 <section>
     <div>
-        <a th:href="@{|/cash/update/${cashDTO.cashId}|}">수정</a><button onclick="bToMain()">돌아가기</button>
+        <a th:href="@{|/cash/update/${cashDTO.cashId}|}">수정</a><a th:href="@{|/cash/delete/${cashDTO.cashId}|}">삭제</a>
     </div>
     <div th:object="${cashDTO}">
         <span th:text="*{cashId}">번호</span>
@@ -21,6 +21,9 @@
         <span th:text="*{totalAsset}">총액</span>
         <span th:text="*{cashMemo}">메모</span>
         <span th:text="*{cashPhotoName}" value="보기"><button>클릭</button></span> <!-- 이미지 호출 로직 짜기 -->
+    </div>
+    <div>
+        <button onclick="bToMain()">돌아가기</button>
     </div>
     <div class="container">
         <div class="pagination">
@@ -37,7 +40,7 @@
             </li>
 
             <!-- 해당 부분 오류 발생 원인 찾아야 함. -->
-            <li th:each="page: ${#number.sequence(balanceStartPage, balanceEndPage)}"
+            <li th:each="page: ${#numbers.sequence(balanceStartPage, balanceEndPage)}"
                 th:class="${page == balancePage.number + 1} ? 'active'" class="page-item">
                 <a class="page-link" th:text="${page}" th:href="@{/cash/(page=${page})}"></a>
             </li>

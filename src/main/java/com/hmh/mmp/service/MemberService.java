@@ -19,11 +19,11 @@ public interface MemberService {
 
     MemberDetailDTO findById(Long memberId);
 
-    void deleteById(Long memberId);
-
     MemberDetailDTO findByEmail(String memberEmail);
 
     Long update(MemberDetailDTO memberDetailDTO);
 
     Page<MemberPagingDTO> paging(Pageable pageable);
+
+    void delete(Long memberId);
 }

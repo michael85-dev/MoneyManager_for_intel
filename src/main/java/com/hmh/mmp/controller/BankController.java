@@ -1,11 +1,14 @@
 package com.hmh.mmp.controller;
 
 import com.hmh.mmp.common.PagingConst;
+import com.hmh.mmp.dto.account.AccountDetailDTO;
+import com.hmh.mmp.dto.account.AccountPagingDTO;
 import com.hmh.mmp.dto.bank.BankDetailDTO;
 import com.hmh.mmp.dto.bank.BankPagingDTO;
 import com.hmh.mmp.dto.bank.BankSaveDTO;
 import com.hmh.mmp.dto.member.MemberDetailDTO;
 import com.hmh.mmp.dto.member.MemberLoginDTO;
+import com.hmh.mmp.service.AccountService;
 import com.hmh.mmp.service.BankService;
 import com.hmh.mmp.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +35,9 @@ import static com.hmh.mmp.common.SessionConst.LOGIN_ID;
 @Slf4j
 @RequestMapping("/bank/*")
 public class BankController {
-    private static MemberService ms;
-    private static BankService bs;
+    private final MemberService ms;
+    private final BankService bs;
+    private final AccountService as;
 
     @GetMapping("save")
     public String saveForm(Model model, HttpSession session) { //, MemberLoginDTO memberLoginDTO) {
@@ -90,19 +94,32 @@ public class BankController {
     }
 
     @GetMapping("{bankId}")
-    public String findById(@PathVariable("bankId") Long bankId, Model model) {
+    public String findById(@PathVariable("bankId") Long bankId, Model model, @PageableDefault(page = 1) Pageable pageable) {
+        System.out.println("BankController.findById");
         log.info("글보기 메서드 호출. 요청글 번호 : {} ", bankId);
 
         BankDetailDTO bankDetailDTO = bs.findById(bankId);
-
         model.addAttribute("bdDTO", bankDetailDTO);
 
+        // account 내역 부르기는 이거로 대신함... account에서 부르지 않음.
+        List<AccountDetailDTO> accountDetailDTOList = as.findAll(bankId);
+        model.addAttribute("aList", accountDetailDTOList);
+
+        Page<AccountPagingDTO> accountPagingDTOPage = as.paging(pageable);
+        model.addAttribute("accountPage", accountPagingDTOPage);
+
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.A_BLOCK_LIMIT))) - 1) * PagingConst.A_BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.A_BLOCK_LIMIT - 1) < accountPagingDTOPage.getTotalPages()) ? startPage + PagingConst.A_BLOCK_LIMIT : accountPagingDTOPage.getTotalPages();
+        model.addAttribute("aStartPage", startPage);
+        model.addAttribute("aEndPage", endPage);
+
 //        return "bank/findById";
-        return "bank/findById";
+        return "bank/findById" + bankId;
     }
 
     @GetMapping("update")
     public String updateForm(@PathVariable("bankId") Long bankId, Model model) {
+        System.out.println("BankController.updateForm");
         BankDetailDTO bankDetailDTO = bs.findById(bankId);
 
         model.addAttribute("bankDTO", bankDetailDTO);
@@ -111,11 +128,21 @@ public class BankController {
     }
 
     @PostMapping("{bankId}")
-    public String update(@ModelAttribute BankDetailDTO bankDetailDTO) {
+    public String update(@ModelAttribute BankDetailDTO bankDetailDTO) throws IOException {
+        System.out.println("BankController.update");
         Long bankId = bs.update(bankDetailDTO);
 
 //        return "redirect:/bank/" + bankDetailDTO.getBankId();
         return "bank/findAll";
+    }
+
+    @GetMapping("delete/{bankId}")
+    public String delete(@PathVariable("bankId") Long bankId) {
+        System.out.println("BankController.delete");
+
+        bs.delete(bankId);
+
+        return "redirect:/bank/";
     }
 
 }

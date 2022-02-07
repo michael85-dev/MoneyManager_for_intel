@@ -40,9 +40,29 @@ public class AccountController {
         Long accountId = as.save(accountSaveDTO);
 
         // Paging 관련 업데이트 필요함
-        List<AccountDetailDTO> accountDetailDTOList = as.findAll(accountSaveDTO.getBankId());
+//        List<AccountDetailDTO> accountDetailDTOList = as.findAll(accountSaveDTO.getBankId());
+//        model.addAttribute("aList", accountDetailDTOList);
 
+        return "bank/findById";
+    }
 
-        return "bank/findById" + accountSaveDTO.getBankId();
+    @GetMapping("{accountId}")
+    public String findById(@PathVariable("accountId") Long accountId, Model model) {
+        System.out.println("AccountController.findById");
+
+        AccountDetailDTO accountDetailDTO = as.findById(accountId);
+        model.addAttribute("aDTO", accountDetailDTO);
+
+        return "account/findById";
+    }
+
+    @GetMapping("update/{accountId}")
+    public String updateForm(@PathVariable("accountId") Long accountId, Model model) {
+        System.out.println("AccountController.updateForm");
+
+        AccountDetailDTO accountDetailDTO = as.findById(accountId);
+        model.addAttribute("aDTO", accountDetailDTO);
+
+        return "account/update";
     }
 }

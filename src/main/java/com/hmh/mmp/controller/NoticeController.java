@@ -4,6 +4,7 @@ import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.notice.NoticeDetailDTO;
 import com.hmh.mmp.dto.notice.NoticePagingDTO;
 import com.hmh.mmp.dto.notice.NoticeSaveDTO;
+import com.hmh.mmp.dto.notice.NoticeUpdateDTO;
 import com.hmh.mmp.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 import static com.hmh.mmp.common.SessionConst.LOGIN_ID;
@@ -68,11 +70,39 @@ public class NoticeController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute NoticeSaveDTO noticeSaveDTO) {
+    public String save(@ModelAttribute NoticeSaveDTO noticeSaveDTO) throws IOException {
         System.out.println("NoticeController.save");
 
-        
+        Long noticeId = ns.save(noticeSaveDTO);
 
         return "redirect:/notice/findAll";
+    }
+
+    @GetMapping("update/{noticeId}")
+    public String updateForm(@PathVariable("noticeId") Long noticeId, Model model) {
+        System.out.println("NoticeController.updateForm");
+
+        NoticeDetailDTO noticeDetailDTO = ns.findById(noticeId);
+        model.addAttribute("nDTO", noticeDetailDTO);
+
+        return "notice/update";
+    }
+
+    @PostMapping("update")
+    public String update(@ModelAttribute NoticeUpdateDTO noticeUpdateDTO) throws IOException {
+        System.out.println("NoticeController.update");
+
+        Long noticeId = ns.update(noticeUpdateDTO);
+
+        return "redirect:/notice/" + noticeId;
+    }
+
+    @GetMapping("delete/{noticeId}")
+    public String delete(@PathVariable("noticeId") Long noticeId) {
+        System.out.println("NoticeController.delete");
+
+        ns.delete(noticeId);
+
+        return "redirect:/notice/";
     }
 }

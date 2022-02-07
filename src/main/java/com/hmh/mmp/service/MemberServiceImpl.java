@@ -99,11 +99,6 @@ public class MemberServiceImpl implements MemberService {
 //        return MemberDetailDTO.toMemberDetailDTO(mr.findById(memberId).get());
     }
 
-    @Override
-    public void deleteById(Long memberId) {
-        mr.deleteById(memberId);
-    }
-
     // session의 데이터를 가지고 모든 데이터 또는 부분 데이터를 가지고 오기 위한 메서드.
     @Override
     public MemberDetailDTO findByEmail(String memberEmail) {
@@ -140,5 +135,11 @@ public class MemberServiceImpl implements MemberService {
         );
 
         return mPageList;
+    }
+
+    @Override
+    public void delete(Long memberId) {
+        MemberEntity memberEntity = mr.findById(memberId).get();
+        mr.delete(memberEntity);
     }
 }

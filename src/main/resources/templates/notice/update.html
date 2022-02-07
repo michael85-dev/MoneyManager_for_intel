@@ -9,22 +9,17 @@
 </head>
 <body>
 <header>
-
+    notice update page
 </header>
 <main>
-    <div th:if="${session.level eq ('5' or '4')}"> <!-- 수정 필요 / 관리자 또는 부 관리자만 해당 항목을 볼 수 있음 -->
-        <a th:href="@{|/notice/update/${nDTO.noticeId}|}">수정</a>
-        <a th:href="@{|/notice/delete/${nDTO.noticeId}|}">삭제</a>
-    </div>
-    <div th:object="${nDTO}">
-        <span th:text="*{noticeId}">번호</span>
-        <span th:text="*{noticeTitle}">제목</span>
-        <span th:text="*{noticeWriter}">작성자</span>
-        <span th:text="*{noticeContents}">내용</span>
-        <div class="text-end">
-            <button onclick="bToMain()">돌아가기</button>
-        </div>
-    </div>
+    <form action="/notice/update" method="post" id="update" th:object="${nDTO}" enctype="multipart/form-data">
+        번호 : <input type="text" name="noticeId" th:value="*{noticeId}" readonly>
+        제목 : <input type="text" name="noticeTitle" th:value="*{noticeTitle}">
+        작성자 : <input type="text" name="noticeWriter" th:value="*{noticeWriter}" readonly>
+        내용 : <textarea name="noticeContents" th:value="*{noticeContents}" rows="10"></textarea>
+        파일 : <input type="file" name="noticePhoto" src="img~~">
+        <input type="submit" value="수정"> <button onclick="bToMain()">돌아가기</button>
+    </form>
 </main>
 <footer>
 
@@ -32,7 +27,7 @@
 </body>
 <script>
     function bToMain() {
-        location.href="/notice/"; // 이렇게 주소를 줘야 하나...
+        location.href="/notice/";
     }
 </script>
 </html>

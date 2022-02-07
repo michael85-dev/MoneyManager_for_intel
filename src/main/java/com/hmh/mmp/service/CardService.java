@@ -19,4 +19,6 @@ public interface CardService {
     CardDetailDTO findById(Long cardId);
 
     Long update(CardUpdateDTO cardUpdateDTO);
+
+    void delete(Long cardId);
 }

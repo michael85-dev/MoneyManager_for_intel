@@ -20,4 +20,6 @@ public interface BoardService {
     Long update(BoardUpdateDTO boardUpdateDTO) throws IOException;
 
     Long save(BoardSaveDTO boardSaveDTO) throws IOException;
+
+    void delete(Long boardId);
 }

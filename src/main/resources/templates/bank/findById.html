@@ -22,21 +22,98 @@
     </div>
     <div>
         <div class="text-end"> <!-- 내역 생성을 위한 것. -->
-            <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a>
+            <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a> <a th:href="@{|/bank/delete/${bdDTO.bankId}|}">삭제</a>
         </div>
         <div> <!-- 세부 내역 표시를 위한 공간 -->
             <table>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>번호</th>
+                        <th>계좌</th>
+                        <th>연결카드</th> <!-- 이걸 어떻게 연결해야 할까? -->
+                        <th>총액</th>
+                        <th>메모</th>
+                        <th>이미지</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
+                    <tr th:object="${bdDTO}">
+                        <td th:value="*{bankId}">번호</td>
+                        <td th:value="*{bankName}">계좌</td>
+                        <td th:value="*{카드를 어떻게 연결해야하는가.}">연결카드</td> <!-- 이걸 어떻게 연결해야 할까? -->
+                        <td th:value="*{totalAsset}">총액</td>
+                        <td th:value="*{bankMemo}">메모</td>
+                        <td>이미지</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div> <!-- 관련 계좌 정보를 보내줘야 함. -->
+            <div>
+                <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>사용 내역</th>
+                        <th>수입 내역</th> <!-- 이걸 어떻게 연결해야 할까? -->
+                        <th>지출 내역</th>
+                        <th>메모</th>
+                        <th>영수증</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="a : ${aList}"> <!-- 왜 오류가 발생하는 걸까? 데이터를 못가지고 오는건가. -->
+                        <td th:value="${a.accountId}">번호</td>
+                        <td th:value="${a.accountName}">
+                            <a th:href="@{|/account/${a.accountId}|}">
+                                사용 내역
+                            </a>
+                        </td>
+                        <td th:value="${a.plusAsset}">수입 내역</td> <!-- 이걸 어떻게 연결해야 할까? -->
+                        <td th:value="${a.minusAsset}">지출 내역</td>
+                        <td th:valu="${a.accountMemo}">메모</td>
+                        <td th:value="${a.accountPhotoName}">
+                            영수증
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="container"> <!-- account 관련 페이징 처리 -->
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/account/(page=1)}">
+                            <span>First</span>
+                        </a>
+                    </li>
+
+                    <li th:class="${accountPage.first} ? 'disabled'" class="page-item">
+                        <a class="page-link" th:href="${accountPage.first} ? '#' : @{/account/(page=${accountPage.number})}">
+                            <span>&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(aStartPage, aEndPage)}"
+                        th:class="${page == accountPage.number + 1} ? 'active'" class="page-item">
+                        <a class="page-link" th:text="${page}" th:href="@{/account/(page=${page})}"></a>
+                    </li>
+
+                    <li th:class="${accountPage.last} ? 'disabled'">
+                        <a class="page-link" th:href="${accountPage.last} ? '#' : @{/account/(page=${accountPage.number + 2})}">
+                            <span>&gt;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/account/(page=${accountPage.totalPages})}">
+                            <span>Last</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </div>
 </section>

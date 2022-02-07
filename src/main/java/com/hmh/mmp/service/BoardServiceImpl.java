@@ -114,4 +114,10 @@ public class BoardServiceImpl implements BoardService{
 
         return boardId;
     }
+
+    @Override
+    public void delete(Long boardId) {
+        BoardEntity boardEntity = bor.findById(boardId).get();
+        bor.delete(boardEntity);
+    }
 }
