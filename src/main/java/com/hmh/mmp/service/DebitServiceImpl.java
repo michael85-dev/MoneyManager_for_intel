@@ -3,8 +3,11 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
 import com.hmh.mmp.dto.debit.DebitPagingDTO;
+import com.hmh.mmp.dto.debit.DebitSaveDTO;
+import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.DebitEntity;
+import com.hmh.mmp.repository.BankRepository;
 import com.hmh.mmp.repository.CardRepository;
 import com.hmh.mmp.repository.DebitRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +16,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DebitServiceImpl implements DebitService {
     private final CardRepository crr;
+    private final BankRepository br;
     private final DebitRepository dr;
 
     @Override
@@ -59,5 +66,37 @@ public class DebitServiceImpl implements DebitService {
         }
 
         return debitDetailDTOList;
+    }
+
+    @Override
+    public Long save(DebitSaveDTO debitSaveDTO) throws IOException {
+        System.out.println("DebitServiceImpl.save");
+        // 파일 저장 화
+        MultipartFile debitPhoto = debitSaveDTO.getDebitPhoto();
+        String debitPhotoName = debitPhoto.getOriginalFilename();
+        debitPhotoName = System.currentTimeMillis() + "-" + debitPhotoName;
+        String savePath = "/Users/myungha/Desktop/Github/MoneyManager_for_intel/src/main/resources/photo/debit" + debitPhotoName;
+
+        if(!debitPhoto.isEmpty()) {
+            debitPhoto.transferTo(new File(savePath));
+            debitSaveDTO.setDebitPhotoName(debitPhotoName);
+        }
+
+        // 사용되는 계정 정보와 카드 정보 가지고 오기.
+        BankEntity bankEntity = br.findById(debitSaveDTO.getBankId()).get();
+        CardEntity cardEntity = crr.findById(debitSaveDTO.getCardId()).get();
+
+        // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가.
+        Long totalAsset = cardEntity.getTotalAsset();
+        totalAsset = totalAsset - debitSaveDTO.getMinusAsset();
+        cardEntity.setTotalAsset(totalAsset);
+        crr.save(cardEntity);
+
+        // 해당 데이터 저장하기 -> bankName 어 떻게 해결해야 하는지 필요함 (고민 필요) 미완
+        need.
+        DebitEntity debitEntity = DebitEntity.toSaveData(debitSaveDTO, cardEntity, bankEntity);
+        Long debitId = dr.save(debitEntity).getId();
+
+        return debitId;
     }
 }

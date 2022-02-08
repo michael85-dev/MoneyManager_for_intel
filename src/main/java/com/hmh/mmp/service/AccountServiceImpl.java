@@ -4,10 +4,12 @@ import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.account.AccountDetailDTO;
 import com.hmh.mmp.dto.account.AccountPagingDTO;
 import com.hmh.mmp.dto.account.AccountSaveDTO;
+import com.hmh.mmp.dto.account.AccountUpdateDTO;
 import com.hmh.mmp.entity.AccountEntity;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.repository.AccountRepository;
 import com.hmh.mmp.repository.BankRepository;
+import com.hmh.mmp.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +29,7 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService{
     private final AccountRepository ar;
     private final BankRepository br;
+    private final CardRepository cr;
 
     @Override
     public Long save(AccountSaveDTO accountSaveDTO) throws IOException {
@@ -39,12 +42,15 @@ public class AccountServiceImpl implements AccountService{
             accountPhoto.transferTo(new File(savePath));
             accountSaveDTO.setAccountPhotoName(accountPhotoName);
         }
+
+        // asset 설정
         if (accountSaveDTO.getPlusAsset() != null) {
             accountSaveDTO.setMinusAsset(0L);
         } else {
             accountSaveDTO.setPlusAsset(0L);
         }
 
+        // bank에 금액 입력
         Long bankTotalAsset = br.findById(accountSaveDTO.getBankId()).get().getTotalAsset();
         bankTotalAsset = bankTotalAsset + accountSaveDTO.getPlusAsset() - accountSaveDTO.getMinusAsset();
 
@@ -106,5 +112,49 @@ public class AccountServiceImpl implements AccountService{
         AccountDetailDTO accountDetailDTO = AccountDetailDTO.toMoveData(accountEntity);
 
         return accountDetailDTO;
+    }
+
+    @Override
+    public Long update(AccountUpdateDTO accountUpdateDTO) throws IOException {
+        System.out.println("AccountServiceImpl.update");
+        // 파일 저장
+        MultipartFile accountPhoto = accountUpdateDTO.getAccountPhoto();
+        String accountPhotoName = accountPhoto.getOriginalFilename();
+        accountPhotoName = System.currentTimeMillis() + "-" + accountPhotoName;
+
+        String savePath = "/Users/myungha/Desktop/Github/MoneyManager_for_intel/src/main/resources/photo/account" + accountPhotoName;
+        if (!accountPhoto.isEmpty()) {
+            accountPhoto.transferTo(new File(savePath));
+            accountUpdateDTO.setAccountPhotoName(accountPhotoName);
+        }
+
+        // 자산 및 entity 호출
+        Long bankTotalAsset = br.findById(accountUpdateDTO.getBankId()).get().getTotalAsset();
+        BankEntity bankEntity = br.findById(accountUpdateDTO.getBankId()).get();
+
+        // 금액 부분 설정
+        if (accountUpdateDTO.getMinusAsset() != 0) {
+            accountUpdateDTO.setPlusAsset(0L);
+        } else {
+            accountUpdateDTO.setMinusAsset(0L);
+        }
+
+        // bank에 금액 설정
+        bankTotalAsset = bankTotalAsset + accountUpdateDTO.getPlusAsset() - accountUpdateDTO.getMinusAsset();
+        bankEntity.setTotalAsset(bankTotalAsset);
+
+        // 데이터 전달
+        AccountEntity accountEntity = AccountEntity.toUpdateData(accountUpdateDTO);
+        Long accountId = ar.save(accountEntity).getId();
+
+        return accountId;
+    }
+
+    @Override
+    public void delete(Long accountId) {
+        System.out.println("AccountServiceImpl.delete");
+        AccountEntity accountEntity = ar.findById(accountId).get();
+        ar.delete(accountEntity);
+
     }
 }

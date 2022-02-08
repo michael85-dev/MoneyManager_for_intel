@@ -22,6 +22,8 @@ public class DebitSaveDTO {
     private Long memberId;
     private Long bankId;
 
+    private String bankName;
+
     private LocalDate date;
     private String debitName; //내역명
     private MultipartFile debitPhoto;
@@ -29,6 +31,7 @@ public class DebitSaveDTO {
     private Long minusAsset; // 지출
     private String debitMemo; // 내역
     private Double debitGet; // 할인
+    private Double debitPercent; // 퍼센트 할인
 
     private String firstList; // 대분류
     private String secondList; // 중뷴류

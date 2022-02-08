@@ -21,28 +21,40 @@
         <span th:text="*{cardMemo}">메모</span>
         <span th:text="*{cardPhotoName}">카드이미지</span>
     </div>
-    <!-- 연동 카드 정보 전부 가지고 오기 -->
+    <!-- 연동 카드 정보 전부 가지고 오기 -> 내역을 가지고 오는 것임... -->
     <div>
         <div th:if="${cardDTO.level eq '0'}">
+            <div>
+                <a th:href="@{|/debit/save/${cardDTO.cardId}|}">내역 생성</a>
+            </div>
             <table>
                 <thead>
                     <tr> <!-- 시간에 따라서 나가는 날이 설정되게 하는거... 어떻게 해야할까? -->
                         <th>번호</th>
                         <th>카드명</th>
-                        <th>카드종류</th>
-                        <th>총 사용액</th>
+
+                        <th>사용액</th>
+                        <th>할인액</th>
                         <th>메모</th>
                         <th>영수증</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="ca : ${list}">
-                        <td>번호</td>
-                        <td>카드명</td>
-                        <td>카드종류</td>
-                        <td>총 사용액</td>
-                        <td>메모</td>
-                        <td>영수증</td>
+                    <tr th:each="de : ${dlist}">
+                        <td th:value="${de.debitId}">번호</td>
+                        <td th:value="${de.debitName}">
+                            <a th:href="@{|/debit/${de.debitId}|}">
+                                내역명
+                            </a>
+                        </td>
+
+                        <td th:value="${de.minusAsset}">사용액</td>
+                        <td>할인액</td>
+                        <td th:value="${de.debitMemo}">메모</td>
+                        <td>
+                            <img th:src="" alt="X">
+                            영수증
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +104,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="ca: ${list}">
+                    <tr th:each="cr: ${clist}">
                         <td>번호</td>
                         <td>카드명</td>
                         <td>카드종류</td>

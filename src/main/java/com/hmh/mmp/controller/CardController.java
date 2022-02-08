@@ -83,7 +83,7 @@ public class CardController {
         int level = cardDetailDTO.getLevel();
         if (level == 0) {
             List<DebitDetailDTO> debitDetailDTOList = ds.findAll(cardId);
-            model.addAttribute("list", debitDetailDTOList);
+            model.addAttribute("dlist", debitDetailDTOList);
 
             Page<DebitPagingDTO> debitPage = ds.paging(pageable);
             model.addAttribute("cPage", debitPage);
@@ -95,7 +95,7 @@ public class CardController {
 
         } else {
             List<CreditDetailDTO> creditDetailDTOList = cds.findAll(cardId);
-            model.addAttribute("list", creditDetailDTOList);
+            model.addAttribute("clist", creditDetailDTOList);
 
             Page<CreditPagingDTO> creditPage = cds.paging(pageable);
             model.addAttribute("cPage", creditPage);

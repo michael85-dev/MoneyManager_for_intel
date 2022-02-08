@@ -25,9 +25,10 @@ public class CreditEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private CardEntity cardEntity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_id")
-    private BankEntity bankEntity;
+
+    @OneToMany(mappedBy = "creditEntity", fetch = FetchType.LAZY)
+    private List<BankEntity> bankEntityList= new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;

@@ -16,9 +16,9 @@
         번호 : <input type="text" name="accountId" th:value="*{accountId}" readonly>
         내역 : <input type="text" name="accountName" th:value="*{accountName}">
         사용액 : <select>
-        <option disabled>선택하세요</option>
-        <option>수입</option>
-        <option>지출</option>
+                <option disabled>선택하세요</option>
+                <option name="plusAsset" th:value="*{plusAsset}">수입</option>
+                <option >지출</option>
             </select>
         메모 : <textarea name="accountMemo" th:value="*{accountMemo}" rows="10"></textarea>
         파일 : <input type="file" th:field="*{accountPhoto}">

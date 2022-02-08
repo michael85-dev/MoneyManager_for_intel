@@ -1,5 +1,6 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.debit.DebitSaveDTO;
 import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "debit_entity")
-public class DebitEntity {
+public class DebitEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "debit_id")
@@ -23,15 +24,17 @@ public class DebitEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private CardEntity cardEntity;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_id")
-    private BankEntity bankEntity;
+
+    @OneToMany(mappedBy = "debitEntity", fetch = FetchType.LAZY)
+    private List<BankEntity> bankEntityList= new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "debitEntity")
     private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
+    // bankName.... 이 필요한데. (정확히... 맞나?)
 
     private LocalDate calDate;
     private LocalDateTime calTime;
@@ -41,4 +44,17 @@ public class DebitEntity {
     private String debitMemo; // 내역
     private Double debitGet; // 할인
     private Double debitPercent; // 할인율
+
+    public static DebitEntity toSaveData(DebitSaveDTO debitSaveDTO, CardEntity cardEntity, BankEntity bankEntity) {
+        DebitEntity debitEntity = new DebitEntity();
+        debitEntity.setCardEntity(cardEntity);
+        debitEntity.setDebitGet(debitSaveDTO.getDebitGet());
+        debitEntity.setBankEntityList(); // 해당 값을 List가 아니라. 정확한 하나의 값으로 정해서 줘야하는데 어떻게 줘야하는가...?
+        debitEntity.setDebitMemo(debitSaveDTO.getDebitMemo());
+        debitEntity.setDebitName(debitSaveDTO.getDebitName());
+        debitEntity.setDebitPercent(debitSaveDTO.getDebitPercent());
+        debitEntity.setDebitPhotoName(debitSaveDTO.getDebitPhotoName());
+
+        return debitEntity;
+    }
 }

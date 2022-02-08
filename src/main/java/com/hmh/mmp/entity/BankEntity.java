@@ -36,10 +36,14 @@ public class BankEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
     private List<AccountEntity> accountEntityList= new ArrayList<>();
-    @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
-    private List<CreditEntity> creditEntityList= new ArrayList<>();
-    @OneToMany(mappedBy = "bankEntity", fetch = FetchType.LAZY)
-    private List<DebitEntity> debitEntityList= new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "credit_id")
+    private CreditEntity creditEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "debit_id")
+    private DebitEntity debitEntity;
 
     // BankEntity에다가 Save와 Update등의 내용을 담아야함....
     public static BankEntity saveBank(BankSaveDTO bankSaveDTO, MemberEntity memberEntity) {

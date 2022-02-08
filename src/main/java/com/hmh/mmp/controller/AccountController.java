@@ -2,6 +2,7 @@ package com.hmh.mmp.controller;
 
 import com.hmh.mmp.dto.account.AccountDetailDTO;
 import com.hmh.mmp.dto.account.AccountSaveDTO;
+import com.hmh.mmp.dto.account.AccountUpdateDTO;
 import com.hmh.mmp.dto.bank.BankDetailDTO;
 import com.hmh.mmp.service.AccountService;
 import com.hmh.mmp.service.BankService;
@@ -64,5 +65,21 @@ public class AccountController {
         model.addAttribute("aDTO", accountDetailDTO);
 
         return "account/update";
+    }
+
+    @PostMapping("update")
+    public String update(@ModelAttribute AccountUpdateDTO accountUpdateDTO) throws IOException {
+        System.out.println("AccountController.update");
+        Long accountId = as.update(accountUpdateDTO);
+
+        return "redirect:/account/findById" + accountId;
+    }
+
+    @GetMapping("delete/{accountId}")
+    public String delete(@PathVariable("accountId") Long accountId) {
+        System.out.println("AccountController.delete");
+        as.delete(accountId);
+
+        return "redirect:/account/findAll"; // /account/로 해야하나?
     }
 }
