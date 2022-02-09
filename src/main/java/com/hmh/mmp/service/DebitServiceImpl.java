@@ -86,6 +86,8 @@ public class DebitServiceImpl implements DebitService {
         BankEntity bankEntity = br.findById(debitSaveDTO.getBankId()).get();
         CardEntity cardEntity = crr.findById(debitSaveDTO.getCardId()).get();
 
+        // bank에 바로 반영하기.
+
         // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가.
         Long totalAsset = cardEntity.getTotalAsset();
         totalAsset = totalAsset - debitSaveDTO.getMinusAsset();
@@ -98,5 +100,10 @@ public class DebitServiceImpl implements DebitService {
         Long debitId = dr.save(debitEntity).getId();
 
         return debitId;
+    }
+
+    @Override
+    public DebitDetailDTO findById(Long debitId) {
+        return null;
     }
 }

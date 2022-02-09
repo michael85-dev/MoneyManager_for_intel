@@ -15,4 +15,6 @@ public interface DebitService {
     List<DebitDetailDTO> findAll(Long cardId);
 
     Long save(DebitSaveDTO debitSaveDTO) throws IOException;
+
+    DebitDetailDTO findById(Long debitId);
 }

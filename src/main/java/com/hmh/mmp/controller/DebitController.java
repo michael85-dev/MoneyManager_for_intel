@@ -44,7 +44,9 @@ public class DebitController {
     @GetMapping("{debitId}")
     public String findById(@PathVariable("debitId") Long debitId, Model model) {
         System.out.println("DebitController.findById");
-        
+
+        DebitDetailDTO debitDetailDTO = ds.findById(debitId);
+        model.addAttribute("deDTO", debitDetailDTO);
 
         return "debit/findById";
     }
