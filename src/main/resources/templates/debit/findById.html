@@ -14,7 +14,23 @@
 </header>
 <main>
     <div>
-        <a th:href="@{|/debit/update/${debitId}|}"
+        <a th:href="@{|/debit/update/${deDTO.debitId}|}">수정</a> <a th:href="@{|/debit/delete/${deDTO.debitId}|}">삭제</a>
+    </div>
+    <div th:object="${deDTO}">
+        <span th:text="*{debitId}">번호</span>
+        <span th:text="*{debitName}">카드명</span>
+        <span th:text="*{minusAsset}">사용액</span>
+        <div th:if="*{debitPercent eq '0'}">
+            <span>할인</span>
+        </div>
+        <div th:if="*{debitGet eq '0'}">
+            <span>할인</span>
+        </div>
+        <span th:text="*{debitMemo}">메모</span>
+        <span>
+            <img src="" alt="">
+                영수증
+        </span>
     </div>
 </main>
 <footer>

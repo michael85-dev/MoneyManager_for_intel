@@ -4,6 +4,7 @@ import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
 import com.hmh.mmp.dto.debit.DebitPagingDTO;
 import com.hmh.mmp.dto.debit.DebitSaveDTO;
+import com.hmh.mmp.dto.debit.DebitUpdateDTO;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.DebitEntity;
@@ -104,6 +105,29 @@ public class DebitServiceImpl implements DebitService {
 
     @Override
     public DebitDetailDTO findById(Long debitId) {
-        return null;
+        System.out.println("DebitServiceImpl.findById");
+
+        DebitEntity debitEntity = dr.findById(debitId).get();
+        DebitDetailDTO debitDetailDTO = DebitDetailDTO.toMoveData(debitEntity);
+
+        return debitDetailDTO;
+    }
+
+    @Override
+    public void delete(Long debitId) {
+        System.out.println("DebitServiceImpl.delete");
+
+        DebitEntity debitEntity = dr.findById(debitId).get();
+        dr.delete(debitEntity);
+
+    }
+
+    @Override
+    public Long update(DebitUpdateDTO debitUpdateDTO) {
+        System.out.println("DebitServiceImpl.update");
+        DebitEntity debitEntity = DebitEntity.toUpdateData(debitUpdateDTO);
+        Long debitId = dr.save(debitEntity).getId();
+
+        return debitId;
     }
 }

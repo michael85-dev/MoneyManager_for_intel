@@ -3,6 +3,7 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
 import com.hmh.mmp.dto.debit.DebitPagingDTO;
 import com.hmh.mmp.dto.debit.DebitSaveDTO;
+import com.hmh.mmp.dto.debit.DebitUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,8 @@ public interface DebitService {
     Long save(DebitSaveDTO debitSaveDTO) throws IOException;
 
     DebitDetailDTO findById(Long debitId);
+
+    void delete(Long debitId);
+
+    Long update(DebitUpdateDTO debitUpdateDTO);
 }

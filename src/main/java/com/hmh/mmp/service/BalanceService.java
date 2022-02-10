@@ -11,4 +11,6 @@ public interface BalanceService {
     List<BalanceDetailDTO> findAll(Long cashId);
 
     Page<BalancePagingDTO> paging(Pageable pageable);
+
+    BalanceDetailDTO findById(Long balanceId);
 }

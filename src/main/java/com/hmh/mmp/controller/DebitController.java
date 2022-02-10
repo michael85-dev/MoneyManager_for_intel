@@ -2,6 +2,7 @@ package com.hmh.mmp.controller;
 
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
 import com.hmh.mmp.dto.debit.DebitSaveDTO;
+import com.hmh.mmp.dto.debit.DebitUpdateDTO;
 import com.hmh.mmp.service.BankService;
 import com.hmh.mmp.service.CardService;
 import com.hmh.mmp.service.DebitService;
@@ -47,6 +48,34 @@ public class DebitController {
 
         DebitDetailDTO debitDetailDTO = ds.findById(debitId);
         model.addAttribute("deDTO", debitDetailDTO);
+
+        return "debit/findById";
+    }
+
+    @GetMapping("delete/{debitId}")
+    public String delete(@PathVariable("debitId") Long debitId) {
+        System.out.println("DebitController.delete");
+        DebitDetailDTO debitDetailDTO = ds.findById(debitId);
+        Long cardId = debitDetailDTO.getCardId();
+
+        ds.delete(debitId);
+
+        return "redirect:/card/" + cardId;
+    }
+
+    @GetMapping("update/{debitId}")
+    public String updateForm(@PathVariable("debitId") Long debitId, Model model) {
+        System.out.println("DebitController.updateForm");
+        DebitDetailDTO debitDetailDTO = ds.findById(debitId);
+        model.addAttribute("deDTO", debitDetailDTO);
+
+        return "debit/update";
+    }
+
+    @PostMapping("update")
+    public String update(@ModelAttribute DebitUpdateDTO debitUpdateDTO) {
+        System.out.println("DebitController.update");
+        Long debitId = ds.update(debitUpdateDTO);
 
         return "debit/findById";
     }

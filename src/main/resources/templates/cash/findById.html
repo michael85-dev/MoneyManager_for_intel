@@ -25,39 +25,74 @@
     <div>
         <button onclick="bToMain()">돌아가기</button>
     </div>
-    <div class="container">
-        <div class="pagination">
-            <li class="page-item">
-                <a class="page-link" th:href="@{/cash/(page=1)}">
-                    <span>First</span>
-                </a>
-            </li>
 
-            <li th:class="${balancePage.first} ? 'disabled'" class="page-item">
-                <a class="page-link" th:href="${balancePage.first}  '#' : @{/cash/(page=${balancePage.number})}">
-                    <span>&lt;</span>
-                </a>
-            </li>
+    <div>
+        balance 전체 내역 보여주기
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>내역</th>
+                    <th>수입</th>
+                    <th>지출</th>
+                    <th>메모</th>
+                    <th>영수증</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ba: ${baList}">
+                    <td th:value="*{ba.balanceId}">번호</td>
+                    <td th:value="*{ba.balanceName}">
+                        <a th:href="@{|/balance/@{ba.balanceId}|}">
+                            내역
+                        </a>
+                    </td>
+                    <td th:value="*{ba.plusAsset}">수입</td>
+                    <td th:value="*{ba.minusAsset}">지출</td>
+                    <td th:value="*{ba.balanceMemo}">메모</td>
+                    <td>
+                        <img src="" alt="">
+                        영수증
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            <!-- 해당 부분 오류 발생 원인 찾아야 함. -->
-            <li th:each="page: ${#numbers.sequence(balanceStartPage, balanceEndPage)}"
-                th:class="${page == balancePage.number + 1} ? 'active'" class="page-item">
-                <a class="page-link" th:text="${page}" th:href="@{/cash/(page=${page})}"></a>
-            </li>
+        <div class="container">
+            <div class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/balance/(page=1)}">
+                        <span>First</span>
+                    </a>
+                </li>
 
-            <li th:class="${balancePage.last} ? 'disabled'">
-                <a class="page-link" th:href="${balancePage.last} ? '#' : @{/cash/(page=${balancePage.number + 2})}">
-                    <span>&gt;</span>
-                </a>
-            </li>
+                <li th:class="${balancePage.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${balancePage.first}  '#' : @{/balance/(page=${balancePage.number})}">
+                        <span>&lt;</span>
+                    </a>
+                </li>
 
-            <li class="page-item">
-                <a class="page-link" th:href="@{/cash/(paeg=${balancePage.totalPages})}">
-                    <span>Last</span>
-                </a>
-            </li>
+                <!-- 해당 부분 오류 발생 원인 찾아야 함. -->
+                <li th:each="page: ${#numbers.sequence(balanceStartPage, balanceEndPage)}"
+                    th:class="${page == balancePage.number + 1} ? 'active'" class="page-item">
+                    <a class="page-link" th:text="${page}" th:href="@{/balance/(page=${page})}"></a>
+                </li>
 
-        </div>
+                <li th:class="${balancePage.last} ? 'disabled'">
+                    <a class="page-link" th:href="${balancePage.last} ? '#' : @{/balance/(page=${balancePage.number + 2})}">
+                        <span>&gt;</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/balance/(paeg=${balancePage.totalPages})}">
+                        <span>Last</span>
+                    </a>
+                </li>
+
+            </div>
+    </div>
+
     </div>
 </section>
 </body>

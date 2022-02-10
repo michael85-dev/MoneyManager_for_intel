@@ -85,7 +85,7 @@ public class CashController {
 
         // balance에 대한 내역 불러와서 페이징 처리 필요
         List<BalanceDetailDTO> balanceDetailDTOList = bas.findAll(cashId);
-        model.addAttribute("balanceList", balanceDetailDTOList);
+        model.addAttribute("baList", balanceDetailDTOList);
 
         Page<BalancePagingDTO> balancePaging = bas.paging(pageable);
         model.addAttribute("balancePage", balancePaging);

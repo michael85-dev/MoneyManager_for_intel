@@ -1,6 +1,7 @@
 package com.hmh.mmp.entity;
 
 import com.hmh.mmp.dto.debit.DebitSaveDTO;
+import com.hmh.mmp.dto.debit.DebitUpdateDTO;
 import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,5 +57,11 @@ public class DebitEntity extends BaseEntity {
         debitEntity.setDebitPhotoName(debitSaveDTO.getDebitPhotoName());
 
         return debitEntity;
+    }
+
+    public static DebitEntity toUpdateData(DebitUpdateDTO debitUpdateDTO) {
+        DebitEntity debitEntity = new DebitEntity();
+        debitEntity.setDebitPhotoName(debitUpdateDTO.getDebitPhotoName());
+        
     }
 }

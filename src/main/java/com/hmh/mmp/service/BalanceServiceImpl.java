@@ -59,4 +59,14 @@ public class BalanceServiceImpl implements BalanceService{
 
         return balancePage;
     }
+
+    @Override
+    public BalanceDetailDTO findById(Long balanceId) {
+        System.out.println("BalanceServiceImpl.findById");
+
+        BalanceEntity balanceEntity = bar.findById(balanceId).get();
+        BalanceDetailDTO balanceDetailDTO = BalanceDetailDTO.toMoveData(balanceEntity);
+
+        return balanceDetailDTO;
+    }
 }
