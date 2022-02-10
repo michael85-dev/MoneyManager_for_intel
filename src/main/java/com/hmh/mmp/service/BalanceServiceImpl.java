@@ -3,6 +3,7 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.balance.BalanceDetailDTO;
 import com.hmh.mmp.dto.balance.BalancePagingDTO;
+import com.hmh.mmp.dto.balance.BalanceUpdateDTO;
 import com.hmh.mmp.entity.BalanceEntity;
 import com.hmh.mmp.entity.CashEntity;
 import com.hmh.mmp.repository.BalanceRepository;
@@ -68,5 +69,22 @@ public class BalanceServiceImpl implements BalanceService{
         BalanceDetailDTO balanceDetailDTO = BalanceDetailDTO.toMoveData(balanceEntity);
 
         return balanceDetailDTO;
+    }
+
+    @Override
+    public Long update(BalanceUpdateDTO balanceUpdateDTO) {
+        System.out.println("BalanceServiceImpl.update");
+
+        BalanceEntity balanceEntity = BalanceEntity.toUpdateData(balanceUpdateDTO);
+        Long balanceId = bar.save(balanceEntity).getId();
+        return balanceId;
+    }
+
+    @Override
+    public void delete(Long balanceId) {
+        System.out.println("BalanceServiceImpl.delete");
+        BalanceEntity balanceEntity = bar.findById(balanceId).get();
+
+        bar.delete(balanceEntity);
     }
 }

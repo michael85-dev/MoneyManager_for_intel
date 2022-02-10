@@ -2,6 +2,7 @@ package com.hmh.mmp.service;
 
 import com.hmh.mmp.dto.balance.BalanceDetailDTO;
 import com.hmh.mmp.dto.balance.BalancePagingDTO;
+import com.hmh.mmp.dto.balance.BalanceUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,8 @@ public interface BalanceService {
     Page<BalancePagingDTO> paging(Pageable pageable);
 
     BalanceDetailDTO findById(Long balanceId);
+
+    Long update(BalanceUpdateDTO balanceUpdateDTO);
+
+    void delete(Long balanceId);
 }
