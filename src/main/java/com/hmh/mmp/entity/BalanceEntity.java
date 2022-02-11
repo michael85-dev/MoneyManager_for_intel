@@ -1,5 +1,7 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.balance.BalanceSaveDTO;
+import com.hmh.mmp.dto.balance.BalanceUpdateDTO;
 import com.hmh.mmp.entity.list.FirstListEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,8 +41,37 @@ public class BalanceEntity extends BaseEntity {
     private Long plusAsset;
     private Long minusAsset;
 
+    private Double balanceGet; // 할인액
+    private Double balancePercents; // 할인율
+
     private Double rate; // 이자?
     private String balancePhotoName;
 
 
+    public static BalanceEntity toUpdateData(BalanceUpdateDTO balanceUpdateDTO) {
+        BalanceEntity balanceEntity = new BalanceEntity();
+        balanceEntity.setBalanceGet(balanceUpdateDTO.getBalanceGet());
+        balanceEntity.setBalanceMemo(balanceUpdateDTO.getBalanceMemo());
+        balanceEntity.setBalanceName(balanceUpdateDTO.getBalanceName());
+        balanceEntity.setBalancePercents(balanceEntity.getBalancePercents());
+        balanceEntity.setBalancePhotoName(balanceUpdateDTO.getBalancePhotoName());
+        balanceEntity.setMinusAsset(balanceUpdateDTO.getMinusAsset());
+        balanceEntity.setPlusAsset(balanceUpdateDTO.getPlusAsset());
+
+        return balanceEntity;
+    }
+
+    public static BalanceEntity toSaveData(BalanceSaveDTO balanceSaveDTO, CashEntity cashEntity) {
+        BalanceEntity balanceEntity = new BalanceEntity();
+        balanceEntity.setCashEntity(cashEntity);
+        balanceEntity.setBalanceGet(balanceSaveDTO.getBalanceGet());
+        balanceEntity.setBalanceName(balanceSaveDTO.getBalanceName());
+        balanceEntity.setBalanceMemo(balanceSaveDTO.getBalanceMemo());
+        balanceEntity.setBalancePercents(balanceSaveDTO.getBalancePercents());
+        balanceEntity.setPlusAsset(balanceSaveDTO.getPlusAsset());
+        balanceEntity.setMinusAsset(balanceSaveDTO.getMinusAsset());
+        balanceEntity.setBalancePhotoName(balanceSaveDTO.getBalancePhotoName());
+
+        return balanceEntity;
+    }
 }

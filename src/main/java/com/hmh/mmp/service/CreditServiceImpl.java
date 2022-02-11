@@ -3,6 +3,7 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.credit.CreditDetailDTO;
 import com.hmh.mmp.dto.credit.CreditPagingDTO;
+import com.hmh.mmp.dto.credit.CreditSaveDTO;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.CreditEntity;
 import com.hmh.mmp.repository.CardRepository;
@@ -59,5 +60,16 @@ public class CreditServiceImpl implements CreditService {
         }
 
         return creditDetailDTOList;
+    }
+
+    @Override
+    public Long save(CreditSaveDTO creditSaveDTO) {
+        System.out.println("CreditServiceImpl.save");
+
+
+        CardEntity cardEntity = crr.findById(creditSaveDTO.getCardId()).get();
+        CreditEntity creditEntity = CreditEntity.toSaveData(creditSaveDTO, cardEntity);
+        Long creditId = cdr.save(creditEntity).getId();
+        return creditId;
     }
 }

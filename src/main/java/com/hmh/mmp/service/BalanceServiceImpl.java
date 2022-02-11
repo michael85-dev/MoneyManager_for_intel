@@ -3,6 +3,7 @@ package com.hmh.mmp.service;
 import com.hmh.mmp.common.PagingConst;
 import com.hmh.mmp.dto.balance.BalanceDetailDTO;
 import com.hmh.mmp.dto.balance.BalancePagingDTO;
+import com.hmh.mmp.dto.balance.BalanceSaveDTO;
 import com.hmh.mmp.dto.balance.BalanceUpdateDTO;
 import com.hmh.mmp.entity.BalanceEntity;
 import com.hmh.mmp.entity.CashEntity;
@@ -14,7 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,9 +76,28 @@ public class BalanceServiceImpl implements BalanceService{
     }
 
     @Override
-    public Long update(BalanceUpdateDTO balanceUpdateDTO) {
+    public Long update(BalanceUpdateDTO balanceUpdateDTO) throws IOException {
         System.out.println("BalanceServiceImpl.update");
+        // 사진 호출
+        MultipartFile balancePhoto = balanceUpdateDTO.getBalancePhoto();
+        String balancePhotoName = balancePhoto.getOriginalFilename();
+        balancePhotoName = System.currentTimeMillis() + "-" + balancePhotoName;
 
+        String savePath = "" + balancePhotoName;
+        if (!balancePhoto.isEmpty()) {
+            balancePhoto.transferTo(new File(savePath));
+            balanceUpdateDTO.setBalancePhotoName(balancePhotoName);
+        }
+
+        // 금액을 현금 계좌에 반영
+        CashEntity cashEntity = csr.findById(balanceUpdateDTO.getCashId()).get(); // cash 항목 꺼내기
+        Long totalAsset = cashEntity.getTotalAsset();// cash의 해당 총 금액
+        totalAsset = totalAsset + balanceUpdateDTO.getPlusAsset() - balanceUpdateDTO.getMinusAsset();
+        cashEntity.setTotalAsset(totalAsset);
+
+        csr.save(cashEntity); // 해당 항목 넣어서 업데이트
+
+        // 데이터 저장
         BalanceEntity balanceEntity = BalanceEntity.toUpdateData(balanceUpdateDTO);
         Long balanceId = bar.save(balanceEntity).getId();
         return balanceId;
@@ -86,5 +109,36 @@ public class BalanceServiceImpl implements BalanceService{
         BalanceEntity balanceEntity = bar.findById(balanceId).get();
 
         bar.delete(balanceEntity);
+    }
+
+    @Override
+    public Long save(BalanceSaveDTO balanceSaveDTO) throws IOException {
+        System.out.println("BalanceServiceImpl.save");
+        // 사진 저장
+        MultipartFile balancePhoto = balanceSaveDTO.getBalancePhoto();
+        String balancePhotoName = balancePhoto.getOriginalFilename();
+        balancePhotoName = System.currentTimeMillis() + "-" + balancePhotoName;
+
+        String savePath = "" + balancePhotoName;
+
+        if (!balancePhoto.isEmpty()) {
+            balancePhoto.transferTo(new File(savePath));
+            balanceSaveDTO.setBalancePhotoName(balancePhotoName);
+        }
+
+        // 금액을 현금 계좌에 반영
+        CashEntity cashEntity = csr.findById(balanceSaveDTO.getCashId()).get(); // cash 항목 꺼내기
+        Long totalAsset = cashEntity.getTotalAsset();// cash의 해당 총 금액
+        totalAsset = totalAsset + balanceSaveDTO.getPlusAsset() - balanceSaveDTO.getMinusAsset();
+        cashEntity.setTotalAsset(totalAsset);
+
+        csr.save(cashEntity); // 해당 항목 넣어서 업데이트
+
+
+        //데이터 저장
+        BalanceEntity balanceEntity = BalanceEntity.toSaveData(balanceSaveDTO, cashEntity);
+
+        Long balanceId = bar.save(balanceEntity).getId();
+        return balanceId;
     }
 }

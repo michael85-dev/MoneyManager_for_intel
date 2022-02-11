@@ -92,6 +92,9 @@
             </div>
         </div>
         <div th:if="${cardDTO.level ne '0'}">
+            <div>
+                <a th:href="@{|/credit/save/${cardDTO.cardId}|}">내역 생성</a>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -105,12 +108,19 @@
                 </thead>
                 <tbody>
                     <tr th:each="cr: ${clist}">
-                        <td>번호</td>
-                        <td>카드명</td>
-                        <td>카드종류</td>
-                        <td>총 사용액</td>
-                        <td>메모</td>
-                        <td>영수증</td>
+                        <td th:value="*{cr.creditId}">번호</td>
+                        <td th:value="*{cr.creditName}">
+                            <a th:href="@{|/credit/${cr.creditId}|}">
+                                내역
+                            </a>
+                        </td>
+                        <td th:value="*{cr.bankId}">연결은행</td> <!-- 연결 방법 확인 필요 -->
+                        <td th:value="*{cr.minusAsset}">총 사용액</td>
+                        <td th:value="*{cr.creditMemo}">메모</td>
+                        <td>
+                            <img th:src="" alt="">
+                            영수증
+                        </td>
                     </tr>
                 </tbody>
             </table>

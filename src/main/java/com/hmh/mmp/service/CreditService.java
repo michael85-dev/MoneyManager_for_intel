@@ -2,6 +2,7 @@ package com.hmh.mmp.service;
 
 import com.hmh.mmp.dto.credit.CreditDetailDTO;
 import com.hmh.mmp.dto.credit.CreditPagingDTO;
+import com.hmh.mmp.dto.credit.CreditSaveDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,4 +12,6 @@ public interface CreditService {
     Page<CreditPagingDTO> paging(Pageable pageable);
 
     List<CreditDetailDTO> findAll(Long cardId);
+
+    Long save(CreditSaveDTO creditSaveDTO);
 }

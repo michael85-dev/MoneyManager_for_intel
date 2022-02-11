@@ -28,6 +28,9 @@
 
     <div>
         balance 전체 내역 보여주기
+        <div>
+            <A th:href="@{|/balance/save/@{cashDTO.cashId}|}">내역 생성</A>
+        </div>
         <table>
             <thead>
                 <tr>

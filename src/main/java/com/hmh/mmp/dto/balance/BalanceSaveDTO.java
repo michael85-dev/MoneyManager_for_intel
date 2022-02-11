@@ -28,6 +28,9 @@ public class BalanceSaveDTO {
     private MultipartFile balancePhoto;
     private String balancePhotoName;
 
+    private Double balanceGet;
+    private Double balancePercents;
+
     private double rate;
 
     private String firstList; // 대분류

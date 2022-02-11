@@ -1,5 +1,6 @@
 package com.hmh.mmp.entity;
 
+import com.hmh.mmp.dto.credit.CreditSaveDTO;
 import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Data;
 import lombok.Getter;
@@ -45,5 +46,20 @@ public class CreditEntity {
     private Double rate; // 할부이자.
     private Integer month; // 할부
     private Double creditGet; // 캐쉬백
-    private Double creditPercent; // 캐쉬백
+    private Double creditPercents; // 캐쉬백
+
+    public static CreditEntity toSaveData(CreditSaveDTO creditSaveDTO, CardEntity cardEntity) {
+        CreditEntity creditEntity = new CreditEntity();
+        creditEntity.setCardEntity(cardEntity);
+        creditEntity.setCreditGet(creditSaveDTO.getCreditGet());
+        creditEntity.setCreditMemo(creditSaveDTO.getCreditMemo());
+        creditEntity.setCreditName(creditSaveDTO.getCreditName());
+        creditEntity.setCreditPercents(creditSaveDTO.getCreditPercents());
+        creditEntity.setCreditPhotoName(creditSaveDTO.getCreditPhotoName());
+        creditEntity.setMinusAsset(creditSaveDTO.getMinusAsset());
+        creditEntity.setMonth(creditSaveDTO.getMonth());
+        creditEntity.setRate(creditSaveDTO.getRate());
+
+        return creditEntity;
+    }
 }
