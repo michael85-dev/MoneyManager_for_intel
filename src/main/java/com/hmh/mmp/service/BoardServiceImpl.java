@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional
     public BoardDetailDTO findById(Long boardId) {
         System.out.println("BoardServiceImpl.findById");
         // 데이터를 가지고 오고
@@ -69,7 +71,14 @@ public class BoardServiceImpl implements BoardService{
 //        데이터를 보내고
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.toMoveData(boardEntity);
         // 조회수 저장 관련 코드 필요함.
-        bor.hits?
+        bor.hits?;
+
+        // Hit 관련 건
+        // int hits = boardEntity.getBoardHits();
+//        hits = hits + 1;
+//        boardEntity.setBoardHits(hits);
+
+//        int hits = br.boardHits(boardId);
 
         return boardDetailDTO;
     }
@@ -106,6 +115,12 @@ public class BoardServiceImpl implements BoardService{
             boardSaveDTO.setBoardPhotoName(boardPhotoName);
         }
 
+        // 조회수 관련 언급
+        int hits = boardSaveDTO.getBoardHits();
+        hits = 0;
+        boardSaveDTO.setBoardHits(hits);
+
+        //
         MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
 
         // 데이터 저장
