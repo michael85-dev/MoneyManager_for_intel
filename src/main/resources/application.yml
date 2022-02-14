@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # mysql의 엔진을 쓴다 라는 개념.
     show-sql: true
     hibernate:
-      ddl-auto: update # ?? 이게 뭔데? ddl : data definition language?
+      ddl-auto: create # ?? 이게 뭔데? ddl : data definition language?
   servlet:
     multipart:
       max-file-size: 20MB # 최대 파일 사이즈 20MB

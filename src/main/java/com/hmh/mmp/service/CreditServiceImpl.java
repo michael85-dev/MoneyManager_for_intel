@@ -1,9 +1,11 @@
 package com.hmh.mmp.service;
 
 import com.hmh.mmp.common.PagingConst;
+import com.hmh.mmp.dto.card.CardDetailDTO;
 import com.hmh.mmp.dto.credit.CreditDetailDTO;
 import com.hmh.mmp.dto.credit.CreditPagingDTO;
 import com.hmh.mmp.dto.credit.CreditSaveDTO;
+import com.hmh.mmp.dto.credit.CreditUpdateDTO;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.CreditEntity;
 import com.hmh.mmp.repository.CardRepository;
@@ -69,6 +71,46 @@ public class CreditServiceImpl implements CreditService {
 
         CardEntity cardEntity = crr.findById(creditSaveDTO.getCardId()).get();
         CreditEntity creditEntity = CreditEntity.toSaveData(creditSaveDTO, cardEntity);
+        Long creditId = cdr.save(creditEntity).getId();
+        return creditId;
+    }
+
+    @Override
+    public CreditDetailDTO findById(Long creditId) {
+        System.out.println("CreditServiceImpl.findById");
+        CreditEntity creditEntity = cdr.findById(creditId).get();
+        CreditDetailDTO creditDetailDTO = CreditDetailDTO.toMoveData(creditEntity);
+
+        return creditDetailDTO;
+    }
+
+    @Override
+    public void delete(Long creditId) {
+        System.out.println("CreditServiceImpl.delete");
+        CreditEntity creditEntity = cdr.findById(creditId).get();
+        cdr.delete(creditEntity);
+    }
+
+    @Override
+    public Long update(CreditUpdateDTO creditUpdateDTO) {
+        System.out.println("CreditServiceImpl.update");
+        CreditEntity creditEntity = cdr.findById(creditUpdateDTO.getCreditId()).get();
+        CardEntity cardEntity = crr.findById(creditUpdateDTO.getCardId()).get();
+        Long minusAsset = creditEntity.getMinusAsset();
+
+        // 할부 이자 계산 필요
+
+        // 할부 분활하여 적용하는 방법 필요.
+
+
+        // 자산 처리..
+        Long totalAsset = cardEntity.getTotalAsset();
+        totalAsset = totalAsset - minusAsset;
+        cardEntity.setTotalAsset(totalAsset);
+        crr.save(cardEntity);
+
+        // 데이터 이관
+        creditEntity = CreditEntity.toUpdateData(creditUpdateDTO);
         Long creditId = cdr.save(creditEntity).getId();
         return creditId;
     }

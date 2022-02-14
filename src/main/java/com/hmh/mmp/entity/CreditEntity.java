@@ -1,6 +1,7 @@
 package com.hmh.mmp.entity;
 
 import com.hmh.mmp.dto.credit.CreditSaveDTO;
+import com.hmh.mmp.dto.credit.CreditUpdateDTO;
 import com.hmh.mmp.entity.list.CardFirstListEntity;
 import lombok.Data;
 import lombok.Getter;
@@ -59,6 +60,20 @@ public class CreditEntity {
         creditEntity.setMinusAsset(creditSaveDTO.getMinusAsset());
         creditEntity.setMonth(creditSaveDTO.getMonth());
         creditEntity.setRate(creditSaveDTO.getRate());
+
+        return creditEntity;
+    }
+
+    public static CreditEntity toUpdateData(CreditUpdateDTO creditUpdateDTO) {
+        CreditEntity creditEntity = new CreditEntity();
+        creditEntity.setCreditPhotoName(creditUpdateDTO.getCreditPhotoName());
+        creditEntity.setCreditMemo(creditUpdateDTO.getCreditMemo());
+        creditEntity.setCreditGet(creditUpdateDTO.getCreditGet());
+        creditEntity.setCreditPercents(creditUpdateDTO.getCreditPercents());
+        creditEntity.setCreditName(creditUpdateDTO.getCreditName());
+        creditEntity.setMonth(creditUpdateDTO.getMonth());
+        creditEntity.setMinusAsset(creditUpdateDTO.getMinusAsset());
+        creditEntity.setRate(creditUpdateDTO.getRate());
 
         return creditEntity;
     }

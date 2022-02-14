@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <form action="/credit/update" method="post" enctype="multipart/form-data" th:object="${crDTO}">
+        번호 : <input type="text" name="creditId" th:value="*{creditId}" readonly>
+        내역 : <input type="text" name="creditName" th:value="*{creditName}">
+        카드 종류 : <!-- 필요는 없겠군. -->
+        <select>
+            <option disabled>선택하세요</option>
+            <option name="??">체크카드</option>
+            <option name="??">신용카드</option>
+        </select>
+        할부 : <input type="text" name="month" th:value="*{month}">
+        <div th:if="*{month ne '0'}">
+            <input type="text" name="rate">
+        </div>
+        할인 :
+        <select>
+            <option disabled>선택하세요</option>
+            <option name="creditPercents" th:value="*{creditPercents}">정인율</option>
+            <option name="creditGet" th:value="*{creditGet}">할인액</option>
+        </select>
+`       메모 : <textarea th:value="*{creditMemo}" name="creditMemo" rows="5"></textarea>
+        영수증 : <input type="file" name="creditPhoto">
+        <input type="submit" value="수정"><button onclick="bToMain()">돌아가기</button>
+    </form>
+</main>
+<footer>
+
+</footer>
+</body>
+<script>
+    function bToMain() {
+        const creditId = '[[${crDTO.creditId}]]'
+        location.href="credit/" + creditId;
+    }
+</script>
+</html>
