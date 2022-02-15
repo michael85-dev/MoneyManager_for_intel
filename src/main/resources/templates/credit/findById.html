@@ -24,7 +24,7 @@
     <div th:object="${crDTO}">
         <span th:text="*{creditId}">번호</span>
         <span th:text="*{creditName}">내역</span>
-        <span th:text="*{}">카드종류</span>
+        <span th:text="*{account}">계좌종류</span> <!-- bankEntity의 해당 항목을 가지고 와야 할 꺼 같긴한데. -->
         <span th:text="*{minusAsset}">사용액</span>
         <span th:text="*{month}">할부</span>
         <div>

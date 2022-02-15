@@ -39,9 +39,9 @@ public class CreditServiceImpl implements CreditService {
                         credit.getCreditMemo(),
                         credit.getCreditName(),
                         credit.getCreditPhotoName(),
-                        credit.getBankEntity(),
+                        // 은행 계좌를 어떻게 연결해야 하는지에 대한 생각이 필요함.
+                        credit.getAccount(),
                         credit.getMinusAsset(),
-                        credit.getDate(),
                         credit.getMonth(),
                         credit.getRate())
         );
@@ -67,9 +67,19 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public Long save(CreditSaveDTO creditSaveDTO) {
         System.out.println("CreditServiceImpl.save");
-
-
+        // 카드 부분에서 돈이 추가 되게 섫정해야함
         CardEntity cardEntity = crr.findById(creditSaveDTO.getCardId()).get();
+        Long totalAsset = cardEntity.getTotalAsset();
+
+        totalAsset = totalAsset - creditSaveDTO.getMinusAsset();
+        cardEntity.setTotalAsset(totalAsset);
+        crr.save(cardEntity);
+
+        // 할부 이자 계산 필요
+
+        // 할부 분활하여 적용하는 방법 필요.
+
+        // 새롭게 반영된 부분 저장.
         CreditEntity creditEntity = CreditEntity.toSaveData(creditSaveDTO, cardEntity);
         Long creditId = cdr.save(creditEntity).getId();
         return creditId;

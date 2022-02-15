@@ -46,11 +46,13 @@ public class DebitEntity extends BaseEntity {
     private Double debitGet; // 할인
     private Double debitPercent; // 할인율
 
+    private String account; // 계좌
+
     public static DebitEntity toSaveData(DebitSaveDTO debitSaveDTO, CardEntity cardEntity, BankEntity bankEntity) {
         DebitEntity debitEntity = new DebitEntity();
         debitEntity.setCardEntity(cardEntity);
         debitEntity.setDebitGet(debitSaveDTO.getDebitGet());
-        debitEntity.setBankEntityList(); // 해당 값을 List가 아니라. 정확한 하나의 값으로 정해서 줘야하는데 어떻게 줘야하는가...?
+        debitEntity.setAccount(debitSaveDTO.getAccount()); // 해당 값을 List가 아니라. 정확한 하나의 값으로 정해서 줘야하는데 어떻게 줘야하는가...?
         debitEntity.setDebitMemo(debitSaveDTO.getDebitMemo());
         debitEntity.setDebitName(debitSaveDTO.getDebitName());
         debitEntity.setDebitPercent(debitSaveDTO.getDebitPercent());

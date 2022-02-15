@@ -18,4 +18,7 @@ public class CreditPagingDTO extends CreditSaveDTO {
 
     public CreditPagingDTO(Long id, Double creditGet, String creditMemo, String creditName, String creditPhotoName, BankEntity bankEntity, Long minusAsset, LocalDate date, Integer month, Double rate) {
     }
+
+    public CreditPagingDTO(Long id, Double creditGet, String creditMemo, String creditName, String creditPhotoName, String account, Long minusAsset, Integer month, Double rate) {
+    }
 }

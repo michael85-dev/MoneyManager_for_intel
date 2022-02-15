@@ -33,6 +33,8 @@ public class DebitSaveDTO {
     private Double debitGet; // 할인
     private Double debitPercent; // 퍼센트 할인
 
+    private String account; // 계좌
+
     private String firstList; // 대분류
     private String secondList; // 중뷴류
     private String thirdList; // 소분류

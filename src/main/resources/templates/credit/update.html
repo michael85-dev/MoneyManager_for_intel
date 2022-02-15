@@ -15,11 +15,10 @@
     <form action="/credit/update" method="post" enctype="multipart/form-data" th:object="${crDTO}">
         번호 : <input type="text" name="creditId" th:value="*{creditId}" readonly>
         내역 : <input type="text" name="creditName" th:value="*{creditName}">
-        카드 종류 : <!-- 필요는 없겠군. -->
-        <select>
+        계좌 종류 :
+        <select th:each="b : ${bList}">
             <option disabled>선택하세요</option>
-            <option name="??">체크카드</option>
-            <option name="??">신용카드</option>
+            <option name="account" th:value="${b.bankName}"></option>
         </select>
         할부 : <input type="text" name="month" th:value="*{month}">
         <div th:if="*{month ne '0'}">
@@ -28,8 +27,12 @@
         할인 :
         <select>
             <option disabled>선택하세요</option>
-            <option name="creditPercents" th:value="*{creditPercents}">정인율</option>
-            <option name="creditGet" th:value="*{creditGet}">할인액</option>
+            <option name="creditPercents">
+                <input type="text" th:value="*{creditPercents}">할인율
+            </option>
+            <option name="creditGet">
+                <input type="text" th:value="*{creditGet}">할인액
+            </option>
         </select>
 `       메모 : <textarea th:value="*{creditMemo}" name="creditMemo" rows="5"></textarea>
         영수증 : <input type="file" name="creditPhoto">

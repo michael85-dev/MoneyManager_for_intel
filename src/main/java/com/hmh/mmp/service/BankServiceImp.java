@@ -143,6 +143,7 @@ public class BankServiceImp implements BankService{
             bankPhoto.transferTo(new File(savePath));
             bankDetailDTO.setBankPhotoName(bankPhotoName);
         }
+        // 변경이 되었는지 봐야함
 
         BankEntity bankEntity = BankEntity.updateBank(bankDetailDTO, memberEntity);
         Long bankId = br.save(bankEntity).getId();

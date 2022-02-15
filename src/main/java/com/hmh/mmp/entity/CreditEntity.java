@@ -49,6 +49,9 @@ public class CreditEntity {
     private Double creditGet; // 캐쉬백
     private Double creditPercents; // 캐쉬백
 
+    private String account; // 유니크로 설정을 해야하나?
+
+
     public static CreditEntity toSaveData(CreditSaveDTO creditSaveDTO, CardEntity cardEntity) {
         CreditEntity creditEntity = new CreditEntity();
         creditEntity.setCardEntity(cardEntity);

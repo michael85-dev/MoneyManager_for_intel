@@ -1,11 +1,15 @@
 package com.hmh.mmp.controller;
 
+import com.hmh.mmp.dto.bank.BankDetailDTO;
+import com.hmh.mmp.dto.card.CardDetailDTO;
 import com.hmh.mmp.dto.debit.DebitDetailDTO;
 import com.hmh.mmp.dto.debit.DebitSaveDTO;
 import com.hmh.mmp.dto.debit.DebitUpdateDTO;
+import com.hmh.mmp.dto.member.MemberDetailDTO;
 import com.hmh.mmp.service.BankService;
 import com.hmh.mmp.service.CardService;
 import com.hmh.mmp.service.DebitService;
+import com.hmh.mmp.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,6 +35,10 @@ public class DebitController {
         debitSaveDTO.setCardId(cardId);
 
         model.addAttribute("dsave", debitSaveDTO);
+
+        CardDetailDTO cardDetailDTO = cs.findById(cardId);
+        List<BankDetailDTO> bankDetailDTOList = bs.findAll(cardDetailDTO.getMemberId());
+        model.addAttribute("bList", bankDetailDTOList);
 
         return "debit/save";
     }
@@ -68,6 +77,9 @@ public class DebitController {
         System.out.println("DebitController.updateForm");
         DebitDetailDTO debitDetailDTO = ds.findById(debitId);
         model.addAttribute("deDTO", debitDetailDTO);
+
+        List<BankDetailDTO> bankDetailDTOList = bs.findAll(debitDetailDTO.getMemberId());
+        model.addAttribute("bList", bankDetailDTOList);
 
         return "debit/update";
     }

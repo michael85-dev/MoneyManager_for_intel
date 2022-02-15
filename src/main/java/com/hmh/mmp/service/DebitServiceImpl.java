@@ -44,9 +44,8 @@ public class DebitServiceImpl implements DebitService {
                         debit.getDebitMemo(),
                         debit.getDebitName(),
                         debit.getMinusAsset(),
-                        debit.getBankEntity(),
+                        debit.getAccount(),
                         debit.getDebitPhotoName(),
-                        debit.getDate())
         );
 
         return debitPage;
@@ -88,6 +87,8 @@ public class DebitServiceImpl implements DebitService {
         CardEntity cardEntity = crr.findById(debitSaveDTO.getCardId()).get();
 
         // bank에 바로 반영하기.
+        String account = debitSaveDTO.getAccount();
+        debitSaveDTO.setAccount(account);
 
         // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가.
         Long totalAsset = cardEntity.getTotalAsset();

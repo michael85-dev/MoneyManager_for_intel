@@ -71,14 +71,15 @@ public class BoardServiceImpl implements BoardService{
 //        데이터를 보내고
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.toMoveData(boardEntity);
         // 조회수 저장 관련 코드 필요함.
-        bor.hits?;
+//        bor.hits?;
 
         // Hit 관련 건
-        // int hits = boardEntity.getBoardHits();
+//        int hits = boardEntity.getBoardHits();
 //        hits = hits + 1;
 //        boardEntity.setBoardHits(hits);
 
-//        int hits = br.boardHits(boardId);
+        int hits = bor.boardHits(boardId);
+        boardEntity.setBoardHits(hits);
 
         return boardDetailDTO;
     }
