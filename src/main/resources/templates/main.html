@@ -6,9 +6,16 @@
     <meta charset="UTF-8">
     <title>Money Manager</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
 <header>
+    <div>
+        <!-- 첫 화면으로 돌아가기? -->
+        <a th:href="@{/main}">메인으로 돌아가기</a> <!-- 해당 부분을 누르면 모든 데이터가 보내지는 것이 아닌지? 그렇다면은.... 로그인에 따른 값이 변경될 수 있게 링크를 설정해줘야 함. -->
+    </div>
     <div> <!-- 맨 위의 간단하게 표시된 어떤 항목들 -->
         <!-- 관리자 계정으로 접근시 보일 수 있는 전체 목록 메뉴 만듥 -->
         <div th:if="${session['loginEmail'] eq 'admin'}">
@@ -19,9 +26,9 @@
         로그인 : <a th:text="${session['loginNickName']}"></a>
         <a href="/member/logout">로그아웃</a>
         <a href="/member/detail">조회</a>
-        <a href="/select">+</a> <!-- 어떤걸 생성하게 해야하는가? -->
+
     </div>
-    <div>
+    <div> <!-- 위에 한개의 바로 바로바로 불러올 수 있게 설정하기 -->
         분류 표시의 정보가 들어 갈 곳
         <a href="/notice/">공지사항</a>
         <a href="/cash/">현금</a>
@@ -31,12 +38,144 @@
         <a>쇼핑몰</a>
         <a>그 외</a>
 
+        <!-- 위에 있는 것을 그대로 아래에다가 붙여둘 예정임. -->
+        <div class="text-end">
+            <!-- d-flex : 일자로 표현되게 해줌 -->
+            <!-- 입력 및 가입 로그인 항목 -->
+            <div class="d-flex">
+                <input type="text" class="form-control" placeholder="Search">
+                <button class="btn btn-link text-light text-decoration-none flex-shrink-0" onclick="location.href='member/login'">Sign in</button>
+                <!-- flex-shrink-0 : 아웃라인 찌그러지지않게 자동으로 맞춰주는 것.? -->
+                <button class="btn btn-outline-light flex-shrink-0" onclick="location.href='member/save'">Sign up</button>
+            </div>
+        </div>
+        <div class="container d-flex align-items-center py-3">
+            <!-- data-bs-toggle="offcanvas" : 메뉴가 스르륵 나타나는 소석을 이야기 함 -->
+            <!-- data-bs-target="#offcanvas" : offcanvas에서 보여줄 내용(id가 offcanvas로 지정된 요소를 보여주겠다.) -->
+            <button class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+                <!-- svg : 벡터 그래픽 이미지 . 안깨지는게 장점 -->
+                <!-- 햄버거 모양 이미지 -->
+                <img src="./images/menu.svg" alt="">
+            </button>
+            <!-- 옆에 추가창에 대한 내용 추가 -->
+            <div class="offcanvas offcanvas-start" id="offcanvas">
+                <div class="offcanvas-header">
+                    <button class="btn-close" data-bs-dismiss="offcanvas">
+                        <!-- 버튼 닫기 누르면 offcanvas를 닫는다 라는 의미 -->
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="/notice/">
+                                공지사항
+                            </a>
+                        </li>
+                        <!-- <div>
+                            <ul>
+                                <li>나</li>
+                                <a onclick="clickcr(this,'ctw.catlist','','',event);" id="category14" href="/PostList.naver?blogId=iskaid&amp;from=postList&amp;categoryNo=14&amp;parentCategoryNo=14 " class="itemfont cm-col1 _selectCurrentCategory _param(1000013777|13317|widget_category|14) on">취미</a>
+                                <li>너</li>
+                            </ul>
+                        </div> -->
+                        <!-- 원래 -->
+                        <li class="list-group-item">
+                            <a href="/cash/">
+                                현금
+                            </a>
+                        </li>
 
+                        <li class="list-group-item">
+                            <a href="/bank/">
+                                계좌
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/card/">
+                                카드
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/board/">
+                                게시판
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/shop/">
+                                쇼핑
+                            </a>
+                        </li>
+                    </ul>
+                    <input type="text" class="form-control mb-2" placeholder="Search">
+                    <!-- d-grid : 한줄에 채워서 표시 가능 -->
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-outline-primary" onclick="location.href='member/login'">Sign in</button>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" onclick="location.href='member/save'">Sign up</button>
+                    </div>
+                </div>
+            </div>
+            <!-- css에서 주어진 class 설정 -->
+            <!-- 4개 메뉴에 대한 항목 -->
+            <ul class="nav flex-grow-1">
+                <li class="list-group-item">
+                    <a href="/notice/">
+                        공지사항
+                    </a>
+                </li>
+
+                <li class="list-group-item">
+                    <a href="/cash/">
+                        현금
+                    </a>
+                </li>
+
+                <li class="list-group-item">
+                    <a href="/bank/">
+                        계좌
+                    </a>
+                </li>
+
+                <li class="list-group-item">
+                    <a href="/card/">
+                        카드
+                    </a>
+                </li>
+
+                <li class="list-group-item">
+                    <a href="/board/">
+                        게시판
+                    </a>
+                </li>
+
+                <li class="list-group-item">
+                    <a href="/shop/">
+                        쇼핑
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </header>
 <main>
+    <div class="text-end"> <!-- 데이터를 저장할 수 있는 가장 큰 선택지를 만들어야 함. -->
+<!--        <a href="/select">+</a> &lt;!&ndash; 어떤걸 생성하게 해야하는가? &ndash;&gt;-->
+        <div id="update">
+            <Select id="check">
+                <option disabled>선택하세요</option>
+                <option id="cash" value="cash">현금</option>
+                <option id="bank" value="bank">계좌</option>
+                <option id="card" value="card">카드</option>
+            </Select>
+            <button onclick="transData()">선택</button>
+        </div>
+    </div>
     main page 관련 정보가 들어갈 곳
-    <div class="row">
+    <div class="row"> <!-- 첫번째 분류 칸 --> <!-- 공지 및 게시판 -->
         <div class="row">
             <!-- 공지 사항 간련 건이 표시되는 것. -->
         </div>
@@ -49,7 +188,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row"> <!-- 두번째 분류 칸 --> <!-- 현금 및 은행? -->
         <div class="row">
             <div class="col-6">
                 카드 관련 정보를 보여주는 곳
@@ -67,6 +206,12 @@
             </div>
         </div>
     </div>
+    <div class="row"> <!-- 3번째 분류 칸 --> <!-- 카드? (데빛 앤 크래딧? 아니면 그걸 한번에 표시? -->
+
+    </div>
+    <div class="row"> <!-- 4번째 분류 칸 --> <!-- 그래프로 표시하기? 아니면? -->
+
+    </div>
 </main>
 <footer>
     <!-- 해당 부분 전체적으로 수정해야함. 아에 안맞음. -->
@@ -76,7 +221,7 @@
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
                 </a>
-                <span class="text-muted">&copy; 2021 MyungHa</span>
+                <span class="text-muted">&copy; 2022 - Now</span>
             </div>
             <!-- ul : 순서가 필요 없는 목록 (unordered list)-->
             <!-- li : ul을 사용할 때 목록을 만들기 위한 태그 (list item) -->
@@ -107,4 +252,20 @@
     </div>
 </footer>
 </body>
+<script>
+    function transData() {
+        const cash = document.getElementById('cash');
+        const card = document.getElementById('card');
+        const bank = document.getElementById('bank');
+
+        const check = document.getElementById('check');
+        if (check == cash) {
+            update.submit(); // 이게 맞나?
+        } else if (check == card) {
+
+        } else if (check == bank) {
+
+        }
+    }
+</script>
 </html>

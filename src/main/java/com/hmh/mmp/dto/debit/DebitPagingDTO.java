@@ -9,9 +9,6 @@ import java.time.LocalDate;
 public class DebitPagingDTO extends DebitSaveDTO {
     private Long debitId;
 
-    public DebitPagingDTO(Long id, Double debitGet, String debitMemo, String debitName, Long minusAsset, BankEntity bankEntity, String debitPhotoName) {
-    }
-
-    public DebitPagingDTO(Long id, Double debitGet, String debitMemo, String debitName, Long minusAsset, BankEntity bankEntity, String debitPhotoName, LocalDate date) {
+    public DebitPagingDTO(Long id, Double debitGet, String debitMemo, String debitName, Long minusAsset, String account, String debitPhotoName) {
     }
 }

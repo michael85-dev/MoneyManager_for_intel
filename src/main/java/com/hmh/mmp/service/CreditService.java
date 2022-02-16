@@ -22,4 +22,5 @@ public interface CreditService {
 
     Long update(CreditUpdateDTO creditUpdateDTO);
 
+    List<CreditDetailDTO> findData(Long memberId);
 }

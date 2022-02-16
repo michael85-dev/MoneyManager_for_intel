@@ -1,5 +1,6 @@
 package com.hmh.mmp.dto.debit;
 
+import com.hmh.mmp.dto.RecoredYMD;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.MemberEntity;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DebitSaveDTO {
+public class DebitSaveDTO extends RecoredYMD {
     private Long cardId;
     private Long memberId;
     private Long bankId;
