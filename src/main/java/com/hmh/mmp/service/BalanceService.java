@@ -22,4 +22,6 @@ public interface BalanceService {
     void delete(Long balanceId);
 
     Long save(BalanceSaveDTO balanceSaveDTO) throws IOException;
+
+    List<BalanceDetailDTO> findData(Long memberId);
 }

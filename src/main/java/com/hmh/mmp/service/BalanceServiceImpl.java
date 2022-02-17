@@ -7,8 +7,10 @@ import com.hmh.mmp.dto.balance.BalanceSaveDTO;
 import com.hmh.mmp.dto.balance.BalanceUpdateDTO;
 import com.hmh.mmp.entity.BalanceEntity;
 import com.hmh.mmp.entity.CashEntity;
+import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.BalanceRepository;
 import com.hmh.mmp.repository.CashRepository;
+import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import java.util.Optional;
 public class BalanceServiceImpl implements BalanceService{
     private final BalanceRepository bar;
     private final CashRepository csr;
+    private final MemberRepository mr;
 
     @Override
     public List<BalanceDetailDTO> findAll(Long cashId) {
@@ -140,5 +143,18 @@ public class BalanceServiceImpl implements BalanceService{
 
         Long balanceId = bar.save(balanceEntity).getId();
         return balanceId;
+    }
+
+    @Override
+    public List<BalanceDetailDTO> findData(Long memberId) {
+        MemberEntity memberEntity = mr.findById(memberId).get();
+        List<BalanceEntity> balanceEntityList = memberEntity.getBalanceEntityList();
+        List<BalanceDetailDTO> balanceDetailDTOList = new ArrayList<>();
+
+        for (BalanceEntity balanceEntity: balanceEntityList) {
+            balanceDetailDTOList.add(BalanceDetailDTO.toMoveData(balanceEntity));
+        }
+
+        return balanceDetailDTOList;
     }
 }

@@ -1,5 +1,6 @@
 package com.hmh.mmp.dto.balance;
 
+import com.hmh.mmp.dto.RecoredYMD;
 import com.hmh.mmp.entity.CashEntity;
 import com.hmh.mmp.entity.MemberEntity;
 import lombok.AllArgsConstructor;
@@ -16,16 +17,16 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BalanceSaveDTO {
-    private Long cashId;
-    private Long memberId;
+public class BalanceSaveDTO extends RecoredYMD {
+    private Long cashId; // 연결된 현금 관련 계좌
+    private Long memberId; // 해당 계좌의 로그인 아이디
 
-    private LocalDate date;
-    private String balanceMemo;
-    private String balanceName;
-    private long plusAsset;
-    private long minusAsset;
-    private MultipartFile balancePhoto;
+    private LocalDate date; // 날짜? (기록 날짜)
+    private String balanceMemo; //  사용 내역 관련 메모
+    private String balanceName; // 사용 내역
+    private long plusAsset; // 추가된 금액
+    private long minusAsset; // 지출된 금액
+    private MultipartFile balancePhoto; // 영수증 관련 사진을 넣어야 하는 것
     private String balancePhotoName;
 
     private Double balanceGet;

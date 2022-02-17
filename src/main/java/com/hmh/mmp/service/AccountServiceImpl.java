@@ -7,9 +7,11 @@ import com.hmh.mmp.dto.account.AccountSaveDTO;
 import com.hmh.mmp.dto.account.AccountUpdateDTO;
 import com.hmh.mmp.entity.AccountEntity;
 import com.hmh.mmp.entity.BankEntity;
+import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.AccountRepository;
 import com.hmh.mmp.repository.BankRepository;
 import com.hmh.mmp.repository.CardRepository;
+import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,7 @@ public class AccountServiceImpl implements AccountService{
     private final AccountRepository ar;
     private final BankRepository br;
     private final CardRepository cr;
+    private final MemberRepository mr;
 
     @Override
     public Long save(AccountSaveDTO accountSaveDTO) throws IOException {
@@ -156,5 +159,21 @@ public class AccountServiceImpl implements AccountService{
         AccountEntity accountEntity = ar.findById(accountId).get();
         ar.delete(accountEntity);
 
+    }
+
+    @Override
+    public List<AccountDetailDTO> findData(Long memberId) { // 해당 프로세스 관련해서 제대로 좀더 익숙해지고 이해해야함.
+        Optional<MemberEntity> memberEntityOptional = mr.findById(memberId);
+        MemberEntity memberEntity = memberEntityOptional.get();
+
+        List<AccountEntity> accountEntityList = memberEntity.getAccountEntityList();
+
+        List<AccountDetailDTO> accountDetailDTOList = new ArrayList<>();
+
+        for (AccountEntity accountEntity:accountEntityList) {
+            accountDetailDTOList.add(AccountDetailDTO.toMoveData(accountEntity));
+        }
+
+        return accountDetailDTOList;
     }
 }

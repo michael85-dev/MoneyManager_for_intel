@@ -1,5 +1,6 @@
 package com.hmh.mmp.dto.credit;
 
+import com.hmh.mmp.dto.RecoredYMD;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreditSaveDTO {
+public class CreditSaveDTO extends RecoredYMD {
     private Long cardId;
     private Long bankId;
     private Long memberId;

@@ -14,6 +14,8 @@
 <main>
     <form action="/balance/save" method="post" enctype="multipart/form-data" th:object="${bsave}">
         번호 : <input type="text" th:field="*{cashId}">
+        날짜 :
+
         내역 : <input type="text" th:field="*{balanceName}">
         수입 :
         <select>

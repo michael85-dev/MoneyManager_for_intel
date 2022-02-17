@@ -22,4 +22,6 @@ public interface AccountService {
     Long update(AccountUpdateDTO accountUpdateDTO) throws IOException;
 
     void delete(Long accountId);
+
+    List<AccountDetailDTO> findData(Long memberId);
 }

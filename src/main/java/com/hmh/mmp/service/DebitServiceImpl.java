@@ -8,9 +8,11 @@ import com.hmh.mmp.dto.debit.DebitUpdateDTO;
 import com.hmh.mmp.entity.BankEntity;
 import com.hmh.mmp.entity.CardEntity;
 import com.hmh.mmp.entity.DebitEntity;
+import com.hmh.mmp.entity.MemberEntity;
 import com.hmh.mmp.repository.BankRepository;
 import com.hmh.mmp.repository.CardRepository;
 import com.hmh.mmp.repository.DebitRepository;
+import com.hmh.mmp.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,7 @@ public class DebitServiceImpl implements DebitService {
     private final CardRepository crr;
     private final BankRepository br;
     private final DebitRepository dr;
+    private final MemberRepository mr;
 
     @Override
     public Page<DebitPagingDTO> paging(Pageable pageable) {
@@ -45,7 +48,7 @@ public class DebitServiceImpl implements DebitService {
                         debit.getDebitName(),
                         debit.getMinusAsset(),
                         debit.getAccount(),
-                        debit.getDebitPhotoName(),
+                        debit.getDebitPhotoName())
         );
 
         return debitPage;
@@ -90,14 +93,20 @@ public class DebitServiceImpl implements DebitService {
         String account = debitSaveDTO.getAccount();
         debitSaveDTO.setAccount(account);
 
-        // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가.
+        // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가. -> 카드 내용에 해당 내역 반영
         Long totalAsset = cardEntity.getTotalAsset();
         totalAsset = totalAsset - debitSaveDTO.getMinusAsset();
         cardEntity.setTotalAsset(totalAsset);
         crr.save(cardEntity);
 
+        // 은행 과년하여 반영하기
+        Long bankUseAsset = bankEntity.getTotalAsset();
+        bankUseAsset = bankUseAsset - debitSaveDTO.getMinusAsset();
+        bankEntity.setTotalAsset(bankUseAsset);
+        // 해당 변경점 업데이트 하기
+        br.save(bankEntity);
+
         // 해당 데이터 저장하기 -> bankName 어 떻게 해결해야 하는지 필요함 (고민 필요) 미완
-        need.
         DebitEntity debitEntity = DebitEntity.toSaveData(debitSaveDTO, cardEntity, bankEntity);
         Long debitId = dr.save(debitEntity).getId();
 
@@ -126,9 +135,40 @@ public class DebitServiceImpl implements DebitService {
     @Override
     public Long update(DebitUpdateDTO debitUpdateDTO) {
         System.out.println("DebitServiceImpl.update");
+        // 계정 정보 가져 오기
+        BankEntity bankEntity = br.findById(debitUpdateDTO.getBankId()).get();
+        String bankAccount = bankEntity.getBankName();
+        Long totalAsset = bankEntity.getTotalAsset();
+        totalAsset = totalAsset - debitUpdateDTO.getMinusAsset();
+        bankEntity.setTotalAsset(totalAsset);
+        // 반영 내역 집어 넣기. (연동된 계좌에)
+        br.save(bankEntity);
+
+        // 카드 관련 하여 사용 내역 반영하기
+        CardEntity cardEntity = crr.findById(debitUpdateDTO.getCardId()).get();
+        Long cardUseAsset = cardEntity.getTotalAsset();
+        cardUseAsset = cardUseAsset - debitUpdateDTO.getMinusAsset();
+        cardEntity.setTotalAsset(cardUseAsset);
+        // 해당 부분 반영
+        crr.save(cardEntity);
+
+        // 체크카드 관련하여 해당 부분 entity에 넣어서 반영하기.
         DebitEntity debitEntity = DebitEntity.toUpdateData(debitUpdateDTO);
         Long debitId = dr.save(debitEntity).getId();
 
         return debitId;
+    }
+
+    @Override
+    public List<DebitDetailDTO> findData(Long memberId) {
+        MemberEntity memberEntity = mr.findById(memberId).get();
+        List<DebitEntity> debitEntityList = memberEntity.getDebitEntityList();
+        List<DebitDetailDTO> debitDetailDTOList = new ArrayList<>();
+
+        for (DebitEntity debitEntity:debitEntityList) {
+            debitDetailDTOList.add(DebitDetailDTO.toMoveData(debitEntity));
+        }
+
+        return debitDetailDTOList;
     }
 }

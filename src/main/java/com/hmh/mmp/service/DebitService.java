@@ -22,4 +22,6 @@ public interface DebitService {
     void delete(Long debitId);
 
     Long update(DebitUpdateDTO debitUpdateDTO);
+
+    List<DebitDetailDTO> findData(Long memberId);
 }

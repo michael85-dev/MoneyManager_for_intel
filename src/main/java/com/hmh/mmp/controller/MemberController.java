@@ -106,7 +106,7 @@ public class MemberController {
 
             // 공지사항 관련
 
-            return "main";
+            return "redirect:/main";
         } else {
             return "member/login";
         }
