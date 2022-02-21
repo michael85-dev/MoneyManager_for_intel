@@ -1,14 +1,28 @@
 package com.hmh.mmp.controller;
 
 import com.hmh.mmp.common.PagingConst;
+import com.hmh.mmp.dto.account.AccountDetailDTO;
+import com.hmh.mmp.dto.account.AccountPagingDTO;
+import com.hmh.mmp.dto.balance.BalanceDetailDTO;
+import com.hmh.mmp.dto.balance.BalancePagingDTO;
 import com.hmh.mmp.dto.bank.BankDetailDTO;
 import com.hmh.mmp.dto.bank.BankPagingDTO;
+import com.hmh.mmp.dto.board.BoardDetailDTO;
+import com.hmh.mmp.dto.board.BoardPagingDTO;
 import com.hmh.mmp.dto.card.CardDetailDTO;
+import com.hmh.mmp.dto.card.CardPagingDTO;
 import com.hmh.mmp.dto.cash.CashDetailDTO;
+import com.hmh.mmp.dto.cash.CashPagingDTO;
+import com.hmh.mmp.dto.credit.CreditDetailDTO;
+import com.hmh.mmp.dto.credit.CreditPagingDTO;
+import com.hmh.mmp.dto.debit.DebitDetailDTO;
+import com.hmh.mmp.dto.debit.DebitPagingDTO;
 import com.hmh.mmp.dto.member.MemberDetailDTO;
 import com.hmh.mmp.dto.member.MemberLoginDTO;
 import com.hmh.mmp.dto.member.MemberPagingDTO;
 import com.hmh.mmp.dto.member.MemberSaveDTO;
+import com.hmh.mmp.dto.notice.NoticeDetailDTO;
+import com.hmh.mmp.dto.notice.NoticePagingDTO;
 import com.hmh.mmp.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,6 +50,11 @@ public class MemberController {
     private final BoardService bos;
     private final CardService crs;
     private final CashService css;
+    private final AccountService as;
+    private final BalanceService bas;
+    private final DebitService dbs;
+    private final CreditService cds;
+    private final NoticeService ns;
 
     @GetMapping("save")
     public String saveForm(Model model) {
@@ -87,7 +106,7 @@ public class MemberController {
             model.addAttribute("bList", bankList);
 
             Page<BankPagingDTO> bPageList = bs.paging(pageable);
-            model.addAttribute("bpList", bPageList);
+            model.addAttribute("bPage", bPageList);
                 // 해당 내용 메서드로 만들지 고민....
             int bank_startPage = (((int) (Math.ceil((double)pageable.getPageNumber() / PagingConst.B_BLOCK_LIMIT))) - 1) * PagingConst.B_BLOCK_LIMIT + 1;
             int bank_endPage = ((bank_startPage + PagingConst.B_BLOCK_LIMIT - 1) < bPageList.getTotalPages()) ? bank_startPage + PagingConst.B_BLOCK_LIMIT - 1 : bPageList.getTotalPages();
@@ -98,13 +117,96 @@ public class MemberController {
             List<CardDetailDTO> cardList = crs.findAll(memberLoginDTO.getId());
             model.addAttribute("crList", cardList);
 
+            Page<CardPagingDTO> crPageList = crs.paging(pageable);
+            model.addAttribute("crPage", crPageList);
+            int card_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.CR_BLOCK_LIMIT))) - 1) * PagingConst.CR_BLOCK_LIMIT + 1;
+            int card_endPage = ((card_startPage + PagingConst.CR_BLOCK_LIMIT - 1) < crPageList.getTotalPages()) ? card_startPage + PagingConst.CR_BLOCK_LIMIT - 1 : crPageList.getTotalPages();
+            model.addAttribute("card_startPage", card_startPage);
+            model.addAttribute("card_endPage", card_endPage);
+
             // 현금 관련
             List<CashDetailDTO> cashList = css.findAll(memberLoginDTO.getId());
             model.addAttribute("csList", cashList);
 
-            // 게시판 관련
+            Page<CashPagingDTO> caPagingList = css.paging(pageable);
+            model.addAttribute("caPage", caPagingList);
+            int cash_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.CS_BLOCK_LIMIT))) - 1) * PagingConst.CS_BLOCK_LIMIT + 1;
+            int cash_endPage = ((cash_startPage + PagingConst.CS_BLOCK_LIMIT - 1) < caPagingList.getTotalPages()) ? cash_startPage + PagingConst.CS_BLOCK_LIMIT - 1 : caPagingList.getTotalPages();
+            model.addAttribute("cash_startPage", cash_startPage);
+            model.addAttribute("cash_endPage", cash_endPage);
 
             // 공지사항 관련
+            // Notice 관련 정보 불러오기
+            List<NoticeDetailDTO> noticeDetailDTOList = ns.findAll();
+            model.addAttribute("noList", noticeDetailDTOList);
+            Page<NoticePagingDTO> noPagingList = ns.paging(pageable);
+            model.addAttribute("noPage", noPagingList);
+            int notice_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.N_BLOCK_LIMIT))) - 1) * PagingConst.N_BLOCK_LIMIT + 1;
+            int notice_endPage = ((notice_startPage + PagingConst.N_BLOCK_LIMIT - 1) < noPagingList.getTotalPages()) ? notice_startPage + PagingConst.N_BLOCK_LIMIT - 1 : noPagingList.getTotalPages();
+            model.addAttribute("notice_startPage", notice_startPage);
+            model.addAttribute("notice_endPage", notice_endPage);
+
+            // 게시판 관련
+            // board 관련 정보 불러오기
+            List<BoardDetailDTO> boardDetailDTOList = bos.findAll();
+            model.addAttribute("boList", boardDetailDTOList);
+            Page<BoardPagingDTO> boPagingList = bos.paging(pageable);
+            model.addAttribute("boPage", boPagingList);
+            int board_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.BO_BLOCK_LIMIT))) - 1) * PagingConst.BO_BLOCK_LIMIT + 1;
+            int board_endPage = ((board_startPage + PagingConst.BO_BLOCK_LIMIT - 1) < boPagingList.getTotalPages()) ? board_startPage + PagingConst.BO_BLOCK_LIMIT - 1 : boPagingList.getTotalPages();
+            model.addAttribute("board_startPage", board_startPage);
+            model.addAttribute("board_endPage", board_endPage);
+
+            // account 관련 정보 불러오기
+            // bankId로 하면 한개의 bankId만을 불러올 것이고 accountId는 해당 되지 않음. 때문에 memberId를 통해서 불러와야하는데. memberId의 경우 다양한 배열이 존재할 것이기 때문에 해당 데이터를 어떻게 불러와야 할지 고안이 필요함.
+            List<AccountDetailDTO> accountDetailDTOList = as.findData(memberLoginDTO.getId());
+            model.addAttribute("acList", accountDetailDTOList);
+            Page<AccountPagingDTO> acPagingList = as.paging(pageable);
+            model.addAttribute("acPage", acPagingList);
+            int account_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.A_BLOCK_LIMIT))) - 1) * PagingConst.A_BLOCK_LIMIT + 1;
+            int account_endPage = ((account_startPage + PagingConst.A_BLOCK_LIMIT - 1) < acPagingList.getTotalPages()) ? account_startPage + PagingConst.A_BLOCK_LIMIT - 1 : acPagingList.getTotalPages();
+            model.addAttribute("account_startPage", account_startPage);
+            model.addAttribute("account_endPage", account_endPage);
+
+            // credit 관련 정보 불러오기
+            List<CreditDetailDTO> creditDetailDTOList = cds.findData(memberLoginDTO.getId());
+            model.addAttribute("cdList", creditDetailDTOList);
+            Page<CreditPagingDTO> cdPagingList = cds.paging(pageable);
+            model.addAttribute("cdPage", cdPagingList);
+            int credit_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.CD_BLOCK_LIMIT))) - 1) * PagingConst.CD_BLOCK_LIMIT + 1;
+            int credit_endPage = ((credit_startPage + PagingConst.CD_BLOCK_LIMIT - 1) < cdPagingList.getTotalPages()) ? credit_startPage + PagingConst.CD_BLOCK_LIMIT - 1 : cdPagingList.getTotalPages();
+            model.addAttribute("credit_startPage", credit_startPage);
+            model.addAttribute("credit_endPage", credit_endPage);
+
+            // debit 관련 정보 불러오기
+            List<DebitDetailDTO> debitDetailDTOList = dbs.findData(memberLoginDTO.getId());
+            model.addAttribute("dbList", debitDetailDTOList);
+            Page<DebitPagingDTO> dbPagingList = dbs.paging(pageable);
+            model.addAttribute("dbPage", dbPagingList);
+            int debit_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.DR_BLOCK_LIMIT))) - 1) * PagingConst.DR_BLOCK_LIMIT + 1;
+            int debit_endPage = ((debit_startPage + PagingConst.DR_BLOCK_LIMIT - 1) < dbPagingList.getTotalPages()) ? debit_startPage + PagingConst.DR_BLOCK_LIMIT - 1 : dbPagingList.getTotalPages();
+            model.addAttribute("debit_startPage", debit_startPage);
+            model.addAttribute("debit_endPage", debit_endPage);
+
+            // balance 관련 정보 불러오기
+            List<BalanceDetailDTO> balanceDetailDTOList = bas.findData(memberLoginDTO.getId());
+            model.addAttribute("baList", balanceDetailDTOList);
+            Page<BalancePagingDTO> baPagingList = bas.paging(pageable);
+            model.addAttribute("baPage", baPagingList);
+            int balance_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.BA_BLOCK_LIMIT))) - 1) * PagingConst.BA_BLOCK_LIMIT + 1;
+            int balance_endPage = ((balance_startPage + PagingConst.BA_BLOCK_LIMIT - 1) < baPagingList.getTotalPages()) ? balance_startPage + PagingConst.BA_BLOCK_LIMIT - 1 : baPagingList.getTotalPages();
+            model.addAttribute("balance_startPage", balance_startPage);
+            model.addAttribute("balance_endPage", balance_endPage);
+
+            // member 관련 정보 불러오기
+            List<MemberDetailDTO> memberDetailDTOList = ms.findAll();
+            model.addAttribute("memberList", memberDetailDTOList);
+            Page<MemberPagingDTO> mPagingList = ms.paging(pageable);
+            model.addAttribute("mPage", mPagingList);
+            int member_startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+            int member_endPage = ((member_startPage + PagingConst.BLOCK_LIMIT - 1) < mPagingList.getTotalPages()) ? member_startPage + PagingConst.BLOCK_LIMIT - 1 : mPagingList.getTotalPages();
+            model.addAttribute("member_startPage", member_startPage);
+            model.addAttribute("member_endPage", member_endPage);
 
             return "redirect:/main";
         } else {
@@ -122,7 +224,7 @@ public class MemberController {
     @GetMapping
     public String findAll(Model model, @PageableDefault(page = 1) Pageable pageable) {
         List<MemberDetailDTO> memberDetailDTO = ms.findAll();
-        model.addAttribute("memberList", memberDetailDTO);
+        model.addAttribute("mList", memberDetailDTO);
 
         // 페이지 작업 하기.
         Page<MemberPagingDTO> mPageList = ms.paging(pageable);

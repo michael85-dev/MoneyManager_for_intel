@@ -12,35 +12,37 @@
 
 </header>
 <main>
-    <th>번호</th>
-    <th>카드명</th>
-    <th>카드종류</th>
-    <th>총 사용액</th>
-    <th>메모</th>
-    <th>영수증</th>
-    <div>
-        <a th:href="@{|/credit/update/${crDTO.creditId}|}">수정</a><a th:href="@{|/credit/delete/${crDTO.creditId}|}">삭제</a>
-    </div>
-    <div th:object="${crDTO}">
-        <span th:text="*{creditId}">번호</span>
-        <span th:text="*{creditName}">내역</span>
-        <span th:text="*{account}">계좌종류</span> <!-- bankEntity의 해당 항목을 가지고 와야 할 꺼 같긴한데. -->
-        <span th:text="*{minusAsset}">사용액</span>
-        <span th:text="*{month}">할부</span>
+    <div  class="table table-hover">
+        <th>번호</th>
+        <th>카드명</th>
+        <th>카드종류</th>
+        <th>총 사용액</th>
+        <th>메모</th>
+        <th>영수증</th>
         <div>
-            <div th:if="*{creditPercents eq '0'}">
-                <span>
-                    정액할인
-                </span>
-            </div>
-            <div th:if="*{creditGet eq '0'}">
-                <span>
-                    퍼센트할인
-                </span>
-            </div>
+            <a th:href="@{|/credit/update/${crDTO.creditId}|}">수정</a><a th:href="@{|/credit/delete/${crDTO.creditId}|}">삭제</a>
         </div>
-        <span th:text="*{creditMemo}">메모</span>
-        <span th:src="" alt="">영수증</span>
+        <div th:object="${crDTO}">
+            <span th:text="*{creditId}">번호</span>
+            <span th:text="*{creditName}">내역</span>
+            <span th:text="*{account}">계좌종류</span> <!-- bankEntity의 해당 항목을 가지고 와야 할 꺼 같긴한데. -->
+            <span th:text="*{minusAsset}">사용액</span>
+            <span th:text="*{month}">할부</span>
+            <div>
+                <div th:if="*{creditPercents eq '0'}">
+                    <span>
+                        정액할인
+                    </span>
+                </div>
+                <div th:if="*{creditGet eq '0'}">
+                    <span>
+                        퍼센트할인
+                    </span>
+                </div>
+            </div>
+            <span th:text="*{creditMemo}">메모</span>
+            <span th:src="" alt="">영수증</span>
+        </div>
     </div>
 </main>
 <footer>

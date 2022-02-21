@@ -25,7 +25,7 @@
             <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a> <a th:href="@{|/bank/delete/${bdDTO.bankId}|}">삭제</a>
         </div>
         <div> <!-- 세부 내역 표시를 위한 공간 -->
-            <table>
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -52,7 +52,7 @@
             <div>
                 <a th:href="@{|/account/save/${bdDTO.bankId}|}">생성</a>
             </div>
-            <table>
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>번호</th>

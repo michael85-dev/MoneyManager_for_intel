@@ -11,7 +11,7 @@
 <header>
     member findAll page
 </header>
-<section class="container">
+<main class="container">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="m: ${memberList}">
+            <tr th:each="m: ${mList}">
                 <td th:text="${m.memberId}">번호</td>
                 <td th:text="${m.memberName}">이름</td>
                 <td th:text="${m.memberNickName}">닉네임</td>
@@ -36,7 +36,9 @@
                 <td th:text="${m.memberPassword}">비밀번호</td>
                 <td th:text="${m.memberPhone}">전화번호</td>
                 <td th:text="${m.memberMemo}">메모</td>
-                <td th:text="${m.memberPhotoName}"></td>
+                <td th:text="${m.memberPhotoName}">
+                    <img src="" alt="">
+                </td>
                 <td>
                     <button th:onclick="detail([[${m.memberId}]])">조회</button>
                 </td>
@@ -81,7 +83,7 @@
     <div id="detail_view">
 
     </div>
-</section>
+</main>
 </body>
 <script>
     function detail(memberId) {
