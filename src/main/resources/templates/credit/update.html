@@ -14,6 +14,7 @@
 <main>
     <form action="/credit/update" method="post" enctype="multipart/form-data" th:object="${crDTO}">
         번호 : <input type="text" name="creditId" th:value="*{creditId}" readonly>
+        날짜 : <input type="date" name="date" th:value="*{date}">
         내역 : <input type="text" name="creditName" th:value="*{creditName}">
         계좌 종류 :
         <select th:each="b : ${bList}">

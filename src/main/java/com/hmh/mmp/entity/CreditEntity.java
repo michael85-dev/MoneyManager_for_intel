@@ -39,6 +39,7 @@ public class CreditEntity {
     private List<CardFirstListEntity> cardFirstListEntityList = new ArrayList<>();
 
     private LocalDate calDate;
+    private LocalDate date;
     private LocalDateTime calTime;
     private String creditName; // 내역
     private String creditPhotoName; // 사진명
@@ -63,6 +64,7 @@ public class CreditEntity {
         creditEntity.setMinusAsset(creditSaveDTO.getMinusAsset());
         creditEntity.setMonth(creditSaveDTO.getMonth());
         creditEntity.setRate(creditSaveDTO.getRate());
+        creditEntity.setDate(creditSaveDTO.getDate());
 
         return creditEntity;
     }
@@ -77,6 +79,7 @@ public class CreditEntity {
         creditEntity.setMonth(creditUpdateDTO.getMonth());
         creditEntity.setMinusAsset(creditUpdateDTO.getMinusAsset());
         creditEntity.setRate(creditUpdateDTO.getRate());
+        creditEntity.setDate(creditUpdateDTO.getDate());
 
         return creditEntity;
     }

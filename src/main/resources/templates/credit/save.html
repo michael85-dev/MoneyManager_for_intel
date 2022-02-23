@@ -14,16 +14,17 @@
 <main>
   <form action="/credit/save" method="post" enctype="multipart/form-data" th:object="${crsave}">
     번호 : <input type="text" name="cardId" th:value="*{cardId}" readonly>
+    날짜 : <input type="date" th:field="*{date}">
     내역 : <input type="text" th:field="*{creditName}">
     사용액 : <input type="text" th:field="*{minusAsset}">
     할인 :
-    <select>
+    <select class="block">
       <option disabled>선택</option>
-      <option th:field="*{creditGet}">
-        <input type="text" value="할인액">
+      <option th:field="*{creditGet}" value="할인액">
+        <input type="text">
       </option>
-      <option th:field="*{creditPercents}">
-        <input type="text" value="할인율">
+      <option th:field="*{creditPercents}" value="할인율">
+        <input type="text">
       </option>
     </select>
     할부 : <input type="text" th:field="*{month}">

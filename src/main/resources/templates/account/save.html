@@ -17,7 +17,7 @@
         계좌 번호 : <input type="text" name="bankId" id="bankId" th:value="${bankId}" readonly>
         계좌 이름 : <input type="text" name="bankName" th:value="${bankName}" readonly> <!-- 현재 NotBlank 때문에 그런 것으로 보임. 해당 부분은 내용이 없어서 발생하는 것인지 여부 확인 필요 -->
 
-        사용일 : <input type="text" th:field="*{date}"> <!-- 달력으로 표시하는 방법을 사용해야함. -->
+        사용일 : <input type="date" th:field="*{date}"> <!-- 달력으로 표시하는 방법을 사용해야함. -->
         사용명 : <input type="text" th:field="*{accountName}">
         내역 : <select id="moneyCheck">
                 <option value="+">수입</option>

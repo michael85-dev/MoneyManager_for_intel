@@ -13,16 +13,17 @@
 </header>
 <main>
     <form action="/debit/update" method="post" enctype="multipart/form-data" th:object="${deDTO}">
-        번호 : <input th:value="*{debitId}" type="text" readonly>
+        번호 : <input th:value="*{debitId}" type="text" name="debitId" readonly>
+        날짜 : <input type="date" name="date" th:value="*{date}">
         카드명 : <input th:text="*{debitName}" type="text">
-        사용액 : <input type="text" name="miunsAsset" th:value="*{minusAsset}">
+        사용액 : <input type="text" name="minusAsset" th:value="*{minusAsset}">
         계좌 :
         <select>
             <option disabled>선택하세요</option>
         </select>
         할인 :
         <select>
-            <option disabled>선택하세요</option>
+            <option disabled>선택하세요</option> <!-- 이거 수정해야 하네... 어떻게 해야하지? -->
             <option th:value="*{debitGet}">
                 <input type="text" name="debitGet">할인액
             </option>

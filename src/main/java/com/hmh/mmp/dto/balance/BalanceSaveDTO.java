@@ -28,6 +28,7 @@ public class BalanceSaveDTO extends RecoredYMD {
     private long minusAsset; // 지출된 금액
     private MultipartFile balancePhoto; // 영수증 관련 사진을 넣어야 하는 것
     private String balancePhotoName;
+    private LocalDate calDate;
 
     private Double balanceGet;
     private Double balancePercents;

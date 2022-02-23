@@ -13,7 +13,8 @@
 </header>
 <main>
     <form action="/debit/save" enctype="multipart/form-data" method="post" th:object="${dsave}">
-        내역 명 debitName <input type="text" th:field="*{debitName}">
+        내역 명 : <input type="text" th:field="*{debitName}">
+        날짜 : <input type="date" th:field="*{date}">
         은행 계좌 bankEntity (select?)
         <select>
             <option disabled>선택하세요</option>

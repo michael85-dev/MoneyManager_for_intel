@@ -38,6 +38,7 @@ public class DebitEntity extends BaseEntity {
     // bankName.... 이 필요한데. (정확히... 맞나?)
 
     private LocalDate calDate;
+    private LocalDate date;
     private LocalDateTime calTime;
     private String debitName; //내역명
     private String debitPhotoName; // 영수증
@@ -57,6 +58,7 @@ public class DebitEntity extends BaseEntity {
         debitEntity.setDebitName(debitSaveDTO.getDebitName());
         debitEntity.setDebitPercent(debitSaveDTO.getDebitPercent());
         debitEntity.setDebitPhotoName(debitSaveDTO.getDebitPhotoName());
+        debitEntity.setDate(debitSaveDTO.getDate());
 
         return debitEntity;
     }
@@ -64,6 +66,13 @@ public class DebitEntity extends BaseEntity {
     public static DebitEntity toUpdateData(DebitUpdateDTO debitUpdateDTO) {
         DebitEntity debitEntity = new DebitEntity();
         debitEntity.setDebitPhotoName(debitUpdateDTO.getDebitPhotoName());
-        
+        debitEntity.setDebitGet(debitUpdateDTO.getDebitGet());
+        debitEntity.setAccount(debitUpdateDTO.getAccount()); // 해당 값을 List가 아니라. 정확한 하나의 값으로 정해서 줘야하는데 어떻게 줘야하는가...?
+        debitEntity.setDebitMemo(debitUpdateDTO.getDebitMemo());
+        debitEntity.setDebitName(debitUpdateDTO.getDebitName());
+        debitEntity.setDebitPercent(debitUpdateDTO.getDebitPercent());
+        debitEntity.setDate(debitUpdateDTO.getDate());
+
+        return debitEntity;
     }
 }

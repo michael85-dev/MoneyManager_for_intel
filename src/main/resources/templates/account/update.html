@@ -13,6 +13,7 @@
 </header>
 <main>
     <form action="/account/update" method="post" enctype="multipart/form-data" th:object="${aDTO}">
+        날짜 : <input type="date" name="date" th:value="*{date}">
         번호 : <input type="text" name="accountId" th:value="*{accountId}" readonly>
         내역 : <input type="text" name="accountName" th:value="*{accountName}">
         사용액 : <select>

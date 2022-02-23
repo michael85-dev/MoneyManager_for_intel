@@ -13,6 +13,7 @@
 </header>
 <main>
     <form action="/balance/update" method="post" enctype="multipart/form-data" th:object="${baDTO}">
+        날짜 : <input type="date" name="date" th:value="*{date}">
         번호 : <input th:value="*{balanceId}" type="text" name="balanceId" readonly>
         사용 내역 : <input th:value="*{balanceName}" type="text" name="balanceName">
         사용 액 :

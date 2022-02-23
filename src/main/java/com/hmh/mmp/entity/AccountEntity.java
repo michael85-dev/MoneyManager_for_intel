@@ -41,6 +41,7 @@ public class AccountEntity extends BaseEntity {
     private String accountName; // 후에 고민해보기
     private String accountPhotoName;
     private String accountMemo;
+    private LocalDate date;
 
     public static AccountEntity toSaveData(AccountSaveDTO accountSaveDTO, BankEntity bankEntity) {
         AccountEntity accountEntity = new AccountEntity();
@@ -50,6 +51,7 @@ public class AccountEntity extends BaseEntity {
         accountEntity.setBankEntity(bankEntity);
         accountEntity.setMinusAsset(accountSaveDTO.getMinusAsset());
         accountEntity.setPlusAsset(accountSaveDTO.getPlusAsset());
+        accountEntity.setDate(accountSaveDTO.getDate());
 
         return accountEntity;
 
@@ -67,6 +69,7 @@ public class AccountEntity extends BaseEntity {
         accountEntity.setAccountPhotoName(accountUpdateDTO.getAccountPhotoName());
         accountEntity.setPlusAsset(accountUpdateDTO.getPlusAsset());
         accountEntity.setMinusAsset(accountUpdateDTO.getMinusAsset());
+        accountEntity.setDate(accountUpdateDTO.getDate());
 
         return accountEntity;
     }

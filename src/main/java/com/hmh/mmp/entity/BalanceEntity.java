@@ -35,6 +35,7 @@ public class BalanceEntity extends BaseEntity {
     private List<FirstListEntity> firstListEntityList = new ArrayList<>();
 
     private LocalDate calDate;
+    private LocalDate date;
     private LocalDateTime calTIme;
     private String balanceMemo;
     private String balanceName;
@@ -57,6 +58,7 @@ public class BalanceEntity extends BaseEntity {
         balanceEntity.setBalancePhotoName(balanceUpdateDTO.getBalancePhotoName());
         balanceEntity.setMinusAsset(balanceUpdateDTO.getMinusAsset());
         balanceEntity.setPlusAsset(balanceUpdateDTO.getPlusAsset());
+        balanceEntity.setDate(balanceUpdateDTO.getDate());
 
         return balanceEntity;
     }
@@ -71,6 +73,7 @@ public class BalanceEntity extends BaseEntity {
         balanceEntity.setPlusAsset(balanceSaveDTO.getPlusAsset());
         balanceEntity.setMinusAsset(balanceSaveDTO.getMinusAsset());
         balanceEntity.setBalancePhotoName(balanceSaveDTO.getBalancePhotoName());
+        balanceEntity.setDate(balanceSaveDTO.getDate());
 
         return balanceEntity;
     }
