@@ -97,7 +97,7 @@ public class CashServiceImpl implements CashService{
         if (cashEntity == null) {
             // 어떻게 해야 자료를 넣을 수 있으려나.
             BindingResult bindingResult = null;
-            bindingResult.hasErrors("데이터가 없습니다");
+//            bindingResult.hasErrors("데이터가 없습니다");
 
         } else {
             cashDetailDTO = CashDetailDTO.toMoveData(cashEntity);

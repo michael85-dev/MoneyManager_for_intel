@@ -51,9 +51,9 @@ public class CreditController {
             Long oneMonthPrice = creditSaveDTO.getMinusAsset() / creditSaveDTO.getMonth();
 
             // 할부로 할 경우에 1달이 지나면 결제 되야 하는 금액 (할부 금액만을 계산)
-            Long removeAsset = cds.bills(oneMonthPrice);
+//            Long removeAsset = cds.bills(oneMonthPrice);
             // 할부가 아닐때 결제 되어야 하는 금액 (미할부 금액만을 계산)
-            Long restAsset = cds.resolve(creditSaveDTO.getCardId());
+//            Long restAsset = cds.resolve(creditSaveDTO.getCardId());
 
             // 매달 결제 되어야 하는 금액은 할부 금액 + 미 할부 금액
 

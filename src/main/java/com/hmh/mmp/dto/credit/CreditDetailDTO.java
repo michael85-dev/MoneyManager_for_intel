@@ -18,7 +18,7 @@ public class CreditDetailDTO extends CreditSaveDTO{
         creditDetailDTO.setCreditMemo(creditEntity.getCreditMemo());
         creditDetailDTO.setCreditName(creditEntity.getCreditName());
         creditDetailDTO.setCreditPhotoName(creditEntity.getCreditPhotoName());
-        creditDetailDTO.setBankId(creditEntity.getBankEntity().getId());
+//        creditDetailDTO.setBankId(creditEntity.);
         creditDetailDTO.setCardId(creditEntity.getCardEntity().getId());
         creditDetailDTO.setDate(creditEntity.getDate());
         creditDetailDTO.setMinusAsset(creditEntity.getMinusAsset());

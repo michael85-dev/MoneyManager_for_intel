@@ -12,30 +12,42 @@
   credit save page
 </header>
 <main>
-  <form action="/credit/save" method="post" enctype="multipart/form-data" th:object="${crsave}">
-    번호 : <input type="text" name="cardId" th:value="*{cardId}" readonly>
-    날짜 : <input type="date" th:field="*{date}">
-    내역 : <input type="text" th:field="*{creditName}">
-    사용액 : <input type="text" th:field="*{minusAsset}">
-    할인 :
-    <select class="block">
-      <option disabled>선택</option>
-      <option th:field="*{creditGet}" value="할인액">
-        <input type="text">
-      </option>
-      <option th:field="*{creditPercents}" value="할인율">
-        <input type="text">
-      </option>
-    </select>
-    할부 : <input type="text" th:field="*{month}">
-    기간 : <!-- 기간 계산에 대해서 언제 결제가 되는지를 선택하게 해주는 것... -->
-    <select>
+  <div class="row">
+    <div class="col-1">
 
-    </select>
-    메모 : <textarea th:field="*{creditMemo}" rows="5"></textarea>
-    영수증 : <input type="file" th:field="*{creditPhoto}">
-    <input type="submit" value="전송"><button onclick="bToMain()">돌아가기</button>
-  </form>
+    </div>
+    <div class="col-10">
+      <form action="/credit/save" method="post" enctype="multipart/form-data" th:object="${crsave}">
+        번호 : <input type="text" name="cardId" th:value="*{cardId}" readonly> <br>
+        날짜 : <input type="date" th:field="*{date}"> <br>
+        내역 : <input type="text" th:field="*{creditName}"> <br>
+        <span th:if="*{creditName >= '50000'}">
+          <select>
+            <option disabled>선택하세요</option>
+            <option value="1" id="month">1개월</option>
+          </select>
+        </span> <br>
+        사용액 : <input type="text" th:field="*{minusAsset}"> <br>
+        할인 :
+        <select class="block">
+          <option disabled>선택</option>
+          <option th:field="*{creditGet}">할인액</option>
+          <option th:field="*{creditPercents}">할인율</option>
+        </select> <br>
+        할부 : <input type="text" th:field="*{month}"> <br>
+        기간 : <!-- 기간 계산에 대해서 언제 결제가 되는지를 선택하게 해주는 것... -->
+        <select>
+
+        </select> <br>
+        메모 : <textarea th:field="*{creditMemo}" rows="5"></textarea> <br>
+        영수증 : <input type="file" th:field="*{creditPhoto}"> <br>
+        <input type="submit" value="전송"><button onclick="bToMain()">돌아가기</button>
+      </form>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
 </main>
 <footer>
   <!-- 해당 부분 전체적으로 수정해야함. 아에 안맞음. -->

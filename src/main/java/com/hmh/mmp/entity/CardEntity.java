@@ -56,5 +56,11 @@ public class CardEntity extends BaseEntity {
     public static CardEntity toUpdateData(CardUpdateDTO cardUpdateDTO) {
         CardEntity cardEntity = new CardEntity();
         cardEntity.setCardTag(cardUpdateDTO.getCardTag()); // 이거 어떻게 설정해야하는지 셋업 필요
+        cardEntity.setCardName(cardUpdateDTO.getCardName());
+        cardEntity.setCardMemo(cardUpdateDTO.getCardMemo());
+        cardEntity.setTotalAsset(cardUpdateDTO.getTotalAsset());
+        cardEntity.setCardPhotoName(cardUpdateDTO.getCardPhotoName());
+
+        return cardEntity;
     }
 }

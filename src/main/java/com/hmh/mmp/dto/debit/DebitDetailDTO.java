@@ -18,7 +18,7 @@ public class DebitDetailDTO extends DebitSaveDTO{
         debitDetailDTO.setDebitMemo(debitEntity.getDebitMemo());
         debitDetailDTO.setDebitName(debitEntity.getDebitName());
         debitDetailDTO.setCardId(debitEntity.getCardEntity().getId());
-        debitDetailDTO.setBankId(debitEntity.getBankEntity().getId());
+//        debitDetailDTO.setBankId(debitEntity.getBankEntity().getId());
         debitDetailDTO.setDate(debitEntity.getDate());
         debitDetailDTO.setMinusAsset(debitEntity.getMinusAsset());
         debitDetailDTO.setDebitPhotoName(debitEntity.getDebitPhotoName());

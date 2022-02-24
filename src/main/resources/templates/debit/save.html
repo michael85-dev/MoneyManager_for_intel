@@ -12,31 +12,42 @@
     debit save pam
 </header>
 <main>
-    <form action="/debit/save" enctype="multipart/form-data" method="post" th:object="${dsave}">
-        내역 명 : <input type="text" th:field="*{debitName}">
-        날짜 : <input type="date" th:field="*{date}">
-        은행 계좌 bankEntity (select?)
-        <select>
-            <option disabled>선택하세요</option>
-            <div th:each="c: ${bsave}">
-                <option th:field="*{bankName}" th:value="*{bankName}">bankName <!-- 이거 어떻게 이름이 붙게 만들어야 하지 --></option>
-            </div>
-        </select>
-        금액 minusAsset <input type="text" th:field="*{minusAsset}">
-        할인 (select) - debitGet(정액) / debitPercent(할인)
-        <select>
-            <option disabled>선택하세요</option>
-            <option th:field="*{debitGet}">
-                <input type="text"> <!-- 금액? -->
-            </option>
-            <option th:field="*{debitPercent}">
-                <input type="text"> <!-- 퍼센트 스크롤 화 필요 -->
-            </option>
-        </select>
+    <div class="row">
+        <div class="col-1">
 
-        메모 debitMemo <textarea th:field="*{debitMemo}"></textarea>
-        영수증 debitPhoto <input type="file" value="저장" th:field="*{debitPhoto}">
-    </form>
+        </div>
+            <div class="col-10">
+                <form action="/debit/save" enctype="multipart/form-data" method="post" th:object="${dsave}">
+                    내역 명 : <input type="text" th:field="*{debitName}"> <br>
+                    날짜 : <input type="date" th:field="*{date}"> <br>
+                    은행 계좌 bankEntity (select?)
+                    <select>
+                        <option disabled>선택하세요</option>
+                        <div th:each="c: ${bsave}">
+                            <option th:field="*{bankName}" th:value="*{bankName}">bankName <!-- 이거 어떻게 이름이 붙게 만들어야 하지 --></option>
+                        </div>
+                    </select> <br>
+                    금액 minusAsset <input type="text" th:field="*{minusAsset}"> <br>
+                    할인 (select) - debitGet(정액) / debitPercent(할인)
+                    <select>
+                        <option disabled>선택하세요</option>
+                        <option th:field="*{debitGet}">할인액
+<!--                            <input type="text"> &lt;!&ndash; 금액? &ndash;&gt;-->
+                        </option>
+                        <option th:field="*{debitPercent}">할인율
+<!--                            <input type="text"> &lt;!&ndash; 퍼센트 스크롤 화 필요 &ndash;&gt;-->
+                        </option>
+                        <input type="hidden" > <!-- 위에서 선택한거를 여기서 받아서 js로 넘겨줘야함. -->
+                    </select> <br>
+
+                    메모 debitMemo <textarea th:field="*{debitMemo}"></textarea> <br>
+                    영수증 debitPhoto <input type="file" value="저장" th:field="*{debitPhoto}"> <br>
+                </form>
+            </div>
+        <div class="col-1">
+
+        </div>
+    </div>
 </main>
 <footer>
     <!-- 해당 부분 전체적으로 수정해야함. 아에 안맞음. -->
