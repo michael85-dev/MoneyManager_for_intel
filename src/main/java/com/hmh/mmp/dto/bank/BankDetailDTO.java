@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class BankDetailDTO extends BankSaveDTO {
+
     private Long bankId;
 
     public static BankDetailDTO toBankDetail(BankEntity bankEntity) {

@@ -80,9 +80,19 @@ public class DebitServiceImpl implements DebitService {
         debitPhotoName = System.currentTimeMillis() + "-" + debitPhotoName;
         String savePath = "/Users/myungha/Desktop/Github/MoneyManager_for_intel/src/main/resources/photo/debit" + debitPhotoName;
 
+        double minusAsset = debitSaveDTO.getMinusAsset();
         if(!debitPhoto.isEmpty()) {
             debitPhoto.transferTo(new File(savePath));
             debitSaveDTO.setDebitPhotoName(debitPhotoName);
+        }
+
+        if ((Double)debitSaveDTO.getDebitGet() == null) { // 할인율 관련
+            minusAsset = (debitSaveDTO.getMinusAsset() - (debitSaveDTO.getMinusAsset() * debitSaveDTO.getDebitPercent() / 100)); // 할인된 금액 반영해서 넣는것.
+
+            debitSaveDTO.setMinusAsset(minusAsset);
+        } else { // 할인액 관련
+
+            debitSaveDTO.setMinusAsset(minusAsset);
         }
 
         // 사용되는 계정 정보와 카드 정보 가지고 오기.
@@ -94,14 +104,14 @@ public class DebitServiceImpl implements DebitService {
         debitSaveDTO.setAccount(account);
 
         // 전체 내역 추가 하기 - 사용 관련은 기본적으로 마이너스로 추가. -> 카드 내용에 해당 내역 반영
-        Long totalAsset = cardEntity.getTotalAsset();
-        totalAsset = totalAsset - debitSaveDTO.getMinusAsset();
+        double totalAsset = cardEntity.getTotalAsset();
+        totalAsset = totalAsset - minusAsset;
         cardEntity.setTotalAsset(totalAsset);
         crr.save(cardEntity);
 
         // 은행 과년하여 반영하기
         Long bankUseAsset = bankEntity.getTotalAsset();
-        bankUseAsset = bankUseAsset - debitSaveDTO.getMinusAsset();
+        bankUseAsset = bankUseAsset - minusAsset;
         bankEntity.setTotalAsset(bankUseAsset);
         // 해당 변경점 업데이트 하기
         br.save(bankEntity);

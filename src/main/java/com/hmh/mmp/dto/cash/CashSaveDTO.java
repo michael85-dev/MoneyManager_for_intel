@@ -12,12 +12,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CashSaveDTO {
+    private Long memberId;
+
     @NotBlank
     @Column(length = 50)
     private String cashName;
-    private Long memberId;
     private String cashMemo;
-    private Long totalAsset;
+    private double totalAsset;
     private String cashPhotoName;
     private MultipartFile cashPhoto;
 }

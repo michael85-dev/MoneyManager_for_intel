@@ -13,13 +13,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BoardSaveDTO {
     private Long memberId;
+
     private String boardPhotoName;
     private MultipartFile boardPhoto;
     private String boardWriter;
     private String boardContents;
     private String boardTitle;
     private String boardPassword;
-    private Integer boardHits;
+    private int boardHits;
 
     public static BoardSaveDTO toMoveDate(MemberDetailDTO memberDetailDTO) {
         BoardSaveDTO boardSaveDTO = new BoardSaveDTO();
